@@ -1,4 +1,4 @@
-## Practical Machine Learning
+## Practical Machine Learning (Coursera)
 Coursera Course: Web([Practical Machine Learning](https://www.coursera.org/learn/practical-machine-learning)) By Johns Hopkins University
 
 * [01. The lecture Notes](https://github.com/leehaesung/PracticalMachineLearning/tree/master/01_Lecture_Notes)
