@@ -3,6 +3,6 @@ Coursera Course: Web([Practical Machine Learning](https://www.coursera.org/learn
 * [01. The lecture Notes](https://github.com/leehaesung/PracticalMachineLearning/tree/master/01_Lecture_Notes)
 * [02. The Lecture Videos](https://github.com/leehaesung/PracticalMachineLearning/tree/master/02_Lecture_Videos)
 * [03. The Caret Package](https://github.com/leehaesung/PracticalMachineLearning/tree/master/03_CARET_Package)
-* [04. The Traing & Test Data]
+* 04. The Traing & Test Data
   * [pml-testing.csv](https://github.com/leehaesung/PracticalMachineLearning/blob/master/04_Traing_Test_Data/pml-testing.csv)
   * [pml-training.csv](https://github.com/leehaesung/PracticalMachineLearning/blob/master/04_Traing_Test_Data/pml-training.csv)
