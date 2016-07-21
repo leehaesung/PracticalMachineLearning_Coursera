@@ -1,6 +1,6 @@
 # Practical Machine Learning
 Coursera Course: Web([Practical Machine Learning](https://www.coursera.org/learn/practical-machine-learning)) By Johns Hopkins University
-* [01. My lecture Notes](https://github.com/leehaesung/PracticalMachineLearning/tree/master/01_Lecture_Notes)
+* [01. The lecture Notes](https://github.com/leehaesung/PracticalMachineLearning/tree/master/01_Lecture_Notes)
 * [02. The Lecture Videos](https://github.com/leehaesung/PracticalMachineLearning/tree/master/02_Lecture_Videos)
 * [03. The Caret Package](https://github.com/leehaesung/PracticalMachineLearning/tree/master/03_CARET_Package)
 * [04. The Traing & Test Data](https://github.com/leehaesung/PracticalMachineLearning/tree/master/04_Traing_Test_Data)
