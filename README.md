@@ -4,6 +4,7 @@ Coursera Course: Web([Practical Machine Learning](https://www.coursera.org/learn
 * [01. The lecture Notes](https://github.com/leehaesung/PracticalMachineLearning/tree/master/01_Lecture_Notes)
 * [02. The Lecture Videos](https://github.com/leehaesung/PracticalMachineLearning/tree/master/02_Lecture_Videos)
 * [03. The Caret Package](https://github.com/leehaesung/PracticalMachineLearning/tree/master/03_CARET_Package)
+  * [A Short Introduction to the caret Package](https://github.com/leehaesung/PracticalMachineLearning_Coursera/blob/master/03_CARET_Package/A%20Short%20Introduction%20to%20the%20caret%20Package.pdf) 
   * [The caret pacakage manual PDF file](https://github.com/leehaesung/PracticalMachineLearning_Coursera/blob/master/03_CARET_Package/Manual_Package_caret.pdf)
   * [The website PDF file ](https://github.com/leehaesung/PracticalMachineLearning_Coursera/blob/master/03_CARET_Package/Web_caret_Package.pdf)
 * [04. Download the Traing & Test Data](https://github.com/leehaesung/PracticalMachineLearning_Coursera/tree/master/04_Traing_Test_Data)
