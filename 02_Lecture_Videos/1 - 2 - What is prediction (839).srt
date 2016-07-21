@@ -1,0 +1,820 @@
+1
+00:00:00,450 --> 00:00:03,170
+A lot of the action in machine learning
+has focused on what
+
+2
+00:00:03,170 --> 00:00:05,041
+algorithms are the best algorithms for
+
+3
+00:00:05,041 --> 00:00:07,431
+extracting information and using it to
+predict.
+
+4
+00:00:07,431 --> 00:00:11,860
+But it's important to step back and look
+at the entire prediction problem.
+
+5
+00:00:11,860 --> 00:00:14,086
+This is a little diagram that I made to
+illustrate
+
+6
+00:00:14,086 --> 00:00:17,220
+some of the key each, issues in building a
+predictor.
+
+7
+00:00:17,220 --> 00:00:18,823
+So you start of with, suppose I want to
+
+8
+00:00:18,823 --> 00:00:22,010
+predict for these dots whether they're red
+or blue.
+
+9
+00:00:22,010 --> 00:00:24,240
+Well, what you might do is have a big
+group of dots that you
+
+10
+00:00:24,240 --> 00:00:25,790
+want to predict about, and then you use
+
+11
+00:00:25,790 --> 00:00:29,370
+probability and sampling to pick a
+training set.
+
+12
+00:00:29,370 --> 00:00:32,250
+The training set will consist of some red
+dots and some blue
+
+13
+00:00:32,250 --> 00:00:35,890
+dots, and you'll measure a whole bunch of
+characteristics of those dots.
+
+14
+00:00:35,890 --> 00:00:38,700
+Then you'll use those characteristics to
+build what's called a
+
+15
+00:00:38,700 --> 00:00:41,815
+prediction function, and the prediction
+function will take a new dot,
+
+16
+00:00:41,815 --> 00:00:44,725
+whose color you don't know, but using
+those characteristics that
+
+17
+00:00:44,725 --> 00:00:48,310
+you measured will predict whether it's red
+or whether it's blue.
+
+18
+00:00:48,310 --> 00:00:49,370
+Then you can go off and try to
+
+19
+00:00:49,370 --> 00:00:51,600
+evaluate whether that prediction function
+works well or not.
+
+20
+00:00:52,640 --> 00:00:54,644
+One thing that I think is very important
+
+21
+00:00:54,644 --> 00:00:57,864
+and often underappreciated about building
+a machine learning
+
+22
+00:00:57,864 --> 00:01:00,354
+algorithm is to look at probability and
+sampling
+
+23
+00:01:00,354 --> 00:01:02,740
+step of building the training and test
+stats.
+
+24
+00:01:03,870 --> 00:01:07,360
+This is always a required component of
+building every machine learning algorithm
+
+25
+00:01:07,360 --> 00:01:09,990
+is deciding which samples you're going to
+use to build that algorithm.
+
+26
+00:01:09,990 --> 00:01:14,710
+But sometimes it's over-looked, because
+all of the action that you hear about for
+
+27
+00:01:14,710 --> 00:01:16,480
+machine learning happens down here when
+you're
+
+28
+00:01:16,480 --> 00:01:18,460
+building the actual machine learning
+function itself.
+
+29
+00:01:19,810 --> 00:01:22,040
+One very high profile example of the ways
+that this
+
+30
+00:01:22,040 --> 00:01:26,100
+can cause problems is the recent
+discussion about Google Flu trends.
+
+31
+00:01:26,100 --> 00:01:29,876
+Google Flu trend is tried to use the terms
+that people were typing into
+
+32
+00:01:29,876 --> 00:01:34,320
+Google, terms like, I have a cough, to
+predict how often people would get flu.
+
+33
+00:01:34,320 --> 00:01:36,966
+In other words, what was the rate of flu
+that was going
+
+34
+00:01:36,966 --> 00:01:39,940
+on in a particular part of the United
+States at a particular time?
+
+35
+00:01:41,200 --> 00:01:43,651
+And they compared their algorithm to
+approach taken
+
+36
+00:01:43,651 --> 00:01:45,947
+by the United States government, where
+they went out
+
+37
+00:01:45,947 --> 00:01:47,989
+and they actually measured how many people
+were
+
+38
+00:01:47,989 --> 00:01:50,330
+getting the flu, in different places in
+the US.
+
+39
+00:01:50,330 --> 00:01:52,505
+And they found in their original paper
+that the
+
+40
+00:01:52,505 --> 00:01:55,631
+Google Flu trends algorithm was able to
+very accurately represent
+
+41
+00:01:55,631 --> 00:01:57,638
+the number of flu cases that would appear
+in
+
+42
+00:01:57,638 --> 00:02:00,900
+various different places in the US at any
+given time.
+
+43
+00:02:00,900 --> 00:02:02,500
+But it was quite a bit faster and quite a
+
+44
+00:02:02,500 --> 00:02:05,930
+bit less expensive to measure using search
+terms at Google.
+
+45
+00:02:05,930 --> 00:02:08,820
+The problem that they didn't realize at
+the time, was that
+
+46
+00:02:08,820 --> 00:02:11,760
+the search terms that people would use
+would change over time.
+
+47
+00:02:11,760 --> 00:02:13,380
+They might use different terms when they
+were
+
+48
+00:02:13,380 --> 00:02:16,830
+searching, and so that would affect the
+algorithm's performance.
+
+49
+00:02:16,830 --> 00:02:19,440
+And also, the way that those terms were
+actually
+
+50
+00:02:19,440 --> 00:02:21,970
+being used in the algorithm wasn't very
+well understood.
+
+51
+00:02:21,970 --> 00:02:24,466
+And so when the function of a particular
+search
+
+52
+00:02:24,466 --> 00:02:27,850
+term changed in their algorithm, it can
+cause problems.
+
+53
+00:02:27,850 --> 00:02:30,856
+And this lead to highly inaccurate results
+for the Google
+
+54
+00:02:30,856 --> 00:02:35,320
+Flu trends algorithm half over time as
+people's internet usage changes.
+
+55
+00:02:35,320 --> 00:02:37,054
+So this gives you an idea that choosing
+
+56
+00:02:37,054 --> 00:02:39,437
+the right dataset and that knowing what
+the specific
+
+57
+00:02:39,437 --> 00:02:41,876
+question is are again paramount, just like
+they have
+
+58
+00:02:41,876 --> 00:02:45,500
+been in other classes of the data science
+specialization.
+
+59
+00:02:45,500 --> 00:02:47,200
+So here are the components of a predictor.
+
+60
+00:02:47,200 --> 00:02:50,000
+You need to start off as always in all,
+any problem
+
+61
+00:02:50,000 --> 00:02:53,250
+with data science with a very specific and
+well defined question.
+
+62
+00:02:53,250 --> 00:02:55,810
+What are you trying to predict and what
+are you trying to predict it with?
+
+63
+00:02:56,910 --> 00:02:58,770
+Then you go out and you collect the best
+
+64
+00:02:58,770 --> 00:03:01,770
+input data that you can to be able to
+predict.
+
+65
+00:03:01,770 --> 00:03:04,022
+And from that data you might either use
+measured
+
+66
+00:03:04,022 --> 00:03:06,893
+characteristics that you have or you might
+use computations
+
+67
+00:03:06,893 --> 00:03:09,086
+to build features that we'd think you
+might be
+
+68
+00:03:09,086 --> 00:03:12,710
+useful for predicting the outcome that you
+care about.
+
+69
+00:03:12,710 --> 00:03:15,275
+At this stage then you can actually start
+to use the machine learning
+
+70
+00:03:15,275 --> 00:03:19,020
+algorithms you may have read about, such
+as Random Forest or Decision Trees.
+
+71
+00:03:19,020 --> 00:03:21,023
+And then what you can do is estimate the
+
+72
+00:03:21,023 --> 00:03:24,281
+parameters of those algorithms, and use
+those parameters to
+
+73
+00:03:24,281 --> 00:03:26,347
+apply the algorithm to a new data set and
+
+74
+00:03:26,347 --> 00:03:30,390
+then finally evaluate that algorithm on
+that new data.
+
+75
+00:03:30,390 --> 00:03:31,980
+So I'm going to just show you one quick
+little
+
+76
+00:03:31,980 --> 00:03:35,160
+example, to show you how this little
+process works.
+
+77
+00:03:35,160 --> 00:03:38,600
+So this is obviously a trivialized version
+of what would happen in a
+
+78
+00:03:38,600 --> 00:03:42,230
+real machine running algorithm, but it
+gives you a flavor of what's going on.
+
+79
+00:03:42,230 --> 00:03:45,010
+So you start off with asking something
+about the question.
+
+80
+00:03:45,010 --> 00:03:46,583
+So you start with a in general
+
+81
+00:03:46,583 --> 00:03:49,409
+people usually start with a quite general
+questions.
+
+82
+00:03:49,409 --> 00:03:51,636
+So here is, can I automatically detect
+emails
+
+83
+00:03:51,636 --> 00:03:54,370
+that are SPAM from those that are not?
+
+84
+00:03:54,370 --> 00:03:56,044
+So SPAM emails are emails that you got
+
+85
+00:03:56,044 --> 00:03:58,204
+that you, come from companies that get
+sent out
+
+86
+00:03:58,204 --> 00:03:59,932
+to thousands of people at the same time
+
+87
+00:03:59,932 --> 00:04:01,890
+and that you might not be interested in
+it.
+
+88
+00:04:02,910 --> 00:04:05,410
+So you might want to make your question a
+little bit more concrete.
+
+89
+00:04:05,410 --> 00:04:07,580
+You often need to when doing machine
+learning.
+
+90
+00:04:07,580 --> 00:04:09,473
+So, the question might be, can I use
+
+91
+00:04:09,473 --> 00:04:12,897
+quantitative characteristics of those
+emails to classify them as
+
+92
+00:04:12,897 --> 00:04:15,035
+SPAM, or what we're going to call HAM
+which
+
+93
+00:04:15,035 --> 00:04:17,499
+is the email that people would like to
+receive?
+
+94
+00:04:19,090 --> 00:04:21,660
+So once you have your question, then you
+need to find input data.
+
+95
+00:04:21,660 --> 00:04:23,490
+In this case, there's actually a bunch of
+data
+
+96
+00:04:23,490 --> 00:04:26,530
+that's available and already pre-processed
+for us in R.
+
+97
+00:04:26,530 --> 00:04:28,751
+So it's actually in the current lab
+
+98
+00:04:28,751 --> 00:04:32,780
+package K-E-R-N-L-A-B and it's the SPAM
+dataset.
+
+99
+00:04:32,780 --> 00:04:38,229
+So we can actually load that data set into
+R directly, and it has some information
+
+100
+00:04:38,229 --> 00:04:43,010
+that's been collected about SPAM and HAM
+emails already available to us.
+
+101
+00:04:43,010 --> 00:04:44,832
+Now we might want to keep in mind that
+that might
+
+102
+00:04:44,832 --> 00:04:47,403
+not necessarily be the perfect data, in
+fact, we don't have all
+
+103
+00:04:47,403 --> 00:04:49,553
+of the emails that have been collected
+over time, or we
+
+104
+00:04:49,553 --> 00:04:52,590
+don't have all the emails that are being
+sent to you personally.
+
+105
+00:04:52,590 --> 00:04:54,920
+So we need to be aware of the potential
+limitations of this
+
+106
+00:04:54,920 --> 00:04:57,730
+data, when we're using it to build an
+algorithm, a prediction algorithm.
+
+107
+00:04:58,930 --> 00:05:00,910
+Then we want to calculate something about
+features.
+
+108
+00:05:00,910 --> 00:05:03,950
+So, imagine that you have a bunch of
+emails.
+
+109
+00:05:03,950 --> 00:05:06,350
+And here's an example email that's been
+sent to me.
+
+110
+00:05:06,350 --> 00:05:09,280
+Dear Jeff, can you send me the address, so
+I can send you the invitation.
+
+111
+00:05:09,280 --> 00:05:10,770
+Thanks, Ben.
+
+112
+00:05:10,770 --> 00:05:12,090
+If we want to build a prediction
+algorithm,
+
+113
+00:05:12,090 --> 00:05:14,460
+we need to calculate some characteristics
+of
+
+114
+00:05:14,460 --> 00:05:17,970
+these emails that we can use to be able to
+build a predictive algorithm.
+
+115
+00:05:17,970 --> 00:05:19,860
+And so one example might be, we can
+
+116
+00:05:19,860 --> 00:05:23,090
+calculate the frequency with which a
+particular word appears.
+
+117
+00:05:23,090 --> 00:05:26,610
+So here, we're looking for the frequency
+that the word you appears.
+
+118
+00:05:26,610 --> 00:05:30,680
+And so in this case, it appears twice in
+this email so 2 out
+
+119
+00:05:30,680 --> 00:05:35,390
+of 17 words or about 11% of the words in
+this email are you.
+
+120
+00:05:35,390 --> 00:05:38,928
+We could calculate that same percentage
+for every single email that we have and
+
+121
+00:05:38,928 --> 00:05:42,320
+now we have a qualitative characteristic
+that we can try to use to predict.
+
+122
+00:05:43,920 --> 00:05:47,995
+So if the data in the current lab package
+that I've shown here are actually,
+
+123
+00:05:47,995 --> 00:05:50,542
+information just like that, for every
+email we
+
+124
+00:05:50,542 --> 00:05:54,160
+have the frequency with which certain
+words appear.
+
+125
+00:05:54,160 --> 00:05:58,446
+And so, for example if credit appears very
+often in the email or money appears
+
+126
+00:05:58,446 --> 00:06:03,185
+very often in the email, you might imagine
+that that email might be a SPAM email.
+
+127
+00:06:03,185 --> 00:06:06,451
+So, as one example of that, we looked at
+the frequency
+
+128
+00:06:06,451 --> 00:06:10,560
+of the word, your, and how often it
+appears in the email.
+
+129
+00:06:10,560 --> 00:06:14,730
+And so, I've got a plot here that's a
+density plot of the, that data.
+
+130
+00:06:14,730 --> 00:06:17,040
+And so, on the x-axis is the frequency
+
+131
+00:06:17,040 --> 00:06:20,900
+that with which, your, appeared in the
+email.
+
+132
+00:06:20,900 --> 00:06:23,236
+And on the y-axis is the density, or the
+
+133
+00:06:23,236 --> 00:06:27,580
+number of times the that frequency appears
+amongst the emails.
+
+134
+00:06:27,580 --> 00:06:31,171
+And so what you can see is that most of
+the emails that are SPAM, those are the
+
+135
+00:06:31,171 --> 00:06:32,938
+ones that are in red, you can see that
+
+136
+00:06:32,938 --> 00:06:36,110
+they tend to have more appearances of the
+word, your.
+
+137
+00:06:36,110 --> 00:06:38,509
+Where as all of the emails that are HAM,
+the
+
+138
+00:06:38,509 --> 00:06:41,777
+ones that we actually want to receive have
+a much higher peak
+
+139
+00:06:41,777 --> 00:06:44,578
+right over here down near 0, so there's
+very few
+
+140
+00:06:44,578 --> 00:06:48,000
+emails that have a large number of viewers
+that are HAM.
+
+141
+00:06:49,100 --> 00:06:52,760
+So, we can build an algorithm in this case
+let's build a very very simple algorithm.
+
+142
+00:06:52,760 --> 00:06:57,916
+We can estimate an algorithm where we want
+to just find a cut off a constant C, where
+
+143
+00:06:57,916 --> 00:07:00,307
+if the frequency of your is above C then
+
+144
+00:07:00,307 --> 00:07:03,930
+we predict spam and otherwise we predict
+that it's ham.
+
+145
+00:07:05,250 --> 00:07:08,562
+So going back to our data we can fig, try
+to figure out what
+
+146
+00:07:08,562 --> 00:07:12,564
+that best cut off is, and here's an
+example of a cutoff that you could
+
+147
+00:07:12,564 --> 00:07:16,635
+choose, so choose a cut off here that if
+it's above 0.5 then we
+
+148
+00:07:16,635 --> 00:07:20,844
+say that it's SPAM, and if it's below 0.5
+we can say that it's HAM.
+
+149
+00:07:20,844 --> 00:07:24,219
+And so we think this might work because
+you can see that
+
+150
+00:07:24,219 --> 00:07:28,480
+the large spike of blue HAM messages are
+below that cut off.
+
+151
+00:07:28,480 --> 00:07:32,720
+Whereas the big, one of the big spikes of
+the SPAM messages is above that cut off.
+
+152
+00:07:32,720 --> 00:07:35,180
+So you might imagine that wil cache quite
+a bit of that SPAM.
+
+153
+00:07:35,180 --> 00:07:38,600
+So then what we do is we evaluate that.
+
+154
+00:07:38,600 --> 00:07:40,470
+So what we would do is calculate for
+
+155
+00:07:40,470 --> 00:07:44,350
+example predictions for each of the
+different emails.
+
+156
+00:07:44,350 --> 00:07:47,828
+We take a prediction in that says, if the
+frequency of yours
+
+157
+00:07:47,828 --> 00:07:52,250
+above 0.5, then you're spam and if it's
+below then you're nonspam.
+
+158
+00:07:52,250 --> 00:07:55,153
+And then we make a table of those
+predictions and divide
+
+159
+00:07:55,153 --> 00:07:58,740
+it by the length of the, all the
+observations that we have.
+
+160
+00:07:58,740 --> 00:08:02,139
+And so we can say is that, when you're
+nonspam about
+
+161
+00:08:02,139 --> 00:08:06,650
+45% of the time, 46% of the time, we get
+you right.
+
+162
+00:08:06,650 --> 00:08:11,260
+When you're spam about 29% of the time, we
+get you right.
+
+163
+00:08:11,260 --> 00:08:16,920
+So, total we get you write about 45% plus
+29% is about 75% of the time.
+
+164
+00:08:16,920 --> 00:08:21,630
+So our prediction algorithm is about 75%
+accurate in this particular case.
+
+165
+00:08:21,630 --> 00:08:23,720
+So that's how we would evaluate the
+algorithm.
+
+166
+00:08:23,720 --> 00:08:27,328
+This is of course any same dataset where
+we actually calculated
+
+167
+00:08:27,328 --> 00:08:31,630
+it, the prediction function, and as we
+will see in later lectures.
+
+168
+00:08:31,630 --> 00:08:34,240
+This will be an optimistic estimate of the
+overall error rate.
+
+169
+00:08:34,240 --> 00:08:39,670
+So that's an overview of, the basic steps
+in building a predictive algorithm.
+
