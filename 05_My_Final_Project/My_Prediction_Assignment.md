@@ -245,25 +245,25 @@ histGroup(DTrainCS, "belt")
 ## Loading required package: reshape2
 ```
 
-![plot of chunk histGroup](./predictionAssignment_files/figure-html/histGroup1.png) 
+![plot of chunk histGroup](https://github.com/leehaesung/PracticalMachineLearning_Coursera/blob/master/05_My_Final_Project/Image_Files/histGroup1.png) 
 
 ```r
 histGroup(DTrainCS, "[^(fore)]arm")
 ```
 
-![plot of chunk histGroup](./predictionAssignment_files/figure-html/histGroup2.png) 
+![plot of chunk histGroup](https://github.com/leehaesung/PracticalMachineLearning_Coursera/blob/master/05_My_Final_Project/Image_Files/histGroup2.png) 
 
 ```r
 histGroup(DTrainCS, "dumbbell")
 ```
 
-![plot of chunk histGroup](./predictionAssignment_files/figure-html/histGroup3.png) 
+![plot of chunk histGroup](https://github.com/leehaesung/PracticalMachineLearning_Coursera/blob/master/05_My_Final_Project/Image_Files/histGroup3.png) 
 
 ```r
 histGroup(DTrainCS, "forearm")
 ```
 
-![plot of chunk histGroup](./predictionAssignment_files/figure-html/histGroup4.png) 
+![plot of chunk histGroup](https://github.com/leehaesung/PracticalMachineLearning_Coursera/blob/master/05_My_Final_Project/Image_Files/histGroup4.png) 
 
 
 # Train a prediction model
