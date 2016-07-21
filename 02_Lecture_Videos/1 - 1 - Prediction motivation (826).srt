@@ -1,0 +1,829 @@
+1
+00:00:00,520 --> 00:00:02,250
+Welcome to the course Practical Machine
+Learning.
+
+2
+00:00:02,250 --> 00:00:06,420
+This is one of the funnest classes in the
+Data Science specialization.
+
+3
+00:00:06,420 --> 00:00:10,160
+I'm very excited about all the ways you
+can use date to predict, and I think it's
+
+4
+00:00:10,160 --> 00:00:12,305
+one of the areas that's probably the most
+sort
+
+5
+00:00:12,305 --> 00:00:15,300
+of well known when you think about Data
+Science.
+
+6
+00:00:15,300 --> 00:00:16,843
+This first lecture is going to cover the
+
+7
+00:00:16,843 --> 00:00:18,984
+motivation and pre-requisites for the
+course and
+
+8
+00:00:18,984 --> 00:00:21,736
+give you a little bit of idea about where
+we're going to be going.
+
+9
+00:00:21,736 --> 00:00:23,186
+So this course will cover the basic
+
+10
+00:00:23,186 --> 00:00:25,336
+ideas of machine learning and prediction,
+and our
+
+11
+00:00:25,336 --> 00:00:26,836
+goal is to be very practical and very
+
+12
+00:00:26,836 --> 00:00:29,670
+hands on with our understanding of machine
+learning.
+
+13
+00:00:29,670 --> 00:00:32,121
+And so the idea here is that we're going
+to cover the
+
+14
+00:00:32,121 --> 00:00:35,782
+main techniques that lots of people use
+and that you've maybe heard about.
+
+15
+00:00:35,782 --> 00:00:38,024
+Linear regression and random forests and
+things
+
+16
+00:00:38,024 --> 00:00:39,934
+like that, but we're also going to cover
+
+17
+00:00:39,934 --> 00:00:41,847
+sort of the nitty-gritty details and the
+
+18
+00:00:41,847 --> 00:00:44,760
+practicalities of doing machine learning
+and real examples.
+
+19
+00:00:44,760 --> 00:00:49,517
+And, so, we've got to start off with ideas
+of, like, study design, so training versus
+
+20
+00:00:49,517 --> 00:00:51,833
+test sets, and deciding how do you
+actually
+
+21
+00:00:51,833 --> 00:00:53,920
+build up a predictor in a real data set.
+
+22
+00:00:53,920 --> 00:00:57,301
+Then we'll talk about conceptual issues
+like out of sample error
+
+23
+00:00:57,301 --> 00:01:00,004
+and over fitting, so you might have heard
+of the fact
+
+24
+00:01:00,004 --> 00:01:02,707
+that some models are maybe a little tuned
+to the noise
+
+25
+00:01:02,707 --> 00:01:05,760
+and that so it won't predict well on a new
+sample.
+
+26
+00:01:05,760 --> 00:01:08,660
+And so we'll talk about how do you sort of
+prevent those sorts of problems.
+
+27
+00:01:08,660 --> 00:01:11,468
+We'll also talk about things like ROC
+curves or methods for
+
+28
+00:01:11,468 --> 00:01:15,130
+evaluating predictors for deciding whether
+a predictor's any good or not.
+
+29
+00:01:16,360 --> 00:01:18,840
+And we're going to be focusing a lot on
+the practical implementation of
+
+30
+00:01:18,840 --> 00:01:23,530
+these machine learning algorithms and also
+these more conceptual issues in R.
+
+31
+00:01:23,530 --> 00:01:26,900
+And we're going to be using the caret
+package for a large majority of that.
+
+32
+00:01:26,900 --> 00:01:30,166
+The caret package is a nice unifying
+framework for
+
+33
+00:01:30,166 --> 00:01:33,380
+a lot of machine learning packages that
+exist in R.
+
+34
+00:01:33,380 --> 00:01:36,147
+Those packages were built by a lot of
+different people, and they
+
+35
+00:01:36,147 --> 00:01:38,302
+have different parameters and different
+choices
+
+36
+00:01:38,302 --> 00:01:40,550
+that have been made by their developers.
+
+37
+00:01:40,550 --> 00:01:43,970
+And the caret package is sort of a nice
+unifying framework for that.
+
+38
+00:01:43,970 --> 00:01:46,054
+This course does depend quite heavily on
+the tools
+
+39
+00:01:46,054 --> 00:01:48,487
+that you've learned in the data
+scientist's toolbox and
+
+40
+00:01:48,487 --> 00:01:50,521
+in R Programming, so if you haven't taken
+those
+
+41
+00:01:50,521 --> 00:01:54,480
+classes already, they're highly encouraged
+before taking this class.
+
+42
+00:01:54,480 --> 00:01:56,790
+It'll also be useful if you've taken
+exploratory data
+
+43
+00:01:56,790 --> 00:02:00,510
+analysis, reporting data and reproducible
+research, and regression models.
+
+44
+00:02:00,510 --> 00:02:03,972
+Those classes aren't required, but, a lot
+of the material that
+
+45
+00:02:03,972 --> 00:02:07,610
+we'll cover in this class will, be related
+to that picture, so
+
+46
+00:02:07,610 --> 00:02:10,426
+if you've seen it before, it might be a
+little bit,
+
+47
+00:02:10,426 --> 00:02:13,340
+easier on you if you go through the
+material in this class.
+
+48
+00:02:14,930 --> 00:02:16,178
+So who predicts things?
+
+49
+00:02:16,178 --> 00:02:17,450
+This is an important question.
+
+50
+00:02:17,450 --> 00:02:20,310
+I think an important motivator for this
+class.
+
+51
+00:02:20,310 --> 00:02:24,597
+Basically, most organizations now use
+machine learning in some simple
+
+52
+00:02:24,597 --> 00:02:28,600
+form or minimum and often in much more
+complicated forms.
+
+53
+00:02:28,600 --> 00:02:30,000
+So here are a couple of examples.
+
+54
+00:02:30,000 --> 00:02:32,361
+Local governments might try to predict
+pension
+
+55
+00:02:32,361 --> 00:02:34,073
+payments in the future so that they
+
+56
+00:02:34,073 --> 00:02:36,966
+know whether their revenue generation
+mechanisms have
+
+57
+00:02:36,966 --> 00:02:41,620
+sufficient, funds, generated to cover
+those pension payments.
+
+58
+00:02:41,620 --> 00:02:43,794
+Google might want to predict whether
+you're going
+
+59
+00:02:43,794 --> 00:02:45,107
+to click on an ad so that they can
+
+60
+00:02:45,107 --> 00:02:46,822
+show you only the ads that, are most
+
+61
+00:02:46,822 --> 00:02:50,090
+likely to get clicks, and so it'll
+increase revenue.
+
+62
+00:02:50,090 --> 00:02:52,760
+Amazon and Netflix and other companies
+like that will show you
+
+63
+00:02:52,760 --> 00:02:55,040
+one movie and they want you to buy the
+next movie.
+
+64
+00:02:55,040 --> 00:02:59,116
+In order to do that they want to show you
+what you may be interested in.
+
+65
+00:02:59,116 --> 00:03:02,894
+Movies that you have seen this one movie,
+so you might be interested in
+
+66
+00:03:02,894 --> 00:03:04,879
+these other movies, so they can kind
+
+67
+00:03:04,879 --> 00:03:08,240
+of keep you watching and again increase
+revenue.
+
+68
+00:03:08,240 --> 00:03:11,500
+Insurance companies employ large groups of
+actuary and statisticians
+
+69
+00:03:11,500 --> 00:03:13,430
+to try to predict your risk of all sorts
+
+70
+00:03:13,430 --> 00:03:16,870
+of different things, including death so
+they can know
+
+71
+00:03:16,870 --> 00:03:20,060
+what's the right price to set insurance
+premiums at.
+
+72
+00:03:20,060 --> 00:03:22,277
+And then please select Johns Hopkins where
+I work will
+
+73
+00:03:22,277 --> 00:03:24,970
+also want to predict who's going to
+succeed in their programs.
+
+74
+00:03:24,970 --> 00:03:26,702
+So which students that have applied to our
+
+75
+00:03:26,702 --> 00:03:29,410
+program will be most likely to be
+successful.
+
+76
+00:03:29,410 --> 00:03:32,244
+All of these different prediction, tasks
+are preformed by a
+
+77
+00:03:32,244 --> 00:03:35,970
+variety of different organizations, and
+they're preformed at different levels.
+
+78
+00:03:35,970 --> 00:03:37,816
+So some of them are very complicated.
+
+79
+00:03:37,816 --> 00:03:40,966
+Predicting which ad you might click on
+might have a whole bunch of
+
+80
+00:03:40,966 --> 00:03:46,150
+predictors, and it might be based on quiet
+a complicated machine learning algorithm.
+
+81
+00:03:46,150 --> 00:03:50,670
+In some cases, it might be a lot simpler
+in terms of what you're trying to predict.
+
+82
+00:03:50,670 --> 00:03:53,269
+And so, either way, it's an important
+
+83
+00:03:53,269 --> 00:03:58,250
+component of basically every major
+organization these days.
+
+84
+00:03:58,250 --> 00:03:59,120
+So why would you predict things?
+
+85
+00:03:59,120 --> 00:03:59,940
+Well, one is glory.
+
+86
+00:03:59,940 --> 00:04:01,720
+Here's a picture of Chris Volinsky.
+
+87
+00:04:01,720 --> 00:04:04,970
+He's a member of the team that won the
+Netflix Prize.
+
+88
+00:04:04,970 --> 00:04:07,430
+The Netflix Prize was a million dollar
+prize that
+
+89
+00:04:07,430 --> 00:04:10,460
+was given out to a teen that could reduce
+the
+
+90
+00:04:10,460 --> 00:04:13,270
+error that Netflix was making when they
+were trying to
+
+91
+00:04:13,270 --> 00:04:16,600
+predict which new movie somebody might be
+interested in seeing.
+
+92
+00:04:16,600 --> 00:04:20,085
+So Chris was a member of a large
+organization of multiple teams that
+
+93
+00:04:20,085 --> 00:04:24,520
+blended their models together, and they
+predicted the best and won the prize.
+
+94
+00:04:24,520 --> 00:04:28,450
+It's actually kind of a, a fascinating
+story about how that happened.
+
+95
+00:04:28,450 --> 00:04:30,910
+And so, of course, they all got a lot of
+sort
+
+96
+00:04:30,910 --> 00:04:34,210
+of nerd credit and a lot of glory for
+winning these competitions.
+
+97
+00:04:34,210 --> 00:04:35,690
+And so that's one way, reason you might
+
+98
+00:04:35,690 --> 00:04:37,410
+be excited about being good at machine
+learning.
+
+99
+00:04:38,530 --> 00:04:40,520
+You might also be excited because you can,
+there's money in it.
+
+100
+00:04:40,520 --> 00:04:43,223
+So not only through organizations where
+you can
+
+101
+00:04:43,223 --> 00:04:44,881
+earn a lot of money if you know how
+
+102
+00:04:44,881 --> 00:04:47,093
+to best predict which ads people will
+click
+
+103
+00:04:47,093 --> 00:04:49,563
+on and so forth but even in these
+competitions.
+
+104
+00:04:49,563 --> 00:04:52,530
+So, for example, this is the heritage
+health prize.
+
+105
+00:04:52,530 --> 00:04:55,480
+And so this was a $3 million prize to the
+team that
+
+106
+00:04:55,480 --> 00:04:58,810
+could best predict who would be admitted
+to the hospital in a year.
+
+107
+00:05:00,350 --> 00:05:02,641
+And when you were trying to do this
+prediction,
+
+108
+00:05:02,641 --> 00:05:05,969
+you would use information about the
+previous hospitalizations from
+
+109
+00:05:05,969 --> 00:05:09,067
+previous years, and nobody actually won
+three million dollars
+
+110
+00:05:09,067 --> 00:05:10,844
+but people did win quite a bit of money
+
+111
+00:05:10,844 --> 00:05:12,619
+from this prize over in the sort of the
+
+112
+00:05:12,619 --> 00:05:15,313
+interim prizes, and so people actually
+both make money
+
+113
+00:05:15,313 --> 00:05:18,238
+through the competitions, but they also
+spun off analytics
+
+114
+00:05:18,238 --> 00:05:23,080
+companies and organizations based on their
+performance in these competitions.
+
+115
+00:05:23,080 --> 00:05:25,027
+In general, it's, it's now kind of a
+sport.
+
+116
+00:05:25,027 --> 00:05:28,430
+Data science is a sport, particularly in
+terms of prediction.
+
+117
+00:05:28,430 --> 00:05:31,063
+And so these are, this organization Kaggle
+is
+
+118
+00:05:31,063 --> 00:05:34,845
+one of, many organizations that can host
+these competitions
+
+119
+00:05:34,845 --> 00:05:37,477
+where you can try to predict, the outcome
+
+120
+00:05:37,477 --> 00:05:40,313
+of a particular experiment, or you try to
+predict
+
+121
+00:05:40,313 --> 00:05:43,487
+all sorts of different things, and these
+competitions
+
+122
+00:05:43,487 --> 00:05:45,917
+often run for a certain fixed period of
+time
+
+123
+00:05:45,917 --> 00:05:50,140
+and often have a lot, of, of a little bit
+of money on the line as well.
+
+124
+00:05:50,140 --> 00:05:52,660
+So, it can be a lot of fun, and there's a
+ranking and
+
+125
+00:05:52,660 --> 00:05:55,380
+a leaderboard, so you can kind of get into
+the fun of the competition.
+
+126
+00:05:56,500 --> 00:06:01,952
+This is a little closer to my area of
+research, so you might also predict for,
+
+127
+00:06:01,952 --> 00:06:04,718
+the purposes of doing sort of better
+medical
+
+128
+00:06:04,718 --> 00:06:07,406
+decision making and so Oncotype DX is a
+
+129
+00:06:07,406 --> 00:06:11,144
+prognostic gene expression signature that
+can be measured
+
+130
+00:06:11,144 --> 00:06:13,610
+in women who have breast cancer, and it
+
+131
+00:06:13,610 --> 00:06:16,076
+can be used to predict how long they'll
+
+132
+00:06:16,076 --> 00:06:19,410
+survive, given a set of conditions that
+they have.
+
+133
+00:06:19,410 --> 00:06:22,010
+So that can be useful for medical doctors
+
+134
+00:06:22,010 --> 00:06:24,580
+when making decisions about patients with
+breast cancer.
+
+135
+00:06:26,240 --> 00:06:29,041
+This is a book that I find very useful.
+
+136
+00:06:29,041 --> 00:06:32,070
+Its a little bit advanced for this class,
+although
+
+137
+00:06:32,070 --> 00:06:35,070
+a lot of the tools are incredibly useful
+still.
+
+138
+00:06:35,070 --> 00:06:38,062
+It's called the Elements of Statistical
+Learning, and
+
+139
+00:06:38,062 --> 00:06:40,240
+so this is a book that's actually, you
+
+140
+00:06:40,240 --> 00:06:44,490
+can get a free copy of the PDF from the
+author's website, so that's very nice.
+
+141
+00:06:44,490 --> 00:06:47,927
+But if you do really like the book, I
+encourage you to buy it as well.
+
+142
+00:06:47,927 --> 00:06:51,866
+The author's put a lot of effort on, into
+it, and it's a great book, and so it
+
+143
+00:06:51,866 --> 00:06:53,837
+could be very useful in terms of having a
+
+144
+00:06:53,837 --> 00:06:56,740
+lot of information that we'll cover in
+this class.
+
+145
+00:06:57,810 --> 00:06:59,300
+And then the package that I think we're
+going to be
+
+146
+00:06:59,300 --> 00:07:02,160
+using by far the most in this class is the
+caret package.
+
+147
+00:07:02,160 --> 00:07:06,036
+So the caret package combines a very large
+number of predictors that
+
+148
+00:07:06,036 --> 00:07:08,765
+have been built in R, and it allows you to
+sort of set
+
+149
+00:07:08,765 --> 00:07:12,258
+up training and test sets in a kind of a
+unified framework that
+
+150
+00:07:12,258 --> 00:07:16,670
+prevents a lot of the problems that come
+up when building prediction models.
+
+151
+00:07:18,370 --> 00:07:22,450
+If you want some more advanced materials,
+so one place
+
+152
+00:07:22,450 --> 00:07:25,190
+to go would be the Machine Learning class
+from Coursera.
+
+153
+00:07:25,190 --> 00:07:28,556
+And what I mean by advanced material is
+sometimes you might be interested
+
+154
+00:07:28,556 --> 00:07:31,479
+in a lot more of the sort of mathematical
+detail behind how these
+
+155
+00:07:31,479 --> 00:07:34,401
+algorithms work, or you might be
+interested in a lot more of the
+
+156
+00:07:34,401 --> 00:07:36,609
+sort of high level machine learning
+algorithms
+
+157
+00:07:36,609 --> 00:07:38,730
+that are on the very cutting edge.
+
+158
+00:07:38,730 --> 00:07:40,376
+And I think this class would be a great
+place
+
+159
+00:07:40,376 --> 00:07:43,548
+for you to start learning about those with
+some material.
+
+160
+00:07:43,548 --> 00:07:46,267
+This class, like I said, will cover the
+basics and will focus
+
+161
+00:07:46,267 --> 00:07:48,581
+on getting you to the point from sort of
+zero to 60.
+
+162
+00:07:48,581 --> 00:07:50,453
+And, in other words, it'll get you to the
+
+163
+00:07:50,453 --> 00:07:52,585
+point where you can use machine learning
+tools in
+
+164
+00:07:52,585 --> 00:07:54,717
+your day to day, but it won't necessarily
+cover
+
+165
+00:07:54,717 --> 00:07:57,330
+all the top level details of machine
+learning algorithms.
+
+166
+00:07:58,380 --> 00:08:00,310
+There is actually a huge amount of
+
+167
+00:08:00,310 --> 00:08:02,580
+information available out there on machine
+learning.
+
+168
+00:08:02,580 --> 00:08:05,970
+It's a very hot topic right now so so I
+listed
+
+169
+00:08:05,970 --> 00:08:11,113
+her a bunch of links that sends you to
+information at Quora.
+
+170
+00:08:11,113 --> 00:08:14,952
+It's from Science, from MIT, CMU, and
+Kaggle, which will give you
+
+171
+00:08:14,952 --> 00:08:18,598
+a lot of information about how to do
+machine learning in a variety
+
+172
+00:08:18,598 --> 00:08:22,178
+of different ways, and so, if this class
+whets your appetite and
+
+173
+00:08:22,178 --> 00:08:26,380
+gets you excited about some of these other
+things, that'd be great, too.
+
