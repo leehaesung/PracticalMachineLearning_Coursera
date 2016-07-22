@@ -7,11 +7,9 @@ Coursera course: [Practical Machine Learning](https://www.coursera.org/learn/pra
 
 **Github Page** For Project: https://github.com/leehaesung/PracticalMachineLearning_Coursera
 
-**gh-page branch** for Project Report:  http://emaasit.github.io/MachineLearning/predictionAssignment.html  
-
 ## Note  
 
-**Note** that http://emaasit.github.io/MachineLearning/predictionAssignment.html will be redirected to http://www.danielemaasit.com/MachineLearning/predictionAssignment.html  
+**Note** that https://iotmakerblog.wordpress.com/  
 
 
 # Background
