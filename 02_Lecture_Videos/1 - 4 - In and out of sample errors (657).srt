@@ -1,0 +1,675 @@
+1
+00:00:00,220 --> 00:00:02,660
+This lecture is about in sample and out of
+sample errors.
+
+2
+00:00:02,660 --> 00:00:05,980
+This is one of the most fundamental
+concepts that we deal with in machine
+
+3
+00:00:05,980 --> 00:00:08,140
+learning and prediction, and so it's worth
+
+4
+00:00:08,140 --> 00:00:11,720
+understanding the concept with a very
+simple example.
+
+5
+00:00:11,720 --> 00:00:14,000
+So in sample errors, the error you get on
+
+6
+00:00:14,000 --> 00:00:16,060
+the same data you used to train your
+predictor.
+
+7
+00:00:16,060 --> 00:00:20,320
+This is sometimes called resubstitution
+error in the machine learning literature.
+
+8
+00:00:20,320 --> 00:00:22,857
+And in sample error is always going to be
+a little bit optimistic,
+
+9
+00:00:22,857 --> 00:00:25,600
+from what the error is that you would get
+from a new sample.
+
+10
+00:00:25,600 --> 00:00:26,770
+And the reason why is, in your
+
+11
+00:00:26,770 --> 00:00:30,190
+specific sample, sometimes your prediction
+algorithm will tune
+
+12
+00:00:30,190 --> 00:00:34,480
+itself a little bit to the noise that you
+collected in that particular data set.
+
+13
+00:00:34,480 --> 00:00:36,184
+And so when you get a new data set,
+there'll be
+
+14
+00:00:36,184 --> 00:00:39,370
+different noise, and so the accuracy will
+go down a little bit.
+
+15
+00:00:39,370 --> 00:00:41,240
+So what we do is we look at this out of
+sample
+
+16
+00:00:41,240 --> 00:00:45,600
+error rate, this is sometimes called the
+generalization error in machine learning.
+
+17
+00:00:45,600 --> 00:00:47,347
+And so the idea is that once we build a
+
+18
+00:00:47,347 --> 00:00:49,750
+model on a sample of data that we have
+collected.
+
+19
+00:00:49,750 --> 00:00:51,917
+We might want to test it on a new sample,
+on a
+
+20
+00:00:51,917 --> 00:00:55,231
+sample collected by a different person or
+in a different time, in
+
+21
+00:00:55,231 --> 00:00:58,305
+order to be able to see what the sort of
+realistic expectation
+
+22
+00:00:58,305 --> 00:01:02,670
+of how well that machine running algorithm
+will perform on new data.
+
+23
+00:01:02,670 --> 00:01:06,100
+So almost always, out of sample errors is
+what you care about.
+
+24
+00:01:06,100 --> 00:01:09,380
+So if you see a reported error rate for
+date.
+
+25
+00:01:09,380 --> 00:01:11,187
+The error rate reported only on the data
+
+26
+00:01:11,187 --> 00:01:13,983
+where the machine-learning algorithm was
+built, you know
+
+27
+00:01:13,983 --> 00:01:16,669
+that's very optimistic, and it probably
+won't reflect
+
+28
+00:01:16,669 --> 00:01:19,270
+how the model will perform in real
+practice.
+
+29
+00:01:19,270 --> 00:01:21,640
+In sample error is always less than out of
+
+30
+00:01:21,640 --> 00:01:24,060
+sample error, so that's something to keep
+in mind.
+
+31
+00:01:24,060 --> 00:01:25,270
+And the reason is overfitting.
+
+32
+00:01:25,270 --> 00:01:28,100
+Basically, again, you're matching your
+algorithm to the data that you
+
+33
+00:01:28,100 --> 00:01:30,920
+have at hand, and you're matching it a
+little bit too well.
+
+34
+00:01:30,920 --> 00:01:34,466
+So sometimes you want to be able to give
+up a little bit of accuracy
+
+35
+00:01:34,466 --> 00:01:38,160
+in the sample you have, to be able to get
+accuracy on new data sets.
+
+36
+00:01:38,160 --> 00:01:39,500
+In other words, when the noise is a
+
+37
+00:01:39,500 --> 00:01:41,560
+little bit different, your algorithm will
+be robust.
+
+38
+00:01:42,870 --> 00:01:45,639
+So just to show you a really simple
+example, I thought I'd show you
+
+39
+00:01:45,639 --> 00:01:49,590
+in sample versus out of sample error's
+with a kind of a trivial example.
+
+40
+00:01:49,590 --> 00:01:52,575
+So here's what I've done, I've taken this
+again I've gone
+
+41
+00:01:52,575 --> 00:01:55,097
+to the kernlab package and I looked at the
+spam data set.
+
+42
+00:01:55,097 --> 00:01:56,692
+Remember that was the data set where
+
+43
+00:01:56,692 --> 00:01:58,980
+we collected information about spam
+messages, or
+
+44
+00:01:58,980 --> 00:02:00,895
+messages from robot and things like that,
+
+45
+00:02:00,895 --> 00:02:03,303
+and HAM messages, messages we actually
+care about.
+
+46
+00:02:03,303 --> 00:02:06,760
+And what I do is I actually take a very
+small sample of that Spam data set.
+
+47
+00:02:06,760 --> 00:02:10,410
+I just take ten messages and what I do is
+I
+
+48
+00:02:10,410 --> 00:02:15,620
+basically look at whether you see a lot of
+capital letters.
+
+49
+00:02:15,620 --> 00:02:17,933
+So I'm basically looking at the average
+number of
+
+50
+00:02:17,933 --> 00:02:21,340
+capital letters that you observes in a
+particular email.
+
+51
+00:02:21,340 --> 00:02:27,110
+And so I've plotted the first ten examples
+here versus their index.
+
+52
+00:02:27,110 --> 00:02:31,400
+And so in red are all the spam messages,
+in black are all the ham messages.
+
+53
+00:02:31,400 --> 00:02:35,692
+And so you can see, for example, that some
+of the spam messages like this
+
+54
+00:02:35,692 --> 00:02:37,673
+one up here, have a lot more capital
+
+55
+00:02:37,673 --> 00:02:40,200
+letters than the ones that are ham
+messages.
+
+56
+00:02:40,200 --> 00:02:42,710
+That sort of makes sense intuitively.
+
+57
+00:02:42,710 --> 00:02:45,510
+So we might want to build a predictor,
+based on the average number of
+
+58
+00:02:45,510 --> 00:02:51,080
+capital letters, as to whether you are a
+spam message or you're a ham message.
+
+59
+00:02:51,080 --> 00:02:54,060
+So one thing that we could do is build a
+predictor that says if you have a
+
+60
+00:02:54,060 --> 00:02:56,470
+lot of capitals than you're a spam
+message, and
+
+61
+00:02:56,470 --> 00:02:58,260
+if you don't then you're a non spam
+message.
+
+62
+00:02:58,260 --> 00:03:03,266
+And here's what this rule could look like,
+you could say if you're above 2.7, per
+
+63
+00:03:03,266 --> 00:03:06,009
+capital average we're going to call you
+spam,
+
+64
+00:03:06,009 --> 00:03:09,660
+if you're below 2.40 you're classified as
+non-spam.
+
+65
+00:03:09,660 --> 00:03:12,110
+And then one more, one thing we can do is
+we can actually try
+
+66
+00:03:12,110 --> 00:03:15,740
+to train this algorithm very, very well to
+predict perfectly on this data set.
+
+67
+00:03:15,740 --> 00:03:17,836
+So if we go back to these, this plot of
+the
+
+68
+00:03:17,836 --> 00:03:21,601
+different values, you can see there's one
+spam message right down here
+
+69
+00:03:21,601 --> 00:03:24,253
+in the lower right hand corner, that is a
+little bit
+
+70
+00:03:24,253 --> 00:03:28,760
+lower than the highest non-spam value in
+terms of this capital average.
+
+71
+00:03:28,760 --> 00:03:30,070
+So we could build a prediction algorithm
+
+72
+00:03:30,070 --> 00:03:32,460
+that would capture that spam value as
+well.
+
+73
+00:03:32,460 --> 00:03:35,160
+And so what we would do then is, we would
+make a
+
+74
+00:03:35,160 --> 00:03:39,330
+rule here that just picks out that one
+value in the training set.
+
+75
+00:03:39,330 --> 00:03:42,460
+It says if you're between 2.4 and 2.45,
+you're called spam as well.
+
+76
+00:03:42,460 --> 00:03:48,030
+And that's designed to basically make the
+training set accuracy perfect.
+
+77
+00:03:48,030 --> 00:03:50,360
+And you can see if we apply this rule
+
+78
+00:03:50,360 --> 00:03:53,420
+to the training set, we actually do get
+perfect accuracy.
+
+79
+00:03:53,420 --> 00:03:57,460
+So if you're nonspam, we perfectly
+classify you as nonspam,
+
+80
+00:03:57,460 --> 00:04:01,360
+and if you are spam, we perfectly classify
+you as spam.
+
+81
+00:04:02,700 --> 00:04:05,404
+An alternative rule would not train quite
+so tightly to
+
+82
+00:04:05,404 --> 00:04:08,401
+the training set, but would still use the
+basic principle of
+
+83
+00:04:08,401 --> 00:04:10,986
+if you have a high number of capital
+letters then your
+
+84
+00:04:10,986 --> 00:04:14,270
+spam message, and so this rule might look
+something like this.
+
+85
+00:04:14,270 --> 00:04:17,273
+If you're above 2.40, your cap, your spam
+message, if
+
+86
+00:04:17,273 --> 00:04:21,310
+you're less than or equal to 2.40, then
+you're nonspam message.
+
+87
+00:04:21,310 --> 00:04:24,750
+So this rule on the training set would
+then miss that one value.
+
+88
+00:04:24,750 --> 00:04:28,320
+In other words, you could have a
+prediction of nonspam for that one
+
+89
+00:04:28,320 --> 00:04:32,830
+spam message that was just a little bit
+lower in our training set.
+
+90
+00:04:32,830 --> 00:04:35,498
+So overall, this looks like in that
+training set that the accuracy is
+
+91
+00:04:35,498 --> 00:04:38,350
+a little bit lower for this rule, and it's
+a little bit more simplistic.
+
+92
+00:04:38,350 --> 00:04:40,880
+So then we can apply it to all the spam
+data.
+
+93
+00:04:40,880 --> 00:04:43,878
+In other words apply it to all the values,
+not just the values that we
+
+94
+00:04:43,878 --> 00:04:47,340
+had in the small training set, and these
+are the results that you would get.
+
+95
+00:04:47,340 --> 00:04:50,424
+So this is a table of our predictions on
+the
+
+96
+00:04:50,424 --> 00:04:54,830
+the rows here, and in the columns that's
+the actual values.
+
+97
+00:04:54,830 --> 00:04:57,150
+And so you can see the number of errors
+that we make are the
+
+98
+00:04:57,150 --> 00:04:59,870
+errors here that are on the off-diagonal
+
+99
+00:04:59,870 --> 00:05:02,130
+elements of this little matrix that we
+created.
+
+100
+00:05:02,130 --> 00:05:04,850
+So those are the number of errors that we
+made, made.
+
+101
+00:05:04,850 --> 00:05:07,354
+And so what we can look at is that we can
+actually look
+
+102
+00:05:07,354 --> 00:05:11,340
+at the average number of times that were
+right using our more complicated rules.
+
+103
+00:05:11,340 --> 00:05:13,080
+So this is just the sum of the times that
+our
+
+104
+00:05:13,080 --> 00:05:17,290
+prediction is equal to the actual value in
+the spam data set.
+
+105
+00:05:17,290 --> 00:05:20,370
+And so that happens 3,366 times in this
+data set.
+
+106
+00:05:20,370 --> 00:05:22,220
+And then we could also look at the
+
+107
+00:05:22,220 --> 00:05:24,270
+more simplified rule, the rule where we
+just used
+
+108
+00:05:24,270 --> 00:05:26,160
+a threshold, and also look at the number
+of
+
+109
+00:05:26,160 --> 00:05:28,490
+times that that's equal to the real spam
+type.
+
+110
+00:05:28,490 --> 00:05:31,260
+And you can see about 30 more times, we
+actually
+
+111
+00:05:31,260 --> 00:05:34,400
+get the right answer when we use this more
+simplified rule.
+
+112
+00:05:34,400 --> 00:05:36,277
+So, what's the reason that the simplified
+rule
+
+113
+00:05:36,277 --> 00:05:38,397
+actually does better than the more
+complicated rule?
+
+114
+00:05:38,397 --> 00:05:40,500
+And the reason why is over fitting.
+
+115
+00:05:40,500 --> 00:05:42,220
+So, in every data set we have two parts,
+we have
+
+116
+00:05:42,220 --> 00:05:45,560
+the signal component, that's the part
+we're trying to use to predict.
+
+117
+00:05:45,560 --> 00:05:48,160
+And then we have noise, so that's just
+random variation in
+
+118
+00:05:48,160 --> 00:05:51,940
+the dataset that we get, because the data
+are measured noisily.
+
+119
+00:05:51,940 --> 00:05:56,070
+And so the goal of a predictor is to find
+a signal and ignore the noise.
+
+120
+00:05:56,070 --> 00:05:59,040
+And in any small dataset, you can always
+build a
+
+121
+00:05:59,040 --> 00:06:02,630
+perfect in-sample predictor just like we
+did with that spam dataset.
+
+122
+00:06:02,630 --> 00:06:05,815
+You can always carve up the prediction
+space in this, in this
+
+123
+00:06:05,815 --> 00:06:09,950
+small data set, to capture every single
+quirk of that data set.
+
+124
+00:06:09,950 --> 00:06:12,680
+But when you do that, you capture both the
+signal and the noise.
+
+125
+00:06:12,680 --> 00:06:15,854
+So for example, in that training set there
+was one stem value
+
+126
+00:06:15,854 --> 00:06:20,200
+that has slightly lower capital average
+than some of the non-span values.
+
+127
+00:06:20,200 --> 00:06:22,020
+But that was just because we randomly
+picked a data
+
+128
+00:06:22,020 --> 00:06:24,490
+set where that was true, where that value
+was low.
+
+129
+00:06:24,490 --> 00:06:28,695
+So that predictor won't necessarily
+perform as well on new samples,
+
+130
+00:06:28,695 --> 00:06:33,170
+because we've tuned it too tightly to the
+observed training set.
+
+131
+00:06:33,170 --> 00:06:35,250
+So, this lecture has two purposed.
+
+132
+00:06:35,250 --> 00:06:38,625
+One is to introduce you to the idea of in
+sample and out of sample errors.
+
+133
+00:06:38,625 --> 00:06:41,060
+In-sample errors are errors on the
+trainings that
+
+134
+00:06:41,060 --> 00:06:43,090
+we actually built with, and out of sample
+
+135
+00:06:43,090 --> 00:06:44,470
+errors are the errors on the data set
+
+136
+00:06:44,470 --> 00:06:47,790
+that wasn't used to build the training
+predictor.
+
+137
+00:06:47,790 --> 00:06:50,364
+And also we introduced to you this idea of
+over fitting.
+
+138
+00:06:50,364 --> 00:06:53,476
+In that we want to build models that are
+simple and robust enough that
+
+139
+00:06:53,476 --> 00:06:57,260
+they don't actually capture the noise,
+while they do capture all of the signal.
+
