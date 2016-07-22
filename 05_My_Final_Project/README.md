@@ -1,11 +1,11 @@
 Practical Machine Learning
 ========================
 
-Coursera course: [Practical Machine Learning](https://class.coursera.org/predmachlearn-006)  
+Coursera course: [Practical Machine Learning](https://www.coursera.org/learn/practical-machine-learning)  
 
-# Useful links:
+# My useful links:
 
-**Github Page** For Project: https://github.com/Emaasit/MachineLearning
+**Github Page** For Project: https://github.com/leehaesung/PracticalMachineLearning_Coursera
 
 **gh-page branch** for Project Report:  http://emaasit.github.io/MachineLearning/predictionAssignment.html  
 
