@@ -1,0 +1,1017 @@
+1
+00:00:00,460 --> 00:00:02,340
+This lecture's about the tradeoffs and the
+
+2
+00:00:02,340 --> 00:00:05,200
+different components of building a machine
+learning algorithm.
+
+3
+00:00:05,200 --> 00:00:07,292
+So remember, from the previous lecture
+that we talked
+
+4
+00:00:07,292 --> 00:00:10,290
+about the different components of building
+a machine learning algorithm.
+
+5
+00:00:10,290 --> 00:00:11,352
+We started off with a question.
+
+6
+00:00:11,352 --> 00:00:12,858
+So this is the question we are trying to
+answer,
+
+7
+00:00:12,858 --> 00:00:15,020
+and we try to make it as concrete as
+possible.
+
+8
+00:00:15,020 --> 00:00:16,590
+Then we collect some data.
+
+9
+00:00:16,590 --> 00:00:18,190
+The data that we're going to be using to
+build our
+
+10
+00:00:18,190 --> 00:00:22,040
+machine learning algorithm and to the,
+apply that algorithm later on.
+
+11
+00:00:22,040 --> 00:00:23,630
+From that data we compress it into a set
+
+12
+00:00:23,630 --> 00:00:25,870
+of features that we're going to use to
+predict with.
+
+13
+00:00:25,870 --> 00:00:27,737
+And then we feed those features into an
+algorithm
+
+14
+00:00:27,737 --> 00:00:29,660
+which we'll then use to apply to predict
+things.
+
+15
+00:00:30,710 --> 00:00:32,350
+In my experience, it's been that the
+question
+
+16
+00:00:32,350 --> 00:00:34,360
+is the most important component of
+building a
+
+17
+00:00:34,360 --> 00:00:36,640
+good machine learning algorithm, getting a
+very concrete
+
+18
+00:00:36,640 --> 00:00:39,400
+and specific question where you can
+collect data.
+
+19
+00:00:39,400 --> 00:00:42,040
+The next most important step is to be able
+to actually collect data.
+
+20
+00:00:42,040 --> 00:00:45,090
+Frequently the question that you actually
+really want to answer, the data won't
+
+21
+00:00:45,090 --> 00:00:48,720
+be available, or the data will be only
+available in a sort of tangential.
+
+22
+00:00:48,720 --> 00:00:49,850
+Form.
+
+23
+00:00:49,850 --> 00:00:51,954
+Then creating features is an important
+component
+
+24
+00:00:51,954 --> 00:00:53,355
+in that if you don't compress the
+
+25
+00:00:53,355 --> 00:00:56,820
+data in the right way you might lose all
+of the relevant and valuable information.
+
+26
+00:00:56,820 --> 00:00:59,940
+And finally, in my experience it's been
+the algorithm is
+
+27
+00:00:59,940 --> 00:01:02,650
+often the least important part of building
+a machine learning algorithm.
+
+28
+00:01:02,650 --> 00:01:05,160
+It can be very important depending on the
+exact
+
+29
+00:01:05,160 --> 00:01:07,770
+modality of the type of data that you're
+using.
+
+30
+00:01:07,770 --> 00:01:10,910
+For example, image data and voice data can
+require certain
+
+31
+00:01:10,910 --> 00:01:14,360
+kinds of prediction algorithms that might
+not necessarily be as.
+
+32
+00:01:14,360 --> 00:01:16,290
+Important for different kinds of
+prediction.
+
+33
+00:01:17,890 --> 00:01:20,290
+So an important point that I think is
+worth hammering home is
+
+34
+00:01:20,290 --> 00:01:25,260
+driven was actually first quoted by John
+Tukey, which is that the combination
+
+35
+00:01:25,260 --> 00:01:28,730
+of some data and and aching desire for an
+answer does not ensure
+
+36
+00:01:28,730 --> 00:01:32,590
+that a reasonable answer can be extracted
+from a given body of data.
+
+37
+00:01:32,590 --> 00:01:34,870
+In other words, an important component of
+knowing how
+
+38
+00:01:34,870 --> 00:01:36,820
+to do prediction is to know when to give
+up,
+
+39
+00:01:36,820 --> 00:01:38,370
+when the data that you have is just not
+
+40
+00:01:38,370 --> 00:01:40,570
+sufficient to answer the question that
+you're trying to answer.
+
+41
+00:01:42,650 --> 00:01:44,700
+The key point that you need to remember.
+
+42
+00:01:44,700 --> 00:01:47,460
+When making that decision is garbage in
+garbage out.
+
+43
+00:01:47,460 --> 00:01:50,300
+In other words if you have bad data that
+you collected.
+
+44
+00:01:50,300 --> 00:01:52,960
+Or data that isn't very useful for
+performing predictions.
+
+45
+00:01:52,960 --> 00:01:55,410
+No matter how good your machine learning
+algorithm is.
+
+46
+00:01:55,410 --> 00:01:57,940
+You'll often get very bad results out.
+
+47
+00:01:57,940 --> 00:02:00,030
+In general the easiest thing to predict is
+when you have
+
+48
+00:02:00,030 --> 00:02:02,360
+data on the exact same thing that you're
+trying to predict.
+
+49
+00:02:02,360 --> 00:02:03,400
+In other words when you're.
+
+50
+00:02:03,400 --> 00:02:05,400
+In the Netflix prize they were trying to
+
+51
+00:02:05,400 --> 00:02:07,310
+predict new movie ratings, how people
+would rate
+
+52
+00:02:07,310 --> 00:02:09,140
+movies and they were trying to make that
+
+53
+00:02:09,140 --> 00:02:11,590
+prediction on the basis of old movie
+ratings.
+
+54
+00:02:11,590 --> 00:02:13,520
+And so that's a very direct relationship,
+you
+
+55
+00:02:13,520 --> 00:02:15,390
+can imagine how old movie ratings would
+be.
+
+56
+00:02:16,780 --> 00:02:20,690
+Governed by similar process as the new
+movie ratings.
+
+57
+00:02:20,690 --> 00:02:23,905
+In my area one thing that you might do is
+collect molecular measurements such as
+
+58
+00:02:23,905 --> 00:02:25,853
+gene expression and that's a that's a
+measure
+
+59
+00:02:25,853 --> 00:02:28,090
+of something that's going on in your body.
+
+60
+00:02:28,090 --> 00:02:31,010
+And you might use that to try to predict
+how people respond.
+
+61
+00:02:31,010 --> 00:02:34,620
+To disease or to other different medical
+conditions.
+
+62
+00:02:34,620 --> 00:02:37,912
+Again they're sort of a, you can imagine a
+pathway from the gene expression
+
+63
+00:02:37,912 --> 00:02:40,485
+data we've collected, the molecular
+information we've
+
+64
+00:02:40,485 --> 00:02:43,240
+collected, a value to your disease status.
+
+65
+00:02:43,240 --> 00:02:46,390
+In general it depends, what is a good
+prediction, what are
+
+66
+00:02:46,390 --> 00:02:48,480
+the features that you would collect to be
+able to predict.
+
+67
+00:02:48,480 --> 00:02:51,875
+But in general the closer that you could
+get to similar types of
+
+68
+00:02:51,875 --> 00:02:56,002
+data, the closer that you can do to
+perform a high prediction of accuracy.
+
+69
+00:02:57,090 --> 00:02:58,700
+This is a link here to a video
+
+70
+00:02:58,700 --> 00:03:03,030
+that talks about the, unreasonable
+effectiveness of data.
+
+71
+00:03:03,030 --> 00:03:06,270
+In other words, that getting a lot more
+data can often beat
+
+72
+00:03:06,270 --> 00:03:08,160
+out getting much better statistical or
+
+73
+00:03:08,160 --> 00:03:10,970
+machine learning models in almost every
+case.
+
+74
+00:03:10,970 --> 00:03:13,580
+And the most important step in developing
+a machine learning
+
+75
+00:03:13,580 --> 00:03:16,660
+algorithm after you define a question is
+collecting the right data.
+
+76
+00:03:16,660 --> 00:03:20,040
+Data that's relevant for the question
+you're trying to answer.
+
+77
+00:03:20,040 --> 00:03:21,150
+The features also matter.
+
+78
+00:03:21,150 --> 00:03:23,405
+So the important properties of good
+features are
+
+79
+00:03:23,405 --> 00:03:25,220
+that they compress the data in a way that
+
+80
+00:03:25,220 --> 00:03:27,475
+make it possible to compute your
+prediction, or
+
+81
+00:03:27,475 --> 00:03:30,350
+your machine learning algorithm, in a very
+simple way.
+
+82
+00:03:30,350 --> 00:03:32,420
+And maybe are more interpretable than the
+data that
+
+83
+00:03:32,420 --> 00:03:36,010
+you've collected that's the raw data that
+might be complicated.
+
+84
+00:03:36,010 --> 00:03:39,900
+They're, the good features retain all the
+relevant information while compressing
+
+85
+00:03:39,900 --> 00:03:42,840
+the data, and that can be a hard balance
+to strike.
+
+86
+00:03:42,840 --> 00:03:45,730
+They're also usually created with expert
+application knowledge, and
+
+87
+00:03:45,730 --> 00:03:47,460
+this is something that there's a debate in
+the
+
+88
+00:03:47,460 --> 00:03:51,150
+community about whether it's better to
+create features automatically
+
+89
+00:03:51,150 --> 00:03:54,080
+or whether it's better to use expert
+domain knowledge.
+
+90
+00:03:54,080 --> 00:03:57,608
+And in general it seems that the, expert
+domain knowledge can help quite a bit in
+
+91
+00:03:57,608 --> 00:03:59,927
+many, many applications and so should be
+consulted
+
+92
+00:03:59,927 --> 00:04:03,520
+when building a features for machine
+learning algorithm.
+
+93
+00:04:03,520 --> 00:04:06,896
+Some common mistake are trying to automate
+feature selection in a way
+
+94
+00:04:06,896 --> 00:04:10,880
+that doesn't allow for you to understand
+how those features are actually.
+
+95
+00:04:10,880 --> 00:04:13,900
+Being applied to make good predictions.
+
+96
+00:04:13,900 --> 00:04:16,011
+Black box predictions can be very useful,
+they
+
+97
+00:04:16,011 --> 00:04:17,963
+can be very accurate but they can also
+change
+
+98
+00:04:17,963 --> 00:04:19,704
+on a dime if we're not paying attention
+
+99
+00:04:19,704 --> 00:04:22,220
+to how those features actually do predict
+the outcome.
+
+100
+00:04:23,390 --> 00:04:26,020
+Not paying attention to data specific
+quirks is another
+
+101
+00:04:26,020 --> 00:04:28,860
+problem that can come up so in some cases.
+
+102
+00:04:28,860 --> 00:04:32,170
+The function of a particular set of data
+set might be that there's outlines
+
+103
+00:04:32,170 --> 00:04:34,240
+if there's weird behaviors of specific
+features
+
+104
+00:04:34,240 --> 00:04:36,730
+and not understanding those can cause
+problems.
+
+105
+00:04:36,730 --> 00:04:40,000
+And obviously throwing away information
+unnecessarily is not a good idea.
+
+106
+00:04:41,340 --> 00:04:43,750
+You can automate feature selections
+sometimes with care,
+
+107
+00:04:43,750 --> 00:04:45,850
+in fact there's a whole area of research
+that's
+
+108
+00:04:45,850 --> 00:04:47,470
+been dedicated to this so what I would
+
+109
+00:04:47,470 --> 00:04:50,330
+call sort of semi supervised learning or
+deep learning.
+
+110
+00:04:50,330 --> 00:04:53,110
+And so the idea in this paper was to try
+
+111
+00:04:53,110 --> 00:04:56,280
+to use, to try to discover features of
+YouTube videos.
+
+112
+00:04:56,280 --> 00:04:58,924
+That could later be used in prediction
+algorithms.
+
+113
+00:04:58,924 --> 00:05:01,860
+So for example they were able to create a
+very accurate
+
+114
+00:05:01,860 --> 00:05:05,300
+predictor of whether you were a cat in a
+video or not.
+
+115
+00:05:05,300 --> 00:05:09,060
+Based on a bunch of features they sort of
+collected in an unsupervised way.
+
+116
+00:05:09,060 --> 00:05:11,770
+In other words they filtered through the
+data in a way
+
+117
+00:05:11,770 --> 00:05:16,160
+to identify those features that might be
+useful for later predictive algorithms.
+
+118
+00:05:16,160 --> 00:05:18,200
+But even when they did this, they went
+back and looked
+
+119
+00:05:18,200 --> 00:05:20,250
+at those features and tried to figure out
+why they would be
+
+120
+00:05:20,250 --> 00:05:23,550
+predictive and so for example these
+features, this feature here makes it
+
+121
+00:05:23,550 --> 00:05:26,080
+very clear why it would be a good
+predictor for a cat.
+
+122
+00:05:26,080 --> 00:05:28,660
+Because you can kind of see the image of a
+cat there in the video.
+
+123
+00:05:30,290 --> 00:05:31,440
+Feature that they've collected.
+
+124
+00:05:33,110 --> 00:05:35,530
+Algorithms matter less than you'd think,
+and this can be a
+
+125
+00:05:35,530 --> 00:05:38,770
+bit of a source of surprise and
+frustration for some people.
+
+126
+00:05:38,770 --> 00:05:42,510
+So this is an, a table where they actually
+tried predicting
+
+127
+00:05:42,510 --> 00:05:45,810
+a variety of different prediction tasks,
+for example, sort of a
+
+128
+00:05:45,810 --> 00:05:51,080
+segmentation task, predicting votes in the
+US House of Representatives, and
+
+129
+00:05:51,080 --> 00:05:54,700
+predicting wave forms, and a bunch of
+other different prediction tasks.
+
+130
+00:05:54,700 --> 00:05:57,949
+And so they did it with two different
+ways, first they used something called
+
+131
+00:05:57,949 --> 00:05:59,931
+linear discriminant analysis which is sort
+of
+
+132
+00:05:59,931 --> 00:06:02,590
+a very basic early predictor you might
+learn.
+
+133
+00:06:02,590 --> 00:06:04,130
+And then they also tried for each data
+
+134
+00:06:04,130 --> 00:06:06,380
+set to find the absolute best prediction
+algorithm
+
+135
+00:06:06,380 --> 00:06:08,440
+they could have and then this table shows
+
+136
+00:06:08,440 --> 00:06:10,490
+the prediction error of these two
+different approaches.
+
+137
+00:06:10,490 --> 00:06:12,581
+And you can see that the best prediction
+error is
+
+138
+00:06:12,581 --> 00:06:15,860
+always a little bit better than the linear
+discriminant error.
+
+139
+00:06:15,860 --> 00:06:17,380
+But, it's actually not that far off.
+
+140
+00:06:17,380 --> 00:06:19,806
+So, for example, here in this Pima
+prediction, it was
+
+141
+00:06:19,806 --> 00:06:23,990
+0.19 was the, 0.197 was the error with the
+best method.
+
+142
+00:06:23,990 --> 00:06:26,210
+And 0.22 for linear discriminate analysis.
+
+143
+00:06:26,210 --> 00:06:28,980
+So it seems like using the same method
+over and over
+
+144
+00:06:28,980 --> 00:06:33,820
+again did make the prediction error worse,
+but not incredibly worse.
+
+145
+00:06:33,820 --> 00:06:35,830
+And so that's very typical of many
+applications.
+
+146
+00:06:35,830 --> 00:06:36,590
+That.
+
+147
+00:06:36,590 --> 00:06:39,160
+Using a very, sensible approach will get
+you
+
+148
+00:06:39,160 --> 00:06:41,330
+a very large weight of solving the
+problem.
+
+149
+00:06:41,330 --> 00:06:44,250
+And then, getting the absolute best method
+can improve, but it
+
+150
+00:06:44,250 --> 00:06:47,950
+often doesn't improve that much over, sort
+of, most good sensible methods.
+
+151
+00:06:49,480 --> 00:06:51,292
+Some issues to consider when building a
+machine
+
+152
+00:06:51,292 --> 00:06:54,260
+learning algorithm are there, there's
+different components to it.
+
+153
+00:06:54,260 --> 00:06:57,240
+First, it might, you might need it to be
+interpretable.
+
+154
+00:06:57,240 --> 00:06:58,510
+In other words, if you're going to be
+showing
+
+155
+00:06:58,510 --> 00:07:02,090
+this machine learning algorithm to doctors
+or, in my case.
+
+156
+00:07:02,090 --> 00:07:05,050
+Or in the case of a web company you might
+want to show this to the CEO.
+
+157
+00:07:05,050 --> 00:07:08,720
+You want your predictor to be
+interpretable so they can understand it.
+
+158
+00:07:08,720 --> 00:07:11,830
+Part of being interpretable is often being
+simple, in other words, being very
+
+159
+00:07:11,830 --> 00:07:16,570
+easy to explain is often better than being
+really complicated and hard to understand.
+
+160
+00:07:16,570 --> 00:07:20,100
+And often you have trade offs with respect
+to accuracy, so getting those
+
+161
+00:07:20,100 --> 00:07:23,860
+two qualities can reduce your accuracy,
+and the question is how much do they.
+
+162
+00:07:23,860 --> 00:07:24,780
+Reduce your accuracy.
+
+163
+00:07:24,780 --> 00:07:25,799
+Is it too much to give up
+
+164
+00:07:25,799 --> 00:07:28,390
+the interpretability and the simplicity
+that you gain?
+
+165
+00:07:28,390 --> 00:07:31,620
+You also want it to be scalable and fast.
+
+166
+00:07:33,090 --> 00:07:35,190
+By fast I mean it's very easy to, build
+the
+
+167
+00:07:35,190 --> 00:07:38,220
+model, it's very easy to test the model in
+small samples.
+
+168
+00:07:38,220 --> 00:07:41,320
+Scalable means it's easy to apply to a
+large data set.
+
+169
+00:07:41,320 --> 00:07:43,460
+Whether that's because it's very very fast
+or whether
+
+170
+00:07:43,460 --> 00:07:46,390
+it's because it's parallelizable across
+multiple samples for example.
+
+171
+00:07:48,190 --> 00:07:51,200
+So in the general prediction it's about
+accuracy tradeoffs.
+
+172
+00:07:51,200 --> 00:07:53,390
+So the idea is sometimes you will trade
+off a
+
+173
+00:07:53,390 --> 00:07:56,740
+lot of accuracy or a little bit of
+accuracy for interpretability.
+
+174
+00:07:56,740 --> 00:08:00,240
+Sometimes you'll trade it off for speed or
+simplicity or scalability.
+
+175
+00:08:00,240 --> 00:08:01,750
+But in general, what you're trying to do
+is
+
+176
+00:08:01,750 --> 00:08:05,260
+find that right balance between those,
+those other features
+
+177
+00:08:05,260 --> 00:08:07,210
+of the prediction algorithm that might be
+important to
+
+178
+00:08:07,210 --> 00:08:10,250
+you, and how accurate you need it to be.
+
+179
+00:08:10,250 --> 00:08:12,830
+Interpretability often matters, so for
+example, in medical
+
+180
+00:08:12,830 --> 00:08:15,340
+studies, this is a paper that studied how
+some
+
+181
+00:08:15,340 --> 00:08:17,890
+physicians like better prediction rules
+that look like
+
+182
+00:08:17,890 --> 00:08:19,750
+this, they look a little bit like decision
+trees.
+
+183
+00:08:19,750 --> 00:08:20,750
+In other words.
+
+184
+00:08:20,750 --> 00:08:23,490
+You start off and you say if total
+cholesterol is above
+
+185
+00:08:23,490 --> 00:08:27,930
+a particular value and you smoke, then you
+get a certain outcome.
+
+186
+00:08:27,930 --> 00:08:31,670
+So those sort of if/then statements can be
+very interpretable to some people,
+
+187
+00:08:31,670 --> 00:08:35,390
+and so that's about the reason why people
+like things like decision trees.
+
+188
+00:08:35,390 --> 00:08:37,590
+And that can matter more or less depending
+
+189
+00:08:37,590 --> 00:08:40,360
+on what your, the purpose of your
+algorithm is.
+
+190
+00:08:40,360 --> 00:08:42,729
+But interpretablity prevents things like
+the
+
+191
+00:08:42,729 --> 00:08:45,157
+Google flu trends problem where people
+didn't
+
+192
+00:08:45,157 --> 00:08:48,937
+really understand how the features were
+directly tied to the rate of flu.
+
+193
+00:08:48,937 --> 00:08:52,274
+And so if you don't understand how the
+features are working, you
+
+194
+00:08:52,274 --> 00:08:56,930
+can get caught when the algorithm starts
+to, have problems or fail.
+
+195
+00:08:56,930 --> 00:08:58,220
+Scalability also matters.
+
+196
+00:08:58,220 --> 00:09:01,180
+A very interesting component of this
+Netflix challenge is that
+
+197
+00:09:01,180 --> 00:09:03,790
+the Netflix prize was a million dollar
+challenge, and they
+
+198
+00:09:03,790 --> 00:09:07,820
+had lots of teams compete, and several
+teams produced analytic
+
+199
+00:09:07,820 --> 00:09:09,110
+algorithms that were much better
+
+200
+00:09:09,110 --> 00:09:13,280
+at predicting than Netflix original
+algorithm.
+
+201
+00:09:13,280 --> 00:09:15,860
+But it turns out they actually never
+implemented the
+
+202
+00:09:15,860 --> 00:09:19,460
+final algorithm on their production
+machinery, and the reason was.
+
+203
+00:09:19,460 --> 00:09:21,260
+That the algorithm didn't scale very well.
+
+204
+00:09:21,260 --> 00:09:24,550
+It was a blend of many, many different
+machine learning algorithms and it took a
+
+205
+00:09:24,550 --> 00:09:27,180
+long time to commute, compute particularly
+on
+
+206
+00:09:27,180 --> 00:09:30,210
+the huge data sets that Netflix was
+collecting.
+
+207
+00:09:30,210 --> 00:09:31,720
+And so they actually went with something
+that was
+
+208
+00:09:31,720 --> 00:09:33,990
+a little less accurate, but quiet a bit
+more scalable.
+
+209
+00:09:33,990 --> 00:09:38,081
+So that tells a lesson of accuracy isn't
+always the best.
+
+210
+00:09:38,081 --> 00:09:42,780
+And only decision maker when trying to
+build prediction algorithms.
+
+211
+00:09:42,780 --> 00:09:45,120
+Although that's often the one that gets
+focused on the most.
+
