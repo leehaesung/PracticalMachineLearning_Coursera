@@ -582,7 +582,7 @@ subset(DTest, select=names(DTest)[grep("belt|[^(fore)]arm|dumbbell|forearm", nam
 
 ## Submission to Coursera
 
-Write submission files to `predictionAssignment_files/answers`.
+Write submission files to `05_My_Final_Project/My_Prediction_Assignment.md`.
 
 
 ```r
