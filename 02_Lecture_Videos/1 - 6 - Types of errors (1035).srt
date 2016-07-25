@@ -1,0 +1,1028 @@
+1
+00:00:00,150 --> 00:00:02,318
+This lecture is about the types of errors
+and the ways that
+
+2
+00:00:02,318 --> 00:00:05,450
+you will evaluate the prediction functions
+that you generate during this class.
+
+3
+00:00:06,670 --> 00:00:08,567
+So, first of all we're going to focus on,
+the types of
+
+4
+00:00:08,567 --> 00:00:11,510
+errors that you can make when you're doing
+a binary prediction problem.
+
+5
+00:00:11,510 --> 00:00:14,230
+In other words, you were trying to predict
+things into one of two groups.
+
+6
+00:00:15,310 --> 00:00:17,200
+In general, we're going to be talking
+about langauge in terms of
+
+7
+00:00:17,200 --> 00:00:21,240
+true positives and true negatives, and
+false positives and false negatives.
+
+8
+00:00:21,240 --> 00:00:22,940
+So the first thing to keep in mind is
+that, when we
+
+9
+00:00:22,940 --> 00:00:25,520
+talk about positive versus negative, we're
+
+10
+00:00:25,520 --> 00:00:27,810
+actually talking about what the algorithm
+decided.
+
+11
+00:00:27,810 --> 00:00:31,460
+Whether it decided that you're in a class,
+or not in a class.
+
+12
+00:00:33,000 --> 00:00:35,650
+Then true and false, refer to the true
+state of the world.
+
+13
+00:00:35,650 --> 00:00:38,747
+So, true means that you actually belong to
+the class we're trying
+
+14
+00:00:38,747 --> 00:00:42,910
+to identify, and false means that you
+actually don't belong to that class.
+
+15
+00:00:42,910 --> 00:00:48,003
+So as an example, true positive mean, the
+true part of true positive, means that you
+
+16
+00:00:48,003 --> 00:00:50,691
+were correctly, so in other words that,
+the
+
+17
+00:00:50,691 --> 00:00:54,120
+truth is that there actually was something
+to identify.
+
+18
+00:00:54,120 --> 00:00:55,460
+A positive.
+
+19
+00:00:55,460 --> 00:00:59,830
+In other words, we actually identified you
+as being belonging to that class.
+
+20
+00:00:59,830 --> 00:01:02,398
+Similarly for a false positive, the
+positive part
+
+21
+00:01:02,398 --> 00:01:04,728
+again refers to the fact that we
+identified you
+
+22
+00:01:04,728 --> 00:01:06,758
+as being part of the positive class, and
+
+23
+00:01:06,758 --> 00:01:09,290
+false refers to the fact that you were
+wrong.
+
+24
+00:01:09,290 --> 00:01:12,830
+We didn't actually corr, classify you to
+the correct class.
+
+25
+00:01:12,830 --> 00:01:16,520
+To make this a little more concrete,
+consider a medical testing example.
+
+26
+00:01:16,520 --> 00:01:18,431
+So in this case, we're trying to identify
+
+27
+00:01:18,431 --> 00:01:20,608
+people that are sick using say a screening
+test,
+
+28
+00:01:20,608 --> 00:01:22,733
+a very common example would be, say
+mammograms
+
+29
+00:01:22,733 --> 00:01:25,660
+to try to identify if women have breast
+cancer.
+
+30
+00:01:25,660 --> 00:01:30,500
+In this case, the true part will be the
+status as to whether you're sick or not.
+
+31
+00:01:30,500 --> 00:01:34,980
+So if we say that we truly identified you,
+then you were truly sick.
+
+32
+00:01:34,980 --> 00:01:39,080
+And if we falsely identified you, then you
+were actually healthy.
+
+33
+00:01:39,080 --> 00:01:40,310
+You were not truly sick.
+
+34
+00:01:41,510 --> 00:01:46,020
+So in this case, a true positive, is
+truly, somebody who is truly sick.
+
+35
+00:01:46,020 --> 00:01:48,288
+And it's positive, in other words, we
+actually
+
+36
+00:01:48,288 --> 00:01:50,670
+diagnosed those people as correctly as
+being sick.
+
+37
+00:01:50,670 --> 00:01:52,857
+If you're a false positive it means that,
+
+38
+00:01:52,857 --> 00:01:55,347
+false, in other words you are a healthy
+person,
+
+39
+00:01:55,347 --> 00:01:58,082
+but positive, means that we were still
+somebody that
+
+40
+00:01:58,082 --> 00:02:01,020
+we identified as being sick, even though
+you weren't.
+
+41
+00:02:02,160 --> 00:02:03,750
+Similarly with a true negative.
+
+42
+00:02:03,750 --> 00:02:06,281
+This is somebody true, who is truly
+negative,
+
+43
+00:02:06,281 --> 00:02:10,390
+truly healthy, and we identified them as
+being negative.
+
+44
+00:02:10,390 --> 00:02:14,470
+And a false negative would be somebody who
+is sick, so we incorrectly identified
+
+45
+00:02:14,470 --> 00:02:19,240
+them as healthy, and the negative part of
+is we identified them as healthy.
+
+46
+00:02:19,240 --> 00:02:20,460
+You can learn more about sensitivity and
+
+47
+00:02:20,460 --> 00:02:24,090
+specificity by going to this Wikipedia
+link below.
+
+48
+00:02:24,090 --> 00:02:25,920
+You can also see them in this 2 by 2
+table.
+
+49
+00:02:25,920 --> 00:02:31,640
+So it's called a 2 by 2 table, because it
+has two rows, here, and two columns, here.
+
+50
+00:02:31,640 --> 00:02:34,980
+So, the columns correspond to what your
+disease status is.
+
+51
+00:02:34,980 --> 00:02:37,830
+So, in this, in this particular example,
+positive means that you
+
+52
+00:02:37,830 --> 00:02:40,890
+have the disease, and negative means that
+you don't have the disease.
+
+53
+00:02:40,890 --> 00:02:43,790
+That's the real truth about your disease
+status.
+
+54
+00:02:43,790 --> 00:02:46,280
+And the test is our prediction, our
+machine learning algorithm.
+
+55
+00:02:46,280 --> 00:02:49,200
+A positive means we predict that you have
+a disease and
+
+56
+00:02:49,200 --> 00:02:52,500
+a negative means that we predict that you
+don't have the disease.
+
+57
+00:02:52,500 --> 00:02:55,810
+So some of the key quantities that people
+talk about, are the sensitivity.
+
+58
+00:02:55,810 --> 00:02:57,543
+This is the probability that we give you
+
+59
+00:02:57,543 --> 00:02:59,591
+a, predict that you are diseased, given
+that
+
+60
+00:02:59,591 --> 00:03:01,744
+you really are diseased, so, if you're
+really
+
+61
+00:03:01,744 --> 00:03:05,150
+diseased, what's the probability we get
+that, right?
+
+62
+00:03:05,150 --> 00:03:07,320
+And then the specificity is if you are
+
+63
+00:03:07,320 --> 00:03:10,030
+really healthy, what's the probability we
+get it right?
+
+64
+00:03:11,180 --> 00:03:14,902
+The positive predictive value is the
+probability that we call you diseased,
+
+65
+00:03:14,902 --> 00:03:18,650
+or the probability that you are diseased,
+given that we call you diseased.
+
+66
+00:03:18,650 --> 00:03:22,938
+So it's a little bit different, than the
+sensitivity in the sense that, now it's
+
+67
+00:03:22,938 --> 00:03:24,715
+looking at all the people we called
+
+68
+00:03:24,715 --> 00:03:27,940
+po diseased, and saying, what fraction of
+them.
+
+69
+00:03:27,940 --> 00:03:29,500
+Actually are diseased.
+
+70
+00:03:29,500 --> 00:03:31,730
+Similarly for the negative predictive
+value.
+
+71
+00:03:31,730 --> 00:03:33,350
+And the accuracy is just a probability
+
+72
+00:03:33,350 --> 00:03:35,060
+that we classified you to the correct
+outcome.
+
+73
+00:03:35,060 --> 00:03:37,640
+So in this table, it's the terms on the
+diagonal.
+
+74
+00:03:37,640 --> 00:03:40,630
+It's the true positives, and the true
+negatives, just added up.
+
+75
+00:03:41,860 --> 00:03:43,270
+So you can write these as fractions.
+
+76
+00:03:43,270 --> 00:03:45,100
+So for example, the sensitivity.
+
+77
+00:03:45,100 --> 00:03:49,370
+That's the probability, given that you are
+diseased, that we called you diseased.
+
+78
+00:03:49,370 --> 00:03:50,700
+So we look at this first column.
+
+79
+00:03:50,700 --> 00:03:53,340
+This is all the people that are diseased.
+
+80
+00:03:53,340 --> 00:03:56,350
+And we look, what fraction of them, did we
+actually get right.
+
+81
+00:03:56,350 --> 00:03:59,373
+So that's, the true positives, divided by
+the true
+
+82
+00:03:59,373 --> 00:04:03,550
+positives, plus the false negatives, that
+gives you the sensitivity.
+
+83
+00:04:03,550 --> 00:04:05,947
+You can similarly make the same sort of
+fractions for the
+
+84
+00:04:05,947 --> 00:04:08,192
+specificity, the positive predictive
+value, the
+
+85
+00:04:08,192 --> 00:04:10,830
+negative predictive value, and so forth.
+
+86
+00:04:10,830 --> 00:04:12,980
+When looking at the positive predictive
+value.
+
+87
+00:04:12,980 --> 00:04:15,810
+We basically look at the, in this case
+it's the
+
+88
+00:04:15,810 --> 00:04:19,250
+true positives, divided by the true
+positives plus the false positives,
+
+89
+00:04:19,250 --> 00:04:21,960
+because we're looking at only the positive
+tests, and we
+
+90
+00:04:21,960 --> 00:04:24,670
+say what fraction of the positive tests
+did we get right?
+
+91
+00:04:24,670 --> 00:04:27,205
+So the true positives were the ones that
+we got right, and the
+
+92
+00:04:27,205 --> 00:04:30,500
+true positives plus the false positives,
+is the total of the positive tests.
+
+93
+00:04:32,530 --> 00:04:35,330
+So this is kind of important because, many
+prediction problems,
+
+94
+00:04:35,330 --> 00:04:37,480
+one of the classes will be more rare than
+the other.
+
+95
+00:04:37,480 --> 00:04:40,155
+So, for example in, in medical studies,
+it's very common
+
+96
+00:04:40,155 --> 00:04:42,680
+that only a very small percentage of
+people will be sick.
+
+97
+00:04:42,680 --> 00:04:45,165
+In this case, suppose that there's a
+disease where only
+
+98
+00:04:45,165 --> 00:04:48,300
+one, 0.1% of the people are sick in the
+population.
+
+99
+00:04:48,300 --> 00:04:50,810
+And suppose we have a really good machine
+learning algorithm.
+
+100
+00:04:50,810 --> 00:04:56,290
+A really good testing kit, that is 99%
+sensitive, and 99% specific.
+
+101
+00:04:56,290 --> 00:05:00,184
+In other words, the probability that we'll
+get it right, if you're diseased
+
+102
+00:05:00,184 --> 00:05:04,210
+is 99%, and the probability we'll get it
+right if you're healthy is 99%.
+
+103
+00:05:04,210 --> 00:05:07,680
+So in this case, suppose that you get a
+positive test.
+
+104
+00:05:08,850 --> 00:05:12,090
+What's the probability, that we'll, that
+you actually have the disease?
+
+105
+00:05:12,090 --> 00:05:14,300
+You can consider two different cases.
+
+106
+00:05:14,300 --> 00:05:15,650
+One, in a general population.
+
+107
+00:05:15,650 --> 00:05:17,960
+In other words, in a population where
+there's
+
+108
+00:05:17,960 --> 00:05:20,500
+a very small chance that you have the
+disease.
+
+109
+00:05:20,500 --> 00:05:22,860
+Another one you can consider, is a case
+where 10% of
+
+110
+00:05:22,860 --> 00:05:25,700
+people have the disease, so the disease is
+much more prevalent.
+
+111
+00:05:26,730 --> 00:05:28,870
+Let's look at how that changes your
+positive predictive value.
+
+112
+00:05:29,970 --> 00:05:32,510
+So the general population, remember, we
+only have
+
+113
+00:05:32,510 --> 00:05:34,800
+about 1% of the people that have the
+disease.
+
+114
+00:05:34,800 --> 00:05:37,860
+So there are only 100 people in this
+column, that have the
+
+115
+00:05:37,860 --> 00:05:41,164
+disease, sim, but there are a lot more
+people that are healthy.
+
+116
+00:05:41,164 --> 00:05:45,630
+Similarly, we have a 99% accuracy, if you
+have the disease.
+
+117
+00:05:45,630 --> 00:05:48,176
+So, 99 out of 100 people.
+
+118
+00:05:48,176 --> 00:05:51,793
+And 99 out of these 100, are correctly
+called diseased.
+
+119
+00:05:51,793 --> 00:05:55,738
+Similarly, at, among the people that are
+healthy, we get 99%
+
+120
+00:05:55,738 --> 00:06:00,117
+right, so 98,901 we call healthy, when
+they really are healthy.
+
+121
+00:06:00,117 --> 00:06:02,589
+That's 99% of the time.
+
+122
+00:06:02,589 --> 00:06:04,931
+But suppose that we wanted to know, if you
+got a
+
+123
+00:06:04,931 --> 00:06:08,908
+positive test, what's the probability that
+you actually have the disease?
+
+124
+00:06:08,908 --> 00:06:10,068
+So, let's look at this for a second.
+
+125
+00:06:10,068 --> 00:06:11,346
+So you say.
+
+126
+00:06:11,346 --> 00:06:15,512
+Suppose you actually got a positive test,
+that's this first row right here.
+
+127
+00:06:15,512 --> 00:06:18,707
+What's the probability that you actually
+have the disease?
+
+128
+00:06:18,707 --> 00:06:22,855
+So that's, the number of people that
+actually have the disease, among
+
+129
+00:06:22,855 --> 00:06:26,812
+the total number of people who had a
+positive test, so that's 99.
+
+130
+00:06:26,812 --> 00:06:32,033
+Divided by 99 plus 999, so it's only a 9%
+positive predictive value.
+
+131
+00:06:32,033 --> 00:06:34,594
+In other words, if you got a positive te,
+test, it's
+
+132
+00:06:34,594 --> 00:06:37,451
+only about a 9% chance that you actually
+have the disease.
+
+133
+00:06:37,451 --> 00:06:38,701
+What's the reason for that?
+
+134
+00:06:38,701 --> 00:06:43,299
+The reason is 99% of a small number, so 99
+out of 100.
+
+135
+00:06:43,299 --> 00:06:47,194
+Is still smaller than 1% out of a much
+bigger number.
+
+136
+00:06:47,194 --> 00:06:53,266
+So 999 out of a much larger fraction that
+are actually healthy people.
+
+137
+00:06:53,266 --> 00:06:56,837
+If instead we consider the case where 10%
+of people are actually sick,
+
+138
+00:06:56,837 --> 00:07:00,620
+then you have a much larger number of
+people that are actually sick.
+
+139
+00:07:00,620 --> 00:07:06,166
+And 99% of the time, we'll get it right,
+so 99, 9,900 of people, that actually are
+
+140
+00:07:06,166 --> 00:07:08,700
+sick, we'll call sick, and only 900 of
+
+141
+00:07:08,700 --> 00:07:11,521
+the people that are healthy will be called
+sick.
+
+142
+00:07:11,521 --> 00:07:14,174
+And so then, things work out how you'd
+expect them to.
+
+143
+00:07:14,174 --> 00:07:20,129
+In other words, 9,900 out of 9,900 plus
+900, so that's.
+
+144
+00:07:20,129 --> 00:07:22,320
+This number on the top left-hand corner.
+
+145
+00:07:22,320 --> 00:07:24,018
+Divided by this total row.
+
+146
+00:07:24,018 --> 00:07:28,330
+Is 92%, and so you have a high positive
+predictive value.
+
+147
+00:07:28,330 --> 00:07:29,034
+What does this mean?
+
+148
+00:07:29,034 --> 00:07:30,290
+If you're predicting a rare event.
+
+149
+00:07:30,290 --> 00:07:33,290
+You have to be aware of, how rare that
+event is.
+
+150
+00:07:33,290 --> 00:07:36,340
+This goes back to the idea of knowing what
+population you're sampling from.
+
+151
+00:07:36,340 --> 00:07:37,920
+When you're building the a predictive
+model.
+
+152
+00:07:39,340 --> 00:07:42,211
+This is actually a key public health
+issue, so you've probably
+
+153
+00:07:42,211 --> 00:07:44,870
+seen it in the news that there's been
+questions about how,
+
+154
+00:07:44,870 --> 00:07:48,165
+what's the value of mammograms in
+detecting disease, and detecting the
+
+155
+00:07:48,165 --> 00:07:52,940
+value of disease versus detecting cases
+that aren't necessarily life threatening.
+
+156
+00:07:52,940 --> 00:07:54,977
+Similarly, you've probably heard about it
+for prostate
+
+157
+00:07:54,977 --> 00:07:56,645
+cancer screening, and in both of these
+cases.
+
+158
+00:07:56,645 --> 00:07:59,194
+You have a fairly rare disease, and even
+though the
+
+159
+00:07:59,194 --> 00:08:02,987
+screening mechanisms are relatively good,
+it's very hard to know whether
+
+160
+00:08:02,987 --> 00:08:05,889
+you're getting a lot of false positives
+that are, as
+
+161
+00:08:05,889 --> 00:08:09,234
+a fraction of the total number of
+positives that you're getting.
+
+162
+00:08:09,234 --> 00:08:11,762
+For continuous data, you actually don't
+have quite
+
+163
+00:08:11,762 --> 00:08:13,728
+so simple a scenario, where you only have
+
+164
+00:08:13,728 --> 00:08:17,279
+one of two cases, and one of two types of
+errors that you can possibly make.
+
+165
+00:08:17,279 --> 00:08:20,830
+The goal here is to see how close you are
+to the truth.
+
+166
+00:08:20,830 --> 00:08:24,320
+And so, one common way to do that, is with
+something called mean squared error.
+
+167
+00:08:24,320 --> 00:08:26,270
+And so the idea is, you have a prediction
+that
+
+168
+00:08:26,270 --> 00:08:29,090
+you have from your model or your machine
+learning algorithm.
+
+169
+00:08:29,090 --> 00:08:30,357
+And so, you have a prediction for
+
+170
+00:08:30,357 --> 00:08:32,790
+every single sample that you're trying to
+predict.
+
+171
+00:08:32,790 --> 00:08:35,390
+And you also maybe know the truth for
+those samples, say in a test set.
+
+172
+00:08:35,390 --> 00:08:37,140
+So what you do is, you calculate
+
+173
+00:08:37,140 --> 00:08:38,970
+the difference between the prediction and
+the truth.
+
+174
+00:08:38,970 --> 00:08:42,110
+And you square it, so the numbers are all
+positive.
+
+175
+00:08:42,110 --> 00:08:44,761
+And then you average the total number of,
+sort
+
+176
+00:08:44,761 --> 00:08:47,980
+of total distance between the pre,
+prediction and the tree.
+
+177
+00:08:47,980 --> 00:08:50,332
+The one thing that's a little bit
+difficult about
+
+178
+00:08:50,332 --> 00:08:53,244
+interpreting this number is that you
+squared this distance,
+
+179
+00:08:53,244 --> 00:08:55,316
+and so, it's a little bit hard to
+interpret
+
+180
+00:08:55,316 --> 00:08:58,130
+on the same scale as the predictions or
+the truth.
+
+181
+00:08:58,130 --> 00:09:01,150
+And so what people often do is they take
+the square root of that quantity.
+
+182
+00:09:01,150 --> 00:09:04,727
+So here, underneath the square root sign,
+is the same number, it's just the average
+
+183
+00:09:04,727 --> 00:09:08,570
+distance between the prediction and the
+truth, and you just sum it and square it.
+
+184
+00:09:08,570 --> 00:09:10,169
+And then you take the square root in that
+number,
+
+185
+00:09:10,169 --> 00:09:11,970
+and that gives you the root, root mean
+squared error.
+
+186
+00:09:11,970 --> 00:09:15,130
+And this is probably the most common error
+measure that's used for continuous data.
+
+187
+00:09:15,130 --> 00:09:18,620
+So for continuous data, people often use
+either
+
+188
+00:09:18,620 --> 00:09:20,610
+the mean squared error, or the mean
+squared error.
+
+189
+00:09:20,610 --> 00:09:22,800
+But if often doesn't work when there are a
+lot of outliers.
+
+190
+00:09:22,800 --> 00:09:26,910
+Or the values of the variables can have
+very different scales.
+
+191
+00:09:26,910 --> 00:09:29,060
+Because, it will be sensitive to those
+outliers.
+
+192
+00:09:29,060 --> 00:09:31,980
+So, for example, if you have one really,
+really large value.
+
+193
+00:09:31,980 --> 00:09:33,870
+It might really raise the mean.
+
+194
+00:09:33,870 --> 00:09:37,120
+Instead, what we could use is often the
+median absolute deviation.
+
+195
+00:09:37,120 --> 00:09:39,266
+So in that case, they take the median
+
+196
+00:09:39,266 --> 00:09:42,316
+of the diff, distance between the observed
+value,
+
+197
+00:09:42,316 --> 00:09:44,673
+and the predicted value, and they do the
+
+198
+00:09:44,673 --> 00:09:48,030
+absolute value instead of doing the
+squared value.
+
+199
+00:09:48,030 --> 00:09:51,426
+And so again, that requires all of the
+distances to be positive,
+
+200
+00:09:51,426 --> 00:09:54,910
+but it's a little bit more robust to the
+size of those errors.
+
+201
+00:09:56,190 --> 00:09:59,616
+And then sensitivity and spe specificity
+are very commonly
+
+202
+00:09:59,616 --> 00:10:03,233
+used when talking about particularly
+medical tests, but they also
+
+203
+00:10:03,233 --> 00:10:05,898
+are particularly widely used if you care
+about one
+
+204
+00:10:05,898 --> 00:10:09,350
+type of error more than the other type of
+error.
+
+205
+00:10:09,350 --> 00:10:12,830
+And then, accuracy which weights false
+positives and false positives equally.
+
+206
+00:10:12,830 --> 00:10:16,240
+This is an important point if again you
+have a very large.
+
+207
+00:10:16,240 --> 00:10:19,930
+Discrepancy in number of times that you're
+a positive or a negative.
+
+208
+00:10:19,930 --> 00:10:22,788
+For multiclass cases, you might have
+something like concordance,
+
+209
+00:10:22,788 --> 00:10:26,060
+and here I've linked to one particular
+distance measure, kappa.
+
+210
+00:10:26,060 --> 00:10:28,337
+But there are a whole large class of
+distance measures, and they
+
+211
+00:10:28,337 --> 00:10:31,380
+all have different properties, that can be
+used when you have multiclass data.
+
+212
+00:10:31,380 --> 00:10:32,840
+So, those are some of the common error
+
+213
+00:10:32,840 --> 00:10:34,920
+measures that are used when doing
+prediction algorithms.
+
