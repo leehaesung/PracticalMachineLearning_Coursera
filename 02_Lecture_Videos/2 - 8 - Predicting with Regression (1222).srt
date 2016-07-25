@@ -1,0 +1,1045 @@
+1
+00:00:00,600 --> 00:00:03,000
+This lecture's about one of the most
+direct and
+
+2
+00:00:03,000 --> 00:00:05,700
+simple ways to perform machine learning
+using regression modeling.
+
+3
+00:00:05,700 --> 00:00:09,080
+If you've taken the regression modeling
+class in the data science
+
+4
+00:00:09,080 --> 00:00:12,300
+specialization, then a lot of this
+material will be familiar to you.
+
+5
+00:00:12,300 --> 00:00:14,360
+We're just using it in the service of
+performing prediction.
+
+6
+00:00:16,520 --> 00:00:19,280
+So the key idea here is that we're just
+going to fit a simple regression model.
+
+7
+00:00:19,280 --> 00:00:21,000
+If you don't know what that is, don't
+worry about
+
+8
+00:00:21,000 --> 00:00:23,440
+it, I'll explain it briefly in the rest of
+the lecture.
+
+9
+00:00:23,440 --> 00:00:27,640
+But the idea is that basically we're
+going to fit a line to a set of data.
+
+10
+00:00:27,640 --> 00:00:30,980
+So that line will consist of basically
+multiplying a
+
+11
+00:00:30,980 --> 00:00:34,090
+set of coefficients by each of the
+different predictors.
+
+12
+00:00:34,090 --> 00:00:36,040
+And so then we get new predictors or
+
+13
+00:00:36,040 --> 00:00:38,980
+new covariance and we multiply them by the
+coefficients
+
+14
+00:00:38,980 --> 00:00:41,570
+that we estimated with our prediction
+model and then
+
+15
+00:00:41,570 --> 00:00:43,140
+we get a new prediction for a new value.
+
+16
+00:00:43,140 --> 00:00:47,250
+This is useful when that linear model is
+nearly correct, in other words.
+
+17
+00:00:47,250 --> 00:00:49,410
+When the relationship between the
+variables can
+
+18
+00:00:49,410 --> 00:00:50,830
+be modeled in a linear way, in
+
+19
+00:00:50,830 --> 00:00:54,850
+other words as a function of lines, then
+this is a useful way to predict.
+
+20
+00:00:54,850 --> 00:00:58,570
+It's very easy to implement, and it's also
+quite easy
+
+21
+00:00:58,570 --> 00:01:01,290
+to interpret compared to many machine
+learning algorithms in the
+
+22
+00:01:01,290 --> 00:01:04,190
+sense that, it's, you're fitting a set of
+lines to
+
+23
+00:01:04,190 --> 00:01:05,960
+a data set and the lines are relatively
+easy to interpret.
+
+24
+00:01:07,830 --> 00:01:10,640
+It can have poor performance in nonlinear
+settings.
+
+25
+00:01:10,640 --> 00:01:13,020
+So it's usually used in combination with
+
+26
+00:01:13,020 --> 00:01:16,570
+other machine learning algorithms on
+complicated examples.
+
+27
+00:01:17,790 --> 00:01:20,770
+So we're going to be using data on
+eruptions of geysers.
+
+28
+00:01:20,770 --> 00:01:26,207
+And so, they're, geysers are have a
+waiting time in between their different
+
+29
+00:01:26,207 --> 00:01:29,806
+eruptions and there's an amount of time
+that they actually erupt for, so
+
+30
+00:01:29,806 --> 00:01:33,114
+there's a data set that we can load in
+very easily that contains
+
+31
+00:01:33,114 --> 00:01:35,669
+some information on eruptions for a
+particular
+
+32
+00:01:35,669 --> 00:01:38,710
+geyser, Old Faithful in the United States.
+
+33
+00:01:38,710 --> 00:01:39,980
+Famous geyser.
+
+34
+00:01:39,980 --> 00:01:45,640
+So we can load the caret package and load
+the data for this eruptions.
+
+35
+00:01:45,640 --> 00:01:47,370
+And I'm going to set the seed so that all
+the
+
+36
+00:01:47,370 --> 00:01:51,480
+analysis that I'm going to perform after
+this can be reproduced.
+
+37
+00:01:51,480 --> 00:01:54,650
+Then I create a training set and a test
+set just like usual.
+
+38
+00:01:54,650 --> 00:01:56,930
+I create a training set because we're
+going to be building models.
+
+39
+00:01:56,930 --> 00:01:59,330
+Only in the training set and then applying
+them in the test set.
+
+40
+00:02:00,610 --> 00:02:03,060
+And so, if you look at the data set, if
+you look in the training
+
+41
+00:02:03,060 --> 00:02:07,780
+set, you can see that we have just two
+variables, so it's a very easy example.
+
+42
+00:02:07,780 --> 00:02:11,270
+We have an eruption time and a waiting
+time.
+
+43
+00:02:11,270 --> 00:02:13,690
+So the waiting time is the time between
+eruptions and the
+
+44
+00:02:13,690 --> 00:02:17,190
+eruptions is the length of time that the
+geyser was erupting.
+
+45
+00:02:18,670 --> 00:02:23,130
+If I make a plot of these two variables, I
+see waiting time here on the x axis.
+
+46
+00:02:23,130 --> 00:02:24,700
+And duration here on the y axis.
+
+47
+00:02:24,700 --> 00:02:28,090
+You can see that there's roughly a linear
+relationship.
+
+48
+00:02:28,090 --> 00:02:30,830
+Or you can imagine drawing a line through
+this that
+
+49
+00:02:30,830 --> 00:02:34,640
+predicts relatively well, the duration
+time from the waiting time.
+
+50
+00:02:36,570 --> 00:02:39,610
+So we can do that by basically fitting a
+formula that's just a,
+
+51
+00:02:39,610 --> 00:02:43,050
+a line so remember the formula for a line
+is going to be the
+
+52
+00:02:43,050 --> 00:02:48,060
+eruption duration here is equal to a
+constant or an inter, what people call
+
+53
+00:02:48,060 --> 00:02:51,230
+an intercept term, plus another constant
+times
+
+54
+00:02:51,230 --> 00:02:53,550
+the waiting time plus the error term.
+
+55
+00:02:53,550 --> 00:02:54,640
+So.
+
+56
+00:02:54,640 --> 00:02:56,290
+As you saw in the previous slide, even if
+a
+
+57
+00:02:56,290 --> 00:02:58,740
+line fit through the middle of the data
+looks like
+
+58
+00:02:58,740 --> 00:03:02,770
+it's sort of a reasonable approximation to
+the relationship, there's
+
+59
+00:03:02,770 --> 00:03:06,410
+obviously not, the points don't exactly
+fall in a line.
+
+60
+00:03:06,410 --> 00:03:09,460
+And that's why we allow for some error in
+our model.
+
+61
+00:03:09,460 --> 00:03:11,620
+The error models, everything that we
+didn't have,
+
+62
+00:03:11,620 --> 00:03:15,770
+we didn't measure, we didn't understand
+about the relationship.
+
+63
+00:03:15,770 --> 00:03:20,790
+And so we can use the lm command in r to
+fill linear model.
+
+64
+00:03:20,790 --> 00:03:23,350
+So lm, relates the eruptions, that's
+going to be
+
+65
+00:03:23,350 --> 00:03:26,750
+the outcome variable that you're trying to
+predict,
+
+66
+00:03:26,750 --> 00:03:29,970
+the tilde says we're going to predict it
+as
+
+67
+00:03:29,970 --> 00:03:31,950
+a function of everything on this side of
+the.
+
+68
+00:03:31,950 --> 00:03:34,300
+The code right here, we're going to use
+the waiting data.
+
+69
+00:03:34,300 --> 00:03:37,680
+We're going to build that model using the
+data from
+
+70
+00:03:37,680 --> 00:03:40,540
+the training set, so if we do that, if we
+
+71
+00:03:40,540 --> 00:03:42,530
+do that, we get a summary of the output
+and
+
+72
+00:03:42,530 --> 00:03:46,380
+the point, the part to look at, assumes
+the prediction here.
+
+73
+00:03:46,380 --> 00:03:52,600
+Are these estimates so the estimate here
+is just the intercept that's the constant.
+
+74
+00:03:52,600 --> 00:03:59,450
+So that's B0, in this formula, and the
+waiting time estimate here is B1 in
+
+75
+00:03:59,450 --> 00:04:05,958
+this formula, and so if we get a new
+prediction, we just add minus 1.79.
+
+76
+00:04:05,958 --> 00:04:10,700
+Plus 0.073 times whatever our new waiting
+time is
+
+77
+00:04:10,700 --> 00:04:14,230
+and that produces our new prediction for
+the expected duration.
+
+78
+00:04:16,100 --> 00:04:19,180
+So this is what the model fit looks like
+and so I'm basically
+
+79
+00:04:19,180 --> 00:04:25,400
+again, I'm plotting the train set, the
+waiting times versus the eruptions and
+
+80
+00:04:25,400 --> 00:04:28,520
+then I plot the fitted values and the way
+I do that is,
+
+81
+00:04:28,520 --> 00:04:33,210
+I can extract that from the linear model
+object nar with an LM1$fitted.
+
+82
+00:04:33,210 --> 00:04:36,670
+Fitted will give me the fitted values and
+then I plot that
+
+83
+00:04:36,670 --> 00:04:41,170
+versus the, the predictor variable that I
+used to predict the values.
+
+84
+00:04:41,170 --> 00:04:45,850
+So here this is the waiting time plotted
+versus duration.
+
+85
+00:04:45,850 --> 00:04:49,240
+The points come from this first plot
+command and then
+
+86
+00:04:49,240 --> 00:04:51,980
+the line that is fit right here, the black
+line.
+
+87
+00:04:51,980 --> 00:04:56,700
+Speaker 1: Comes from this lines command
+that's adding a line of faded values.
+
+88
+00:04:56,700 --> 00:04:59,230
+So you can see just like we saw previously
+there's a line
+
+89
+00:04:59,230 --> 00:05:01,360
+that's a reasonably good representation of
+
+90
+00:05:01,360 --> 00:05:03,010
+the relationship between these two
+variables.
+
+91
+00:05:03,010 --> 00:05:05,630
+Obviously it's not perfect, the points
+don't lie exactly on the
+
+92
+00:05:05,630 --> 00:05:10,560
+line, but it's a reasonably good capture
+of the main data set.
+
+93
+00:05:12,140 --> 00:05:15,870
+So, to predict a new variable, we just
+again, like I said,
+
+94
+00:05:15,870 --> 00:05:20,150
+take the estimated value for b0 and the
+estimated value for b1.
+
+95
+00:05:20,150 --> 00:05:24,010
+We usually denote those with little hats
+above the values.
+
+96
+00:05:24,010 --> 00:05:28,070
+And then we just multiply them together
+using the formula from the previous page.
+
+97
+00:05:28,070 --> 00:05:31,780
+Remember we don't have, in this formula,
+we don't have an error term.
+
+98
+00:05:31,780 --> 00:05:34,340
+Because we don't know what the error term
+is for this
+
+99
+00:05:34,340 --> 00:05:38,610
+particular value, so we just use the parts
+that we can estimate.
+
+100
+00:05:38,610 --> 00:05:41,130
+So to get those values extract those
+values from
+
+101
+00:05:41,130 --> 00:05:43,460
+the linear model object you can use the
+coef.
+
+102
+00:05:43,460 --> 00:05:46,190
+Command that gives you the coefficients
+which is the name that
+
+103
+00:05:46,190 --> 00:05:50,620
+we use for those two variables, the
+estimates for those two variables,
+
+104
+00:05:50,620 --> 00:05:54,910
+and so coeflm11 will give you the
+intercept, a value beta hat
+
+105
+00:05:54,910 --> 00:06:00,580
+zero, and put lm2 will give you beta hat 1
+a value.
+
+106
+00:06:00,580 --> 00:06:03,250
+Fit for, the waiting time.
+
+107
+00:06:03,250 --> 00:06:06,300
+And then, suppose we have a new waiting
+time that's 80.
+
+108
+00:06:06,300 --> 00:06:09,496
+Then the prediction that we get out is
+
+109
+00:06:09,496 --> 00:06:13,380
+4.119 as the time for the eruption
+duration.
+
+110
+00:06:16,020 --> 00:06:20,430
+So, another thing that we can do is we can
+actually predict using that LM object.
+
+111
+00:06:20,430 --> 00:06:21,750
+You don't actually have to, every time,
+
+112
+00:06:21,750 --> 00:06:24,150
+extract the coefficients and multiply them
+together.
+
+113
+00:06:24,150 --> 00:06:26,410
+So if we create a new data set.
+
+114
+00:06:26,410 --> 00:06:30,280
+Which is a data frame that has one new
+value that we want
+
+115
+00:06:30,280 --> 00:06:32,940
+to predict, so we say we have waiting time
+equal to just 80,
+
+116
+00:06:32,940 --> 00:06:37,470
+then if I type predict and I pass it the
+fitted model from
+
+117
+00:06:37,470 --> 00:06:41,510
+the training set, and the new data set,
+new data frame we created.
+
+118
+00:06:41,510 --> 00:06:43,740
+It'll give me the prediction for the new
+value.
+
+119
+00:06:43,740 --> 00:06:48,300
+And it matches, so it's using the same
+formula in this predict command,
+
+120
+00:06:48,300 --> 00:06:51,130
+that you would use if you actually
+calculated out the prediction by hand.
+
+121
+00:06:52,960 --> 00:06:53,980
+So another thing to look at, is.
+
+122
+00:06:53,980 --> 00:06:57,190
+So, remember, we built this model on the
+training set, just like we always do.
+
+123
+00:06:57,190 --> 00:07:00,040
+And we want to see how it does on the test
+set.
+
+124
+00:07:00,040 --> 00:07:04,490
+So here, I have, separated the data into,
+Two separate
+
+125
+00:07:04,490 --> 00:07:07,130
+sets the training and test sets and I made
+two plots.
+
+126
+00:07:07,130 --> 00:07:09,780
+On the left there's a plot of the training
+data and on
+
+127
+00:07:09,780 --> 00:07:13,720
+the right there's a plot of the test data
+and so the
+
+128
+00:07:13,720 --> 00:07:18,120
+training data I plot the waiting time
+versus the duration and then
+
+129
+00:07:18,120 --> 00:07:21,290
+I put the model fit in and it's a
+reasonably good model fit.
+
+130
+00:07:21,290 --> 00:07:23,260
+That's to be expected because it.
+
+131
+00:07:23,260 --> 00:07:25,730
+Is the exact data that we use to build the
+model.
+
+132
+00:07:26,740 --> 00:07:31,610
+Then I also plot the test data set and so
+over here, this is the line
+
+133
+00:07:31,610 --> 00:07:36,250
+that you get, the predictions that you get
+from the model built on the training set.
+
+134
+00:07:37,300 --> 00:07:39,990
+So you can see that it doesn't quiet
+perfectly fit
+
+135
+00:07:39,990 --> 00:07:42,230
+the data anymore like it did in the
+training set.
+
+136
+00:07:42,230 --> 00:07:46,190
+It's a little tilted underneath over hear,
+but that's to be expected
+
+137
+00:07:46,190 --> 00:07:50,190
+because, the test set is a slightly
+different set of data, but
+
+138
+00:07:50,190 --> 00:07:52,490
+as you can see it still captures the
+overall trend or the
+
+139
+00:07:52,490 --> 00:07:56,930
+overall part of the variation that can be
+explained by the waiting time.
+
+140
+00:07:59,140 --> 00:08:02,230
+The next thing to do is to get the
+training and test set errors.
+
+141
+00:08:02,230 --> 00:08:05,955
+So, to get the training set error, we get
+the fitted values,
+
+142
+00:08:05,955 --> 00:08:11,690
+lm1$fitted, remember lm1 was the object we
+actually fit to fit the model.
+
+143
+00:08:11,690 --> 00:08:15,630
+And the fitted values were the predictions
+that we get on the training set.
+
+144
+00:08:15,630 --> 00:08:21,790
+Then we can subtract the actual values of
+the eruption duration on the training set.
+
+145
+00:08:21,790 --> 00:08:24,970
+Square them, sum them up and take the
+square
+
+146
+00:08:24,970 --> 00:08:27,270
+root and that gives us the root mean
+squared error.
+
+147
+00:08:27,270 --> 00:08:30,780
+If you remember that from our lecture on
+the types of errors we could have.
+
+148
+00:08:30,780 --> 00:08:34,480
+So it basically measures how close the
+fitted values are.
+
+149
+00:08:34,480 --> 00:08:36,510
+To the, real values.
+
+150
+00:08:36,510 --> 00:08:38,215
+And we get a value of 5.752.
+
+151
+00:08:39,920 --> 00:08:43,630
+We can also calculate the root mean square
+error on the test set.
+
+152
+00:08:43,630 --> 00:08:48,240
+And so, the way that we do that, is, we
+calculate, we predict again
+
+153
+00:08:48,240 --> 00:08:52,710
+now, using this LM fo, LM object that we
+can fit on the training set.
+
+154
+00:08:52,710 --> 00:08:55,630
+But now we pass it the new data set, the
+test data set.
+
+155
+00:08:55,630 --> 00:08:59,480
+So now this is predicting values on the
+test data set and we subtract
+
+156
+00:08:59,480 --> 00:09:04,100
+off our actual values since we know what
+they are on the test data set.
+
+157
+00:09:04,100 --> 00:09:06,640
+Square them and sum them up.
+
+158
+00:09:06,640 --> 00:09:11,450
+And since we didn't use the test set at
+all when we built are algorithm.
+
+159
+00:09:11,450 --> 00:09:15,700
+This is a more realistic estimate of the
+root mean square error that you would get
+
+160
+00:09:15,700 --> 00:09:19,480
+on a new data set compared to the value
+that we got on the training set.
+
+161
+00:09:19,480 --> 00:09:22,230
+And just like always, the test data set
+error
+
+162
+00:09:22,230 --> 00:09:26,270
+is almost always larger than the training
+set error, because.
+
+163
+00:09:26,270 --> 00:09:29,060
+Again we're moving to a new set of values
+that
+
+164
+00:09:29,060 --> 00:09:34,260
+weren't used to calculate the model, so
+that's represents the
+
+165
+00:09:34,260 --> 00:09:37,370
+added error, or error and variability you
+get when you
+
+166
+00:09:37,370 --> 00:09:39,210
+move to a new data set out of sample
+error.
+
+167
+00:09:40,530 --> 00:09:42,590
+The other thing that you can do that a
+nice component of
+
+168
+00:09:42,590 --> 00:09:45,190
+using linear modeling for prediction is
+
+169
+00:09:45,190 --> 00:09:47,360
+that you can calculate prediction
+intervals.
+
+170
+00:09:47,360 --> 00:09:52,630
+So, again, here I'm just calculating on,
+on, calculating a new set of predictions.
+
+171
+00:09:52,630 --> 00:09:55,570
+For the test data set from using our
+linear
+
+172
+00:09:55,570 --> 00:09:59,240
+model that we've built on the training
+data set.
+
+173
+00:09:59,240 --> 00:10:02,380
+And I say that I also want a prediction
+interval
+
+174
+00:10:02,380 --> 00:10:05,460
+out and so that's just an argument that
+I've passed
+
+175
+00:10:05,460 --> 00:10:09,170
+to the predict function and then if I
+order the
+
+176
+00:10:09,170 --> 00:10:13,400
+values for the test data set and plot the
+test.
+
+177
+00:10:14,620 --> 00:10:17,730
+Waiting times versus eruption times.
+
+178
+00:10:17,730 --> 00:10:22,110
+I can also add lines that show not only my
+predictions, that's
+
+179
+00:10:22,110 --> 00:10:26,170
+what I've got here in this black line that
+shows the predictive values.
+
+180
+00:10:26,170 --> 00:10:30,570
+But I can also show an interval that is
+the interval that captures.
+
+181
+00:10:32,050 --> 00:10:35,400
+Percent of where we the region where we
+expect
+
+182
+00:10:35,400 --> 00:10:38,550
+the predicted values to land, so we expect
+most
+
+183
+00:10:38,550 --> 00:10:41,410
+of the predicted values to land in between
+these
+
+184
+00:10:41,410 --> 00:10:44,490
+two red lines if our linear model is
+correct.
+
+185
+00:10:44,490 --> 00:10:45,860
+And so this.
+
+186
+00:10:45,860 --> 00:10:49,760
+Shows you a little bit about the range of
+possible values we could predict.
+
+187
+00:10:49,760 --> 00:10:52,800
+Not just a single prediction, which can be
+useful for giving you an
+
+188
+00:10:52,800 --> 00:10:57,960
+idea of how well your model is likely to
+do on new, predictions.
+
+189
+00:10:57,960 --> 00:10:59,660
+It'll tell you what are the range
+
+190
+00:10:59,660 --> 00:11:01,870
+of possible predictions that you might get
+out.
+
+191
+00:11:03,490 --> 00:11:05,870
+You can do the same thing in the caret
+package.
+
+192
+00:11:05,870 --> 00:11:08,520
+Again the caret package, I've shown you
+how to do it now by
+
+193
+00:11:08,520 --> 00:11:11,430
+hand but you can also very easily do it
+with a caret package.
+
+194
+00:11:11,430 --> 00:11:14,980
+I use the train function in the caret
+package to build the model.
+
+195
+00:11:14,980 --> 00:11:18,850
+And so again I, the eruptions is the
+output, outcome,
+
+196
+00:11:18,850 --> 00:11:22,410
+waiting time is the predictor and they're
+separated by this tilde.
+
+197
+00:11:22,410 --> 00:11:25,080
+And then I say which data set I want to
+build
+
+198
+00:11:25,080 --> 00:11:28,780
+the model on and for the method, I tell
+it, Linear Modeling.
+
+199
+00:11:28,780 --> 00:11:33,310
+So if you do a summary of that final model
+fit so the final model is the part of
+
+200
+00:11:33,310 --> 00:11:37,050
+the modFit objects that was created by
+Train that tells
+
+201
+00:11:37,050 --> 00:11:40,100
+you the exact final model that's being
+used for prediction.
+
+202
+00:11:40,100 --> 00:11:42,820
+And again, it looks very similar to the
+model that we fit
+
+203
+00:11:42,820 --> 00:11:46,680
+by hand, it's minus 1.79 for the intercept
+and 0.07 for the waiting
+
+204
+00:11:48,700 --> 00:11:49,200
+time.
+
+205
+00:11:51,000 --> 00:11:53,420
+So regression modelling can be done with
+multiple covariants
+
+206
+00:11:53,420 --> 00:11:55,420
+as well, and we'll have a lecture on that.
+
+207
+00:11:55,420 --> 00:11:58,000
+But you can also combine it with
+
+208
+00:11:58,000 --> 00:12:01,320
+all other prediction and machine learning
+methodology.
+
+209
+00:12:01,320 --> 00:12:05,010
+Again, it's sort of a good quick and dirty
+method for use.
+
+210
+00:12:05,010 --> 00:12:05,770
+It does miss.
+
+211
+00:12:06,790 --> 00:12:09,130
+Getting a higher mis-classification error
+
+212
+00:12:09,130 --> 00:12:11,160
+when the relationship isn't necessarily
+linear.
+
+213
+00:12:11,160 --> 00:12:16,810
+A lot of prediction is covered with,
+regression modeling is covered in these
+
+214
+00:12:16,810 --> 00:12:20,035
+books, and would be a good place to go if
+you want more information.
+
+215
+00:12:20,035 --> 00:12:22,814
+[SOUND]
+
