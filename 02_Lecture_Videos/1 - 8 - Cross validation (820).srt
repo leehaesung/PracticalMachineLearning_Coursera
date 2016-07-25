@@ -1,0 +1,822 @@
+1
+00:00:00,290 --> 00:00:01,730
+This lecture is about cross validation.
+
+2
+00:00:01,730 --> 00:00:03,193
+Which is one of the most widely used
+
+3
+00:00:03,193 --> 00:00:06,180
+tools, for detecting relevant features,
+and for building models.
+
+4
+00:00:06,180 --> 00:00:08,410
+And estimating their parameters when doing
+machine learning.
+
+5
+00:00:09,540 --> 00:00:11,620
+So remember the study design that people
+frequently
+
+6
+00:00:11,620 --> 00:00:14,880
+use when building machine learning
+algorithms, and evaluating them.
+
+7
+00:00:14,880 --> 00:00:15,810
+They take a data set.
+
+8
+00:00:15,810 --> 00:00:17,350
+In this case, it's the Netflix [INAUDIBLE]
+study design.
+
+9
+00:00:17,350 --> 00:00:18,660
+So this is the.
+
+10
+00:00:19,670 --> 00:00:22,952
+1,000,000, 100,000,000 user item pairs,
+where its
+
+11
+00:00:22,952 --> 00:00:25,280
+movies that were rated by specific users.
+
+12
+00:00:25,280 --> 00:00:28,960
+And they break that up into a training
+data set, and then a test data set.
+
+13
+00:00:28,960 --> 00:00:32,190
+And remember that all of the model
+building and evaluation by that.
+
+14
+00:00:32,190 --> 00:00:35,178
+People building the model will happen on
+the training data, and then once, at
+
+15
+00:00:35,178 --> 00:00:38,960
+the very end of the competition, they
+would apply it to the test data set.
+
+16
+00:00:38,960 --> 00:00:42,470
+So one problem that comes up that very
+quickly, is that accuracy
+
+17
+00:00:42,470 --> 00:00:44,355
+on the training set is what's
+
+18
+00:00:44,355 --> 00:00:47,410
+called resubstitution accuracy is often
+optimistic.
+
+19
+00:00:47,410 --> 00:00:50,522
+In other words, we're always picking,
+we're trying a bunch of different
+
+20
+00:00:50,522 --> 00:00:53,199
+models, and we're picking the best one on
+the training set, and
+
+21
+00:00:53,199 --> 00:00:55,339
+that will always be tuned a little bit to
+the quirks of
+
+22
+00:00:55,339 --> 00:00:58,660
+that data set, and may not be the accurate
+representation of what that.
+
+23
+00:00:58,660 --> 00:01:01,780
+Prediction accuracy would be a, a new
+sample.
+
+24
+00:01:01,780 --> 00:01:04,160
+So, a better estimate comes from an
+independent data set.
+
+25
+00:01:04,160 --> 00:01:06,780
+So in this case say the test set accuracy.
+
+26
+00:01:06,780 --> 00:01:08,830
+But there's a problem that, if we keep
+using
+
+27
+00:01:08,830 --> 00:01:11,910
+the test set to evaluate the out of sample
+accuracy.
+
+28
+00:01:11,910 --> 00:01:14,917
+Then, in a sense, the test set has become
+part of the training set, and
+
+29
+00:01:14,917 --> 00:01:16,622
+we don't, still don't have an outside
+
+30
+00:01:16,622 --> 00:01:19,970
+measure, independent evaluation of the
+test set error.
+
+31
+00:01:19,970 --> 00:01:23,576
+So to estimate the test set accuracy, what
+we would like to use is, use
+
+32
+00:01:23,576 --> 00:01:27,243
+something about the training set, to get a
+good estimate of what the test set
+
+33
+00:01:27,243 --> 00:01:31,254
+accuracy will be, so then we can build our
+models entirely using the training set,
+
+34
+00:01:31,254 --> 00:01:36,090
+and only evaluate them once on the test
+set, just like the study design calls for.
+
+35
+00:01:36,090 --> 00:01:39,220
+So the way that people do that is cross
+validation.
+
+36
+00:01:39,220 --> 00:01:42,710
+So, the idea is, you take your training
+set, just the training samples.
+
+37
+00:01:42,710 --> 00:01:44,758
+And we split that train, we sub split that
+
+38
+00:01:44,758 --> 00:01:47,780
+training set into a training, and a test
+set.
+
+39
+00:01:47,780 --> 00:01:49,495
+Then we build a model on the training
+
+40
+00:01:49,495 --> 00:01:52,360
+set that's a subset of our original
+training set.
+
+41
+00:01:52,360 --> 00:01:53,948
+And evaluate on the test set, that's
+
+42
+00:01:53,948 --> 00:01:56,730
+a subset, again, of our original training
+set.
+
+43
+00:01:56,730 --> 00:01:59,590
+We repeat this over and over and average
+the estimated errors.
+
+44
+00:01:59,590 --> 00:02:01,150
+And that's something like.
+
+45
+00:02:01,150 --> 00:02:04,130
+Estimating what's going to happen in, when
+we get a new test set.
+
+46
+00:02:05,490 --> 00:02:08,324
+So again, the idea is we take the training
+set, and we split
+
+47
+00:02:08,324 --> 00:02:12,510
+the training set itself up, into training
+and test sets over and over again.
+
+48
+00:02:12,510 --> 00:02:16,550
+Keep rebuilding our models, and picking
+the one that works best on the test set.
+
+49
+00:02:16,550 --> 00:02:19,300
+This is useful for picking variables to
+include in the model.
+
+50
+00:02:19,300 --> 00:02:21,140
+So, again, we can.
+
+51
+00:02:21,140 --> 00:02:25,640
+Now, fit a bunch of different models, with
+various different variables included,
+
+52
+00:02:25,640 --> 00:02:29,720
+and use the one that fits best on these
+cross validated test sets.
+
+53
+00:02:29,720 --> 00:02:31,820
+And then we can also pick the type of
+prediction function
+
+54
+00:02:31,820 --> 00:02:33,970
+to use, so we can try a bunch of different
+algorithms.
+
+55
+00:02:33,970 --> 00:02:38,300
+Again, pick the one that does best on the
+cross validation sets.
+
+56
+00:02:38,300 --> 00:02:41,940
+Or we can pick the parameters in the
+prediction function and estimate them.
+
+57
+00:02:41,940 --> 00:02:44,976
+Again, we can do all of this because,
+eventually,
+
+58
+00:02:44,976 --> 00:02:48,495
+even though we're, we're tr, sub splitting
+the training
+
+59
+00:02:48,495 --> 00:02:50,703
+set into a training set and a test set,
+
+60
+00:02:50,703 --> 00:02:54,560
+we actually leave the original test set
+completely alone.
+
+61
+00:02:54,560 --> 00:02:56,300
+Where it's never used in this process.
+
+62
+00:02:56,300 --> 00:02:58,327
+And so when we apply our ultimate
+prediction algorithm
+
+63
+00:02:58,327 --> 00:03:00,830
+to the test set, it'll still be an
+unbiased measurement.
+
+64
+00:03:00,830 --> 00:03:03,700
+Of what the auto sample accuracy will be.
+
+65
+00:03:03,700 --> 00:03:06,270
+So, the different ways that people can use
+training and test sets.
+
+66
+00:03:06,270 --> 00:03:08,880
+One example is they do random subsampling.
+
+67
+00:03:08,880 --> 00:03:11,637
+So, imagine that, every observation we're
+trying to
+
+68
+00:03:11,637 --> 00:03:14,640
+predict is arrayed out along the, this
+axis here.
+
+69
+00:03:14,640 --> 00:03:17,151
+And the color represents whether we
+include it in the
+
+70
+00:03:17,151 --> 00:03:19,661
+training set or testing set, so again,
+this is only
+
+71
+00:03:19,661 --> 00:03:22,057
+the training samples, and what we might do
+is just
+
+72
+00:03:22,057 --> 00:03:24,990
+take a subsample of them, and call them
+the testing sample.
+
+73
+00:03:24,990 --> 00:03:27,840
+So in this case, it's the light gray bars
+here, are
+
+74
+00:03:27,840 --> 00:03:31,960
+all the samples in this particular
+iteration that we call test samples.
+
+75
+00:03:31,960 --> 00:03:35,760
+Then we would build our predictor on all
+the dark gray samples.
+
+76
+00:03:35,760 --> 00:03:38,970
+And so, again, this is only within the
+training set.
+
+77
+00:03:38,970 --> 00:03:41,582
+We take the dark gray samples and build a
+model, and then
+
+78
+00:03:41,582 --> 00:03:45,870
+apply it to predict the light gray
+samples, and evaluate their accuracy.
+
+79
+00:03:45,870 --> 00:03:48,490
+We can do this, for several different
+random subsamples.
+
+80
+00:03:48,490 --> 00:03:50,280
+So this is a ra, one random sampling.
+
+81
+00:03:50,280 --> 00:03:52,870
+And then this second row is the second
+random sampling.
+
+82
+00:03:52,870 --> 00:03:55,060
+And this third row is the third random
+sampling.
+
+83
+00:03:55,060 --> 00:03:58,340
+Do that over and over again, and then
+average what the errors will be.
+
+84
+00:03:59,510 --> 00:04:03,220
+Another approach that's commonly used is
+what's called K-fold cross validation.
+
+85
+00:04:03,220 --> 00:04:08,350
+So the idea here is we break our data set
+up into k equal size data sets.
+
+86
+00:04:08,350 --> 00:04:09,817
+So, for example, for three fold cross
+
+87
+00:04:09,817 --> 00:04:11,910
+validation, this is what it would look
+like.
+
+88
+00:04:11,910 --> 00:04:12,780
+So here's.
+
+89
+00:04:12,780 --> 00:04:15,890
+The first data set, right here, then
+there's a middle
+
+90
+00:04:15,890 --> 00:04:18,867
+data set right here, and the last third
+data set right
+
+91
+00:04:18,867 --> 00:04:21,247
+here, and so what we would do is on the
+first
+
+92
+00:04:21,247 --> 00:04:25,460
+fold, we would build a prediction model on
+this training data.
+
+93
+00:04:25,460 --> 00:04:28,160
+And we would apply it to this test data.
+
+94
+00:04:28,160 --> 00:04:32,080
+Then we would build a training our model
+on the, just the dark gray
+
+95
+00:04:32,080 --> 00:04:37,590
+components of this second fold, and apply
+it to the middle fold for evaluation.
+
+96
+00:04:37,590 --> 00:04:39,350
+Then finally, we would do the same thing
+down here.
+
+97
+00:04:39,350 --> 00:04:43,280
+We would build our model on this dark gray
+part, and apply it to the light gray part.
+
+98
+00:04:43,280 --> 00:04:45,624
+And again, we would average the errors
+that we
+
+99
+00:04:45,624 --> 00:04:48,329
+got across all of those experiments, and
+we would get
+
+100
+00:04:48,329 --> 00:04:50,733
+an estimate of [COUGH] the average error
+rate that
+
+101
+00:04:50,733 --> 00:04:53,520
+we would get in an out of sample
+estimation procedure.
+
+102
+00:04:53,520 --> 00:04:58,190
+So again, all of these model building and
+evaluation are happening
+
+103
+00:04:58,190 --> 00:05:02,440
+in, within the training set, which we've
+been subs divided into a.
+
+104
+00:05:02,440 --> 00:05:05,260
+Sub training set and a sub testing set to
+evaluate models.
+
+105
+00:05:06,850 --> 00:05:09,235
+Another very common approach is called the
+leave
+
+106
+00:05:09,235 --> 00:05:11,617
+one off, out cross validation, and so
+here, we
+
+107
+00:05:11,617 --> 00:05:13,651
+just leave out exactly one sample, and we
+
+108
+00:05:13,651 --> 00:05:17,000
+build the predictive function on all the
+remaining samples.
+
+109
+00:05:17,000 --> 00:05:20,780
+And then we predict the value on the one
+sample that we left out.
+
+110
+00:05:20,780 --> 00:05:24,760
+Then we leave out the next sample, and
+build on all the remaining values.
+
+111
+00:05:24,760 --> 00:05:27,243
+And then predict the sample that we left
+out, and so forth
+
+112
+00:05:27,243 --> 00:05:30,800
+until we've done that for every single
+sample in our data set.
+
+113
+00:05:30,800 --> 00:05:33,830
+So again, this is another way to estimate
+the out of sample accuracy rate.
+
+114
+00:05:35,510 --> 00:05:38,988
+So some consideration is, first of all,
+for time series data, this doesn't
+
+115
+00:05:38,988 --> 00:05:40,728
+work if you just randomly subsample the
+
+116
+00:05:40,728 --> 00:05:42,850
+population, you actually have to use
+chunks.
+
+117
+00:05:42,850 --> 00:05:44,559
+You have to get blocks of time that are
+
+118
+00:05:44,559 --> 00:05:47,371
+all contiguous, and that's because, one
+time point might
+
+119
+00:05:47,371 --> 00:05:49,798
+depend on all the time points that came
+previously,
+
+120
+00:05:49,798 --> 00:05:53,010
+and you're ignoring a huge, rich structure
+in the data.
+
+121
+00:05:53,010 --> 00:05:55,360
+If you just randomly take samples.
+
+122
+00:05:55,360 --> 00:05:58,030
+For k-fold cross validation, the larger
+the k that
+
+123
+00:05:58,030 --> 00:06:00,770
+you take, you'll get less bias, but more
+variance.
+
+124
+00:06:00,770 --> 00:06:05,230
+And the smaller k that you take, you'll
+get more bias, but less variance.
+
+125
+00:06:05,230 --> 00:06:09,544
+In other words, if you took a very large
+k, say for example a ten-fold cross
+
+126
+00:06:09,544 --> 00:06:12,850
+validation or a 20-fold cross validation,
+that means
+
+127
+00:06:12,850 --> 00:06:15,700
+you'll get a very accurate estimate of
+the.
+
+128
+00:06:16,730 --> 00:06:21,590
+Of the bias between your predicted values,
+and your true values.
+
+129
+00:06:21,590 --> 00:06:22,850
+But it'll be highly variable.
+
+130
+00:06:22,850 --> 00:06:26,340
+In other words, it'll depend a lot on
+which random subsets that you take.
+
+131
+00:06:26,340 --> 00:06:29,070
+For smaller ks, we won't necessarily get
+as good
+
+132
+00:06:29,070 --> 00:06:31,540
+an estimate of the out of sample error
+rate.
+
+133
+00:06:31,540 --> 00:06:34,470
+And that's because, you're only leaving
+one sample out.
+
+134
+00:06:34,470 --> 00:06:37,350
+And so you're using most of your data to
+train your model.
+
+135
+00:06:37,350 --> 00:06:38,430
+But there'll be less variance.
+
+136
+00:06:38,430 --> 00:06:41,300
+In other words, if you do in the extreme
+case.
+
+137
+00:06:41,300 --> 00:06:44,032
+If you have for exampleonly two cross,
+two-fold
+
+138
+00:06:44,032 --> 00:06:46,710
+cross validation, there are only a very
+small.
+
+139
+00:06:46,710 --> 00:06:49,850
+Number of subsets that can make up a
+two-fold cross validation.
+
+140
+00:06:49,850 --> 00:06:51,780
+And so you get less variance.
+
+141
+00:06:51,780 --> 00:06:54,400
+Here, the randomless sampling must be done
+without replacement.
+
+142
+00:06:54,400 --> 00:06:56,840
+In other words, we're subsampling our data
+sets.
+
+143
+00:06:56,840 --> 00:06:59,623
+That's, of course a disadvantage, because,
+it means that we
+
+144
+00:06:59,623 --> 00:07:03,280
+have to break our training setup even
+further to smaller samples.
+
+145
+00:07:03,280 --> 00:07:06,130
+If you do random sampling with
+replacement, this is called the Bootstrap.
+
+146
+00:07:06,130 --> 00:07:08,055
+That's something that you've learned about
+in your early.
+
+147
+00:07:08,055 --> 00:07:10,428
+Inference classes, if you've taken those.
+
+148
+00:07:10,428 --> 00:07:12,658
+The bootstrap, in this particular example,
+
+149
+00:07:12,658 --> 00:07:15,580
+will in general, underestimate the error
+rate.
+
+150
+00:07:15,580 --> 00:07:18,411
+And the reason why is because if you do
+the bootstraps, you sample
+
+151
+00:07:18,411 --> 00:07:20,370
+with replacement from some of your
+samples,
+
+152
+00:07:20,370 --> 00:07:22,580
+some samples will appear more than once.
+
+153
+00:07:22,580 --> 00:07:24,861
+And so, in more, samples appear more than
+once, that means
+
+154
+00:07:24,861 --> 00:07:27,780
+that if you get one right, you'll
+definitely get the other right.
+
+155
+00:07:27,780 --> 00:07:30,239
+And so, you actually get underestimates of
+the
+
+156
+00:07:30,239 --> 00:07:32,390
+error rate, and this can be corrected but
+
+157
+00:07:32,390 --> 00:07:34,726
+its rather complicated, the way to do
+that,
+
+158
+00:07:34,726 --> 00:07:37,739
+is with something called the 0.632
+Bootstap, which
+
+159
+00:07:37,739 --> 00:07:41,734
+is not exactly a great name for a method,
+but it explains, it sort of explains
+
+160
+00:07:41,734 --> 00:07:46,810
+how you can account for the fact that you
+have this underestimate in the error rate.
+
+161
+00:07:46,810 --> 00:07:48,799
+You can do any of these approaches when
+you go models
+
+162
+00:07:48,799 --> 00:07:51,228
+with the care package like we'll be
+learning in this class.
+
+163
+00:07:51,228 --> 00:07:55,784
+If you cross validate to pick predictors,
+you again must estimate the errors on
+
+164
+00:07:55,784 --> 00:07:59,660
+an independent data set, in order to get a
+true out of sample value.
+
+165
+00:07:59,660 --> 00:08:02,118
+So in other words, if you do cross
+validation to predict
+
+166
+00:08:02,118 --> 00:08:05,460
+your model, or to pick your model, the
+cross validated error rates.
+
+167
+00:08:05,460 --> 00:08:08,830
+Since you always picked the best model,
+will not necessarily be a
+
+168
+00:08:08,830 --> 00:08:11,240
+good representation of what the real out
+of sample error rate is.
+
+169
+00:08:11,240 --> 00:08:13,429
+And the best way to do that, is again, by
+applying
+
+170
+00:08:13,429 --> 00:08:16,655
+your prediction function, just one time,
+to an independent test set.
+
+171
+00:08:16,655 --> 00:08:20,474
+[SOUND]
+
