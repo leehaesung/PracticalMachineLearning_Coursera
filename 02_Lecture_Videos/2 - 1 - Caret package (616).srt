@@ -1,0 +1,602 @@
+1
+00:00:00,310 --> 00:00:02,130
+This lecture's about the caret package,
+which is
+
+2
+00:00:02,130 --> 00:00:04,690
+a very useful front end package that wraps
+around
+
+3
+00:00:04,690 --> 00:00:06,950
+a lot of the prediction algorithms and
+tools
+
+4
+00:00:06,950 --> 00:00:08,730
+that you'll be using in the R programming
+language.
+
+5
+00:00:10,150 --> 00:00:13,395
+So the caret package can be found here at
+this website that I linked to here at
+
+6
+00:00:13,395 --> 00:00:15,196
+the bottom, or you can just Google caret R
+
+7
+00:00:15,196 --> 00:00:17,430
+package, and you'll be able to find the
+package.
+
+8
+00:00:18,820 --> 00:00:21,740
+The functionality that's built into the
+care package are some of the following.
+
+9
+00:00:21,740 --> 00:00:23,210
+So, for example, we can use the
+
+10
+00:00:23,210 --> 00:00:25,498
+preprocessing tools in the caret package
+to clean
+
+11
+00:00:25,498 --> 00:00:28,890
+data and get the features set up, so that
+they can be used for prediction.
+
+12
+00:00:28,890 --> 00:00:32,170
+We can also do, sort of cross validation
+and data splitting
+
+13
+00:00:32,170 --> 00:00:34,139
+within the training set, using the
+
+14
+00:00:34,139 --> 00:00:38,280
+create DataPartition and create TimeSlices
+functions.
+
+15
+00:00:38,280 --> 00:00:42,560
+We can also create training and test sets
+with the training and predict functions.
+
+16
+00:00:42,560 --> 00:00:45,101
+And we can use those to train data sets at
+
+17
+00:00:45,101 --> 00:00:48,810
+train prediction functions and apply them
+to new data sets.
+
+18
+00:00:48,810 --> 00:00:52,581
+We can also do model comparison using the
+confusion matrix function, which will
+
+19
+00:00:52,581 --> 00:00:55,860
+give you information about how well the
+model's did on new data sets.
+
+20
+00:00:57,630 --> 00:01:00,993
+There a large machine learning algorithms
+that are built into R, so
+
+21
+00:01:00,993 --> 00:01:03,118
+these range from very popular statistical
+
+22
+00:01:03,118 --> 00:01:05,892
+machine learning algorithms like linear
+discriminant
+
+23
+00:01:05,892 --> 00:01:07,721
+analysis and regression to much more
+
+24
+00:01:07,721 --> 00:01:10,022
+widely used algorithms in computer
+science,
+
+25
+00:01:10,022 --> 00:01:12,619
+like support vector machines,
+classification and
+
+26
+00:01:12,619 --> 00:01:16,100
+regression trees, or random forests or
+boosting.
+
+27
+00:01:16,100 --> 00:01:17,514
+All of these algorithms are built by
+
+28
+00:01:17,514 --> 00:01:19,589
+a variety of different developers, all
+coming from
+
+29
+00:01:19,589 --> 00:01:21,807
+different backgrounds, so the interfaces
+that each of
+
+30
+00:01:21,807 --> 00:01:25,120
+these sort of prediction algorithms is
+slightly different.
+
+31
+00:01:25,120 --> 00:01:26,702
+As one example of this, consider
+
+32
+00:01:26,702 --> 00:01:29,024
+this class of different prediction
+algorithms that
+
+33
+00:01:29,024 --> 00:01:30,765
+you could have applied, so everything
+
+34
+00:01:30,765 --> 00:01:33,840
+from linear discriminate analysis down to
+boosting.
+
+35
+00:01:33,840 --> 00:01:36,493
+And so for each of these different
+algorithms,
+
+36
+00:01:36,493 --> 00:01:39,290
+you can imagine creating an object called
+objnr.
+
+37
+00:01:39,290 --> 00:01:41,810
+That object will have a different class,
+say
+
+38
+00:01:41,810 --> 00:01:45,510
+a linear discriminate analysis or glm and
+so forth.
+
+39
+00:01:45,510 --> 00:01:47,258
+And for each of these objects, we can try
+
+40
+00:01:47,258 --> 00:01:49,573
+to predict, and if we apply the predict
+function, we
+
+41
+00:01:49,573 --> 00:01:51,941
+have to put it pass slightly different
+parameters each
+
+42
+00:01:51,941 --> 00:01:54,890
+time in order to get the prediction of the
+outcome.
+
+43
+00:01:54,890 --> 00:01:57,751
+So, for example, from the GLM package, we
+have to say type
+
+44
+00:01:57,751 --> 00:02:02,180
+equals response to get the prediction of
+the response from that model fit.
+
+45
+00:02:02,180 --> 00:02:04,471
+Or, for example, if we want to use rpart,
+we want
+
+46
+00:02:04,471 --> 00:02:08,730
+to predict with type equals probability in
+order to predict the response.
+
+47
+00:02:08,730 --> 00:02:11,694
+In each case, they're a little bit
+different, and the caret
+
+48
+00:02:11,694 --> 00:02:15,342
+package provides a unifying framework that
+allows you to predict using just
+
+49
+00:02:15,342 --> 00:02:18,363
+one function and without having to specify
+all the options that
+
+50
+00:02:18,363 --> 00:02:21,510
+you might care about in order to get the
+same prediction out.
+
+51
+00:02:22,670 --> 00:02:24,760
+So here's a quick example, using the caret
+package.
+
+52
+00:02:24,760 --> 00:02:29,650
+We'll go into the details of how this is
+done very specifically in later examples.
+
+53
+00:02:29,650 --> 00:02:32,978
+So here we've loaded in the caret package,
+and we've loaded
+
+54
+00:02:32,978 --> 00:02:36,570
+the kern lab package as well to get the
+spam data set.
+
+55
+00:02:36,570 --> 00:02:38,872
+And so, what we can do first is partition
+
+56
+00:02:38,872 --> 00:02:42,010
+the data setup into a training and a test
+set.
+
+57
+00:02:42,010 --> 00:02:45,074
+Here I'm going to use the spam type, and
+I'm going to
+
+58
+00:02:45,074 --> 00:02:48,522
+split it into the, training set and the
+test set.
+
+59
+00:02:48,522 --> 00:02:51,321
+I'm going to say we're going to use about
+75% of
+
+60
+00:02:51,321 --> 00:02:54,140
+our data to train the model and 25% to
+test.
+
+61
+00:02:54,140 --> 00:02:56,618
+Then what I can do is I can actually
+subset the data
+
+62
+00:02:56,618 --> 00:03:00,547
+into the training data using the in train,
+bit, the in train, object
+
+63
+00:03:00,547 --> 00:03:04,175
+that comes out from create data partition,
+and I can create the testing
+
+64
+00:03:04,175 --> 00:03:08,470
+data set by finding all those samples that
+aren't in the training set.
+
+65
+00:03:08,470 --> 00:03:10,842
+Then this will give me a subset of that
+data that are
+
+66
+00:03:10,842 --> 00:03:14,110
+just for training and a subset of the data
+that adjust for testing.
+
+67
+00:03:14,110 --> 00:03:16,120
+And you can do this with sort of a simple
+interface.
+
+68
+00:03:17,300 --> 00:03:20,170
+Next you can fit a model, so here I'm
+going to use the
+
+69
+00:03:20,170 --> 00:03:25,050
+train command from the caret package, and
+so again I'm trying to predict type.
+
+70
+00:03:25,050 --> 00:03:27,560
+And I use the tilde and the dot to say use
+all
+
+71
+00:03:27,560 --> 00:03:30,080
+the other variables in this data frame in
+order to predict the type.
+
+72
+00:03:30,080 --> 00:03:33,104
+And I tell which data set I want to build
+the training model on,
+
+73
+00:03:33,104 --> 00:03:37,440
+and so, in this case, the training data
+set we created on the previous slide.
+
+74
+00:03:37,440 --> 00:03:40,088
+And then I just tell which of the methods
+that I'd like to use, and
+
+75
+00:03:40,088 --> 00:03:43,670
+so you can use GLM or you can use a bunch
+of other different models.
+
+76
+00:03:43,670 --> 00:03:46,793
+And so what this does is it'll create a
+model fit
+
+77
+00:03:46,793 --> 00:03:51,009
+from the train function, and as we use the
+3451 samples
+
+78
+00:03:51,009 --> 00:03:54,758
+in a training set and the 57 predictors to
+predict which
+
+79
+00:03:54,758 --> 00:03:59,600
+class you're belonging to based on a
+model, a GLM model.
+
+80
+00:03:59,600 --> 00:04:02,361
+And so what it can do is it can do a bunch
+of different ways
+
+81
+00:04:02,361 --> 00:04:04,583
+of testing whether this model will work
+well
+
+82
+00:04:04,583 --> 00:04:06,520
+and using it to select the best model.
+
+83
+00:04:06,520 --> 00:04:09,232
+And in this case it used resampling.
+
+84
+00:04:09,232 --> 00:04:12,147
+And it does bootstrapping with 25
+replicates, and it corrects
+
+85
+00:04:12,147 --> 00:04:15,069
+for the potential bias that might come
+from bootstrap sampling.
+
+86
+00:04:16,780 --> 00:04:20,004
+So once we fit that model, we can actually
+look at the model, and so
+
+87
+00:04:20,004 --> 00:04:21,328
+the way we can do that is look
+
+88
+00:04:21,328 --> 00:04:23,940
+at the finalModel component of the
+modelFit object.
+
+89
+00:04:23,940 --> 00:04:27,022
+And the way you do that is you take the
+modelFit object,
+
+90
+00:04:27,022 --> 00:04:30,780
+and then you type dollar sign and then
+always the same finalModel.
+
+91
+00:04:30,780 --> 00:04:33,050
+It will tell you what are the actual
+
+92
+00:04:33,050 --> 00:04:34,920
+fitted values that you got for that GLM
+model.
+
+93
+00:04:36,500 --> 00:04:39,310
+Then you predict on new samples by using
+the predict command.
+
+94
+00:04:39,310 --> 00:04:42,673
+Again, it's a unified framework, so we
+just type predict.
+
+95
+00:04:42,673 --> 00:04:46,313
+We pass it the modelFit that we got from
+the train, function in
+
+96
+00:04:46,313 --> 00:04:49,833
+carrot, and we pass it which data we would
+like it to predict on.
+
+97
+00:04:49,833 --> 00:04:52,577
+So in this case, the new data is the
+testing data.
+
+98
+00:04:52,577 --> 00:04:54,401
+When you do that, it will give you
+
+99
+00:04:54,401 --> 00:04:57,464
+a set of predictions that correspond to
+the responses,
+
+100
+00:04:57,464 --> 00:04:59,547
+and you can use those to try to evaluate
+
+101
+00:04:59,547 --> 00:05:02,110
+whether your model fit works very well or
+not.
+
+102
+00:05:02,110 --> 00:05:05,443
+One way that you can do that is by
+calculating the confusion matrix,
+
+103
+00:05:05,443 --> 00:05:09,488
+so that's using this confusion matrix
+function, and so note the capital M here.
+
+104
+00:05:09,488 --> 00:05:12,720
+Don't miss that when you're typing
+confusion matrix.
+
+105
+00:05:12,720 --> 00:05:16,700
+Then you pass in the predictions that you
+got from your model fit.
+
+106
+00:05:16,700 --> 00:05:19,510
+And then the actual outcome on the testing
+samples.
+
+107
+00:05:19,510 --> 00:05:22,860
+So in this case, it was the type or
+whether it was spam or ham message.
+
+108
+00:05:22,860 --> 00:05:25,050
+And then it will record the confusion
+matrix.
+
+109
+00:05:25,050 --> 00:05:30,018
+So it'll tell you a table for which of the
+cases that you predicted to be nonspam or
+
+110
+00:05:30,018 --> 00:05:32,916
+actually nonspam, which is the cases where
+it was
+
+111
+00:05:32,916 --> 00:05:36,230
+spam, and you predicted to be spam and so
+forth.
+
+112
+00:05:36,230 --> 00:05:38,060
+And then it gives you a bunch of summary
+statistics.
+
+113
+00:05:38,060 --> 00:05:42,271
+So for example, the accuracy, a 95 percent
+confidence interval for the accuracy,
+
+114
+00:05:42,271 --> 00:05:46,382
+and then a bunch of information about how
+well they correspond in other categories.
+
+115
+00:05:46,382 --> 00:05:49,188
+So, for example, the sensitivity and the
+specificity of that.
+
+116
+00:05:49,188 --> 00:05:52,932
+So the confusion matrix function wraps a
+bunch of different accuracy measures
+
+117
+00:05:52,932 --> 00:05:56,292
+that you might want to get out when you're
+evalutating the model fit.
+
+118
+00:05:56,292 --> 00:05:59,541
+For a lot more information about caret,
+we're going to cover a lot of it
+
+119
+00:05:59,541 --> 00:06:03,220
+in this class in terms of how do you
+actually apply the caret package.
+
+120
+00:06:03,220 --> 00:06:06,790
+But I found that these tutorials are
+actually very nice, and they can
+
+121
+00:06:06,790 --> 00:06:10,390
+be very useful for covering material that
+we don't cover in this class.
+
+122
+00:06:10,390 --> 00:06:12,258
+And there's also a very nice paper in the
+journal of
+
+123
+00:06:12,258 --> 00:06:14,040
+statistical software that introduces the
+caret
+
+124
+00:06:14,040 --> 00:06:15,610
+package if you want further information.
+
