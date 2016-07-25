@@ -1,0 +1,636 @@
+1
+00:00:00,263 --> 00:00:03,698
+This lecture is about Boosting, which
+along with random forest, is one
+
+2
+00:00:03,698 --> 00:00:06,760
+of the most accurate out of the box
+classifiers that you can use.
+
+3
+00:00:06,760 --> 00:00:08,964
+The basic idea here is, take a large
+number
+
+4
+00:00:08,964 --> 00:00:11,965
+of possibly weak predictors, and we're
+going to take those
+
+5
+00:00:11,965 --> 00:00:14,721
+possibly weak predictors, and weight them
+in a way,
+
+6
+00:00:14,721 --> 00:00:17,800
+that takes advantage of their strengths,
+and add them up.
+
+7
+00:00:19,190 --> 00:00:21,775
+When we weight them and add them up, we're
+sort of doing
+
+8
+00:00:21,775 --> 00:00:25,730
+the same kind of idea that we did with
+bagging for regression trees.
+
+9
+00:00:25,730 --> 00:00:27,893
+Or that we did with random forest, where
+we're talking
+
+10
+00:00:27,893 --> 00:00:30,820
+a large number of classifiers and sort of
+averaging them.
+
+11
+00:00:30,820 --> 00:00:33,440
+And then, by averaging them together, we
+get a stronger predictor.
+
+12
+00:00:35,530 --> 00:00:38,890
+So the basic idea here is to take k
+classifiers.
+
+13
+00:00:38,890 --> 00:00:42,990
+These come from, usually, from the same
+kind of class of classifiers.
+
+14
+00:00:42,990 --> 00:00:45,120
+And so, some ideas might be using all
+
+15
+00:00:45,120 --> 00:00:49,350
+possible classification trees, or all
+possible regression models.
+
+16
+00:00:49,350 --> 00:00:51,740
+Or all possible cutoffs, where you just.
+
+17
+00:00:51,740 --> 00:00:53,270
+Divide the data into different points.
+
+18
+00:00:54,410 --> 00:00:56,129
+You then create a classifier that combines
+
+19
+00:00:56,129 --> 00:00:59,100
+these classification functions together,
+and weights them together.
+
+20
+00:00:59,100 --> 00:01:04,366
+So, alpha sub t here is a weight times the
+classifier ht of x, and so this weighted
+
+21
+00:01:04,366 --> 00:01:09,730
+set of classifiers, gives you a prediction
+for the new point, that's our f of x.
+
+22
+00:01:10,890 --> 00:01:14,090
+The goal here is to minimize error on the
+training set.
+
+23
+00:01:14,090 --> 00:01:17,480
+And so this is iterative at each step we
+take, exactly one h.
+
+24
+00:01:17,480 --> 00:01:21,090
+We calculate weights for the next step,
+based on
+
+25
+00:01:21,090 --> 00:01:24,170
+the errors that we get from that original
+h.
+
+26
+00:01:24,170 --> 00:01:26,620
+And then we upweight missed
+classifications, and
+
+27
+00:01:26,620 --> 00:01:28,260
+select the next stage and move on.
+
+28
+00:01:29,410 --> 00:01:32,170
+The most famous boosting algorithm is
+probably Adaboost,
+
+29
+00:01:32,170 --> 00:01:33,960
+and here you can read about it on
+Wikipedia.
+
+30
+00:01:33,960 --> 00:01:38,050
+You can also read this very nice tutorial
+on boosting here, that will
+
+31
+00:01:38,050 --> 00:01:40,839
+also give us some of the material for the
+rest of these lecture notes.
+
+32
+00:01:42,090 --> 00:01:44,160
+So, here's a really simple example.
+
+33
+00:01:44,160 --> 00:01:47,384
+Suppose we're trying to separate the blue
+plus signs, from the
+
+34
+00:01:47,384 --> 00:01:50,790
+red minus signs, and we have two variables
+to predict with.
+
+35
+00:01:50,790 --> 00:01:55,120
+So here I plotted variable one on the
+x-axis, and variable two on the y-axis.
+
+36
+00:01:55,120 --> 00:01:58,530
+We haven't named them because this is just
+a very simple example.
+
+37
+00:01:58,530 --> 00:01:59,763
+And so the idea is, can we build
+
+38
+00:01:59,763 --> 00:02:03,050
+a classifier that separates these
+variables from each other?
+
+39
+00:02:03,050 --> 00:02:04,950
+We could start off with a really simple
+classifier.
+
+40
+00:02:04,950 --> 00:02:07,260
+We could say just draw a line a vertical
+
+41
+00:02:07,260 --> 00:02:11,770
+line, and say, which vertical line
+separates these points well?
+
+42
+00:02:11,770 --> 00:02:14,630
+Here's a, a classifier that says anything
+to the left
+
+43
+00:02:14,630 --> 00:02:17,366
+of this vertical line is a blue plus, and
+anything to
+
+44
+00:02:17,366 --> 00:02:19,538
+the right is a red minus, and so you can
+see
+
+45
+00:02:19,538 --> 00:02:23,040
+we've misclassified these three points up
+here in the top right.
+
+46
+00:02:24,220 --> 00:02:27,058
+So the thing that we would do is build
+that classifier, calculate
+
+47
+00:02:27,058 --> 00:02:30,910
+the error rate, in this case we're missing
+about 30% of the points.
+
+48
+00:02:30,910 --> 00:02:34,490
+And then we would upweight those points
+that we missed.
+
+49
+00:02:34,490 --> 00:02:38,350
+Here I've shown that upweighting, by
+drawing them in a larger scale.
+
+50
+00:02:38,350 --> 00:02:41,940
+So those pluses are now upweighted, for
+building the next classifier.
+
+51
+00:02:43,060 --> 00:02:44,600
+We would then build the next classifier.
+
+52
+00:02:44,600 --> 00:02:47,530
+And in this case, our second classifier
+would be,
+
+53
+00:02:47,530 --> 00:02:50,850
+one that drew a vertical line right over
+here.
+
+54
+00:02:50,850 --> 00:02:53,621
+And so, that vertical line would classify
+everything to
+
+55
+00:02:53,621 --> 00:02:55,960
+the right of that line as a red minus.
+
+56
+00:02:55,960 --> 00:02:58,640
+And everything to the left, as a blue
+plus.
+
+57
+00:02:58,640 --> 00:03:02,970
+And so here we again, misclassified three
+points, these three right here.
+
+58
+00:03:02,970 --> 00:03:05,461
+And so, those three points are now
+upweighted, and
+
+59
+00:03:05,461 --> 00:03:07,900
+they are also drawn larger for the next
+iteration.
+
+60
+00:03:07,900 --> 00:03:10,161
+So we can again calculate the error rate,
+and
+
+61
+00:03:10,161 --> 00:03:12,790
+use that to calculate the weights for the
+next step.
+
+62
+00:03:13,940 --> 00:03:17,783
+Then the third classifier, will
+intentionally try to classify those
+
+63
+00:03:17,783 --> 00:03:20,840
+points that we misclassified in the last
+couple of rounds.
+
+64
+00:03:20,840 --> 00:03:25,060
+So, for example, these pluses, and these
+minuses need to be correctly classified.
+
+65
+00:03:25,060 --> 00:03:27,238
+To do that we now draw a horizontal line,
+
+66
+00:03:27,238 --> 00:03:29,930
+and we say anything below that horizontal
+line is a
+
+67
+00:03:29,930 --> 00:03:32,621
+red minus, anything above is a blue plus,
+and now
+
+68
+00:03:32,621 --> 00:03:35,910
+we misclassify this point, and these two
+points over here.
+
+69
+00:03:37,380 --> 00:03:39,743
+So then what we can do, is we can take
+that,
+
+70
+00:03:39,743 --> 00:03:43,161
+those classifiers, and we can weight them,
+and add them up,
+
+71
+00:03:43,161 --> 00:03:45,855
+and so what we do is we say, we're
+going to classify
+
+72
+00:03:45,855 --> 00:03:50,660
+a weighted combination of 0.42 times the
+ver, the first vertical line.
+
+73
+00:03:50,660 --> 00:03:53,710
+Plus 0.65 times the second vertical line,
+plus
+
+74
+00:03:53,710 --> 00:03:58,390
+0.92 times the classification given by
+this horizontal line.
+
+75
+00:03:58,390 --> 00:04:01,536
+So, what that ends up doing is, once you
+add these classification
+
+76
+00:04:01,536 --> 00:04:05,089
+rules up together, you can see that our
+classifier works much better now.
+
+77
+00:04:05,089 --> 00:04:09,070
+We get, to a much better classification
+when adding them up, that
+
+78
+00:04:09,070 --> 00:04:12,995
+gets all of the blue pluses, and all of
+the red minuses together.
+
+79
+00:04:12,995 --> 00:04:16,310
+So in each case, each of our classifiers
+was quite simple, was just
+
+80
+00:04:16,310 --> 00:04:20,050
+a line across the plane, and so, it's
+actually quite a naive classifier.
+
+81
+00:04:20,050 --> 00:04:22,397
+But when you weight them and add them up,
+you can
+
+82
+00:04:22,397 --> 00:04:24,930
+get quite a strong classifier at the end
+of the day.
+
+83
+00:04:26,760 --> 00:04:28,960
+Boosting can be done with any subset of
+classifiers.
+
+84
+00:04:28,960 --> 00:04:32,050
+In other words, you can start with any
+sort of weak set of classifiers.
+
+85
+00:04:32,050 --> 00:04:36,470
+In the previous example, we just used
+straight lines to separate the plain.
+
+86
+00:04:36,470 --> 00:04:39,880
+A very large class is what's called
+gradient boosting.
+
+87
+00:04:39,880 --> 00:04:42,260
+And you can read more about that here.
+
+88
+00:04:42,260 --> 00:04:44,330
+R has multiple mood, boosting libraries.
+
+89
+00:04:44,330 --> 00:04:46,327
+So they basically depend on the different
+
+90
+00:04:46,327 --> 00:04:50,070
+kind of classification functions, and
+combination rules.
+
+91
+00:04:50,070 --> 00:04:53,390
+Gbm package does boosting with trees.
+
+92
+00:04:53,390 --> 00:04:55,620
+Mboost does model based boost, boosting.
+
+93
+00:04:56,690 --> 00:05:00,300
+Ada does additive logistic regression
+boosting.
+
+94
+00:05:00,300 --> 00:05:03,790
+And gamBoost does boosting for generalized
+additive models.
+
+95
+00:05:03,790 --> 00:05:05,980
+Most of these are available in the caret
+package, so you
+
+96
+00:05:05,980 --> 00:05:08,700
+can use them directly by using the train
+function with caret.
+
+97
+00:05:08,700 --> 00:05:10,995
+So here we're going to use the wage
+example,
+
+98
+00:05:10,995 --> 00:05:14,200
+to illustrate how you can apply a boosting
+algorithm.
+
+99
+00:05:14,200 --> 00:05:19,110
+So here we're going to load the ISLR
+library, and the wage data.
+
+100
+00:05:19,110 --> 00:05:22,121
+The ggplot2 library, and the caret
+library, and then
+
+101
+00:05:22,121 --> 00:05:24,619
+we're going to, to create a wage data set
+
+102
+00:05:24,619 --> 00:05:27,181
+that removes the predictor that we care,
+or the
+
+103
+00:05:27,181 --> 00:05:31,490
+variable that we're trying to predict, the
+log wage variable.
+
+104
+00:05:31,490 --> 00:05:33,520
+And we create a training set and a testing
+set.
+
+105
+00:05:35,960 --> 00:05:38,222
+We can then model wage here this wage
+
+106
+00:05:38,222 --> 00:05:41,500
+variable, as a function of all the
+remaining variables.
+
+107
+00:05:41,500 --> 00:05:43,470
+That's why there's this dot here.
+
+108
+00:05:43,470 --> 00:05:48,069
+And we can use gbm, which does boosting
+with trees, and we use verbose
+
+109
+00:05:48,069 --> 00:05:52,840
+with a false here, because this will
+produces a lot of output when you use.
+
+110
+00:05:52,840 --> 00:05:55,170
+Method equals gmb, if you dont' say
+verbose equals false.
+
+111
+00:05:56,740 --> 00:05:58,938
+So when we print the model fit, you can
+
+112
+00:05:58,938 --> 00:06:01,896
+see that there's a different numbers of
+trees that
+
+113
+00:06:01,896 --> 00:06:06,025
+are used, and different interaction
+depths, and they're basically
+
+114
+00:06:06,025 --> 00:06:09,840
+used together, to build a boosted version
+of regression trees.
+
+115
+00:06:11,390 --> 00:06:15,850
+So, here I'm plotting the predicted
+results from the testing sets.
+
+116
+00:06:15,850 --> 00:06:17,270
+So this is the using R model fit.
+
+117
+00:06:17,270 --> 00:06:21,820
+We're predicting on the test set, versus
+the wage variable in the test set.
+
+118
+00:06:21,820 --> 00:06:23,692
+And you can see we get a real, a
+reasonably good
+
+119
+00:06:23,692 --> 00:06:27,480
+prediction, although there still seems to
+be a lot of variability there.
+
+120
+00:06:27,480 --> 00:06:29,393
+But the basic idea for fitting a boosting
+
+121
+00:06:29,393 --> 00:06:31,865
+tree a boosted algorithm in general, is to
+be,
+
+122
+00:06:31,865 --> 00:06:34,677
+we take these weak classifiers, and
+average them together
+
+123
+00:06:34,677 --> 00:06:37,170
+with weights, in order to get a better
+classifier.
+
+124
+00:06:38,790 --> 00:06:42,817
+A lot of the information that I have given
+in this lecture, can be, be
+
+125
+00:06:42,817 --> 00:06:44,830
+found in this tutorial, which also has
+
+126
+00:06:44,830 --> 00:06:48,262
+even more in-depth information if you are
+interested.
+
+127
+00:06:48,262 --> 00:06:50,002
+Here's a little bit more technical
+
+128
+00:06:50,002 --> 00:06:52,909
+introduction to boosting, from Freund and
+Shapire.
+
+129
+00:06:52,909 --> 00:06:56,623
+And then, here are several more write-ups
+about boosting and
+
+130
+00:06:56,623 --> 00:07:00,925
+random forests these are actually
+write-ups from different prizes that
+
+131
+00:07:00,925 --> 00:07:04,053
+have been won, using a combination of
+random forests and
+
+132
+00:07:04,053 --> 00:07:08,510
+boosting blended together, in order to
+achieve maximal prediction accuracy.
+
