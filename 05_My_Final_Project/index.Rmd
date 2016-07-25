@@ -1,5 +1,5 @@
 ---
-title: "Human Activity Recognition - Predicting weight-lifting styles"
+title: "Human Excercise pattern and Recognition - Predicting weight lifting styles"
 author: "Haesung Lee"
 date: "Sunday, July 25, 2016"
 output:
@@ -224,7 +224,7 @@ pml_write_files = function(x) {
 pml_write_files(answers)
 
 ```
-On submission, we would see that all the predicted values are correct and a score of `20\20` is obtained.
+On this submission, we would see that all the predicted values are correct and a score of `20\20` is obtained.
 <br>
 
 ## Conclusion
