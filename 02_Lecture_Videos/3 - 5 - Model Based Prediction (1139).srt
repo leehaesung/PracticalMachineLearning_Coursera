@@ -1,0 +1,1045 @@
+1
+00:00:00,290 --> 00:00:03,010
+This lecture's about model based
+prediction.
+
+2
+00:00:03,010 --> 00:00:04,240
+The basic idea here is that we're going to
+
+3
+00:00:04,240 --> 00:00:08,050
+assume the data follow a specific
+probabilistic model.
+
+4
+00:00:08,050 --> 00:00:09,070
+Then we're going to use base therom to
+
+5
+00:00:09,070 --> 00:00:11,960
+identify optimal classifiers based on that
+probabilistic model.
+
+6
+00:00:14,050 --> 00:00:16,610
+The advantage is that this approach can
+take advantage
+
+7
+00:00:16,610 --> 00:00:18,660
+of some structure that might appear in the
+data.
+
+8
+00:00:18,660 --> 00:00:20,750
+For example the fall of distribution.
+
+9
+00:00:20,750 --> 00:00:23,330
+And that may lead to some computational
+conveniences.
+
+10
+00:00:23,330 --> 00:00:25,800
+There may also be reasonable accurate
+
+11
+00:00:25,800 --> 00:00:28,110
+on real problems, particularly the real
+problems
+
+12
+00:00:28,110 --> 00:00:30,780
+that appear to follow the data
+distribution
+
+13
+00:00:30,780 --> 00:00:32,920
+that under lies our whole holistic model.
+
+14
+00:00:34,070 --> 00:00:34,980
+The cons are that they do make
+
+15
+00:00:34,980 --> 00:00:37,040
+these additional assumptions about the
+data, and they
+
+16
+00:00:37,040 --> 00:00:38,900
+don't have to be exactly satisfied in
+order
+
+17
+00:00:38,900 --> 00:00:40,700
+for the prediction algorithms to work very
+well.
+
+18
+00:00:40,700 --> 00:00:43,340
+But if they're very far off, the
+algorithms may fail.
+
+19
+00:00:44,380 --> 00:00:47,330
+And when the model is incorrect, you do
+get reduced accuracy.
+
+20
+00:00:47,330 --> 00:00:47,830
+So
+
+21
+00:00:49,790 --> 00:00:51,730
+here's the model based approach.
+
+22
+00:00:51,730 --> 00:00:53,430
+Our goal is to build a parametric
+
+23
+00:00:53,430 --> 00:00:56,980
+model, or a model based on probability
+distributions.
+
+24
+00:00:56,980 --> 00:00:59,840
+For the conditional distribution the
+probability that y
+
+25
+00:00:59,840 --> 00:01:04,350
+our outcome equals some specific class k
+given
+
+26
+00:01:04,350 --> 00:01:06,460
+a particular set of predictor variables so
+that
+
+27
+00:01:06,460 --> 00:01:08,980
+our x variables equal the little value of
+x.
+
+28
+00:01:08,980 --> 00:01:12,310
+A typical approach is to apply a Bayes
+theorem.
+
+29
+00:01:12,310 --> 00:01:15,070
+In other words we want to know something
+about the probability y equals
+
+30
+00:01:15,070 --> 00:01:20,000
+k that y comes from class k given the
+variables that we've observed.
+
+31
+00:01:20,000 --> 00:01:25,090
+And we write that down using Bay's theorem
+as the probability X equals X given Y
+
+32
+00:01:25,090 --> 00:01:28,620
+equals K times the probability Y equals K
+
+33
+00:01:28,620 --> 00:01:31,800
+divided by the law of total probability
+here below.
+
+34
+00:01:31,800 --> 00:01:37,350
+If you don't remember Bay's theorem from
+your inference class in data
+
+35
+00:01:37,350 --> 00:01:40,710
+science specialization you can go and read
+about it was this Wikipedia page.
+
+36
+00:01:42,120 --> 00:01:44,920
+We then assume some parametric model for
+the distribution
+
+37
+00:01:44,920 --> 00:01:49,440
+of the features given the class, so that's
+this component
+
+38
+00:01:49,440 --> 00:01:53,110
+here at sub k of x and we assume a
+
+39
+00:01:53,110 --> 00:01:57,480
+prior that each particular element comes
+from a specific class.
+
+40
+00:01:57,480 --> 00:01:59,380
+That's denoted here by this pi sub k.
+
+41
+00:01:59,380 --> 00:02:03,510
+So then we can basically model the
+distribution, the probability
+
+42
+00:02:03,510 --> 00:02:06,220
+that y equals k given a particular set of
+predictor
+
+43
+00:02:06,220 --> 00:02:12,930
+variables as, this, fraction here where we
+have a model
+
+44
+00:02:12,930 --> 00:02:16,450
+for the x variables and a model for the
+prior probability.
+
+45
+00:02:16,450 --> 00:02:20,250
+The prior probabilities, pi k, are usually
+set in advance from the data.
+
+46
+00:02:20,250 --> 00:02:25,380
+And then a common choice for fk of x is a
+Gaussian distribution.
+
+47
+00:02:25,380 --> 00:02:27,120
+It may be a multivariate Gaussian
+
+48
+00:02:27,120 --> 00:02:30,260
+distribution if there are multiple x
+variables.
+
+49
+00:02:30,260 --> 00:02:33,920
+And then we might estimate the parameters,
+mu k and sigma squared k, from the data.
+
+50
+00:02:35,730 --> 00:02:37,160
+Then once we have these parameters
+
+51
+00:02:37,160 --> 00:02:39,980
+estimated, we can calculate the
+probability y
+
+52
+00:02:39,980 --> 00:02:44,540
+belongs to any given class, as soon as we
+observe the predictor variables.
+
+53
+00:02:44,540 --> 00:02:46,260
+And we classify the variables to the
+
+54
+00:02:46,260 --> 00:02:48,520
+class having the highest probability in
+this sense.
+
+55
+00:02:50,920 --> 00:02:53,000
+So, a range of models use this approach.
+
+56
+00:02:53,000 --> 00:02:56,970
+The most popular of which is probably
+linear discriminant analysis,
+
+57
+00:02:56,970 --> 00:03:00,130
+which assumes that 'f' 'k' of 'x' is a
+multivariate Gaussian
+
+58
+00:03:00,130 --> 00:03:01,770
+Distribution, so the features have
+
+59
+00:03:01,770 --> 00:03:05,110
+a multivariate Gaussian Distribution
+within each
+
+60
+00:03:05,110 --> 00:03:08,730
+class and there is the same covariance
+matrix for every class.
+
+61
+00:03:09,870 --> 00:03:15,610
+This ends up drawing basically lines
+through the data, the covariate space.
+
+62
+00:03:15,610 --> 00:03:16,680
+And so that's why it's called linear
+
+63
+00:03:16,680 --> 00:03:19,560
+discriminant analysis, we'll see that in a
+minute.
+
+64
+00:03:19,560 --> 00:03:21,480
+Quadratic discriminant analysis is very
+
+65
+00:03:21,480 --> 00:03:23,720
+much like linear discriminant analysis,
+although
+
+66
+00:03:23,720 --> 00:03:28,500
+it allows different covariance matrices
+within each of the different classes.
+
+67
+00:03:28,500 --> 00:03:30,410
+And so that ends up drawing quadratic
+
+68
+00:03:30,410 --> 00:03:32,210
+curves through the data, as opposed to
+lines.
+
+69
+00:03:33,640 --> 00:03:37,480
+Model base prediction basically allows for
+more complicated
+
+70
+00:03:37,480 --> 00:03:40,870
+versions of the covariance matrix when
+building these models.
+
+71
+00:03:40,870 --> 00:03:43,280
+And naive Bayes classifiers, which we'll
+talk about a little
+
+72
+00:03:43,280 --> 00:03:47,730
+bit more in this lecture, basically assume
+independence between the features.
+
+73
+00:03:47,730 --> 00:03:50,080
+So, in other words in, assume independence
+between
+
+74
+00:03:50,080 --> 00:03:53,620
+our predictor variables through the model
+building process.
+
+75
+00:03:53,620 --> 00:03:54,580
+This may not be true.
+
+76
+00:03:54,580 --> 00:03:57,120
+We may not believe the features are or the
+predictors are
+
+77
+00:03:57,120 --> 00:04:00,320
+independent, but it still might be a
+useful model for prediction purposes.
+
+78
+00:04:01,900 --> 00:04:04,220
+So, why is this called linear discriminant
+analysis?
+
+79
+00:04:04,220 --> 00:04:07,370
+Well, if we consider the ratio of the
+probabilities of the two classes.
+
+80
+00:04:07,370 --> 00:04:10,150
+So, this is the probability you're in
+class K.
+
+81
+00:04:10,150 --> 00:04:12,910
+Given our predictor variables, divided by
+the probability
+
+82
+00:04:12,910 --> 00:04:15,820
+here in class j given the predictor
+variables.
+
+83
+00:04:15,820 --> 00:04:18,390
+And we take the log of that quantity, so
+if we
+
+84
+00:04:18,390 --> 00:04:21,920
+take the log of it, it's a monotone
+function which means that.
+
+85
+00:04:21,920 --> 00:04:25,260
+As this ration increases, so will the log
+of that ratio.
+
+86
+00:04:26,550 --> 00:04:28,610
+So we can look at this quantity, and we
+can see that
+
+87
+00:04:28,610 --> 00:04:33,410
+that breaks down by basically writing
+these quantities out using base theorem.
+
+88
+00:04:33,410 --> 00:04:39,760
+As on the previous page, we get log of the
+ratio of the two Gaussian densities.
+
+89
+00:04:39,760 --> 00:04:42,440
+Plus log of the ratio of the two prior
+probabilities.
+
+90
+00:04:43,690 --> 00:04:47,560
+Now these terms are actually require more
+writing so can write
+
+91
+00:04:47,560 --> 00:04:50,230
+them out and we end up with this term goes
+here.
+
+92
+00:04:50,230 --> 00:04:54,230
+We get the log of the [UNKNOWN] ratio of
+the prior probabilities.
+
+93
+00:04:54,230 --> 00:04:57,210
+Plus a term here that depends on the
+parameters of
+
+94
+00:04:57,210 --> 00:05:01,420
+our Gaussian distributions or are normal
+distributions for each class.
+
+95
+00:05:01,420 --> 00:05:03,820
+Plus a linear term, so this a, an
+
+96
+00:05:03,820 --> 00:05:06,520
+x variable here times one coefficient here
+which
+
+97
+00:05:06,520 --> 00:05:07,880
+is a linear terms so you end up
+
+98
+00:05:07,880 --> 00:05:11,290
+getting basically lines that are drawn
+through the data.
+
+99
+00:05:11,290 --> 00:05:13,310
+And a variable will have a higher
+probability of
+
+100
+00:05:13,310 --> 00:05:14,760
+one class if it's on one side of the
+
+101
+00:05:14,760 --> 00:05:17,460
+line and a higher probability of being in
+another
+
+102
+00:05:17,460 --> 00:05:19,910
+class if it's on the other side of the
+line.
+
+103
+00:05:19,910 --> 00:05:22,920
+If this flew by your head a little too
+fast, don't
+
+104
+00:05:22,920 --> 00:05:25,050
+worry about that too much but you can go
+and read
+
+105
+00:05:25,050 --> 00:05:28,660
+about it more carefully in the elements of
+statistical learning if
+
+106
+00:05:28,660 --> 00:05:30,560
+you'd like to know a little bit more about
+those details.
+
+107
+00:05:32,110 --> 00:05:33,900
+So this is what the decision boundaries
+tend to
+
+108
+00:05:33,900 --> 00:05:35,880
+look at, like, for these sort of
+prediction models.
+
+109
+00:05:35,880 --> 00:05:38,930
+So imagine we have three different groups
+of, points.
+
+110
+00:05:38,930 --> 00:05:43,720
+So we're trying to classify into class
+one, class two or class three.
+
+111
+00:05:43,720 --> 00:05:45,280
+And we have two variables that we're using
+to
+
+112
+00:05:45,280 --> 00:05:48,690
+classify and that's the x and the y axis
+here.
+
+113
+00:05:48,690 --> 00:05:49,770
+What would end up, what we would
+
+114
+00:05:49,770 --> 00:05:52,780
+end up doing is fitting one Gaussian
+distribution.
+
+115
+00:05:52,780 --> 00:05:54,530
+Here's one Gaussian distribution.
+
+116
+00:05:54,530 --> 00:05:56,580
+Here's another Gaussian distribution.
+
+117
+00:05:56,580 --> 00:05:58,230
+And here's a third Gaussian distribution.
+
+118
+00:05:58,230 --> 00:06:00,470
+So one to each class.
+
+119
+00:06:00,470 --> 00:06:02,880
+And then we would basically draw lines
+
+120
+00:06:02,880 --> 00:06:05,050
+where the probability switches over from
+being.
+
+121
+00:06:05,050 --> 00:06:06,900
+Higher in this class to that class.
+
+122
+00:06:06,900 --> 00:06:09,310
+So, that ends up looking like lines like
+this.
+
+123
+00:06:09,310 --> 00:06:13,990
+So, if you're on this side of the line,
+you'll be classified as a two.
+
+124
+00:06:13,990 --> 00:06:17,030
+If you're on this side of the line, you'll
+be classified as a three.
+
+125
+00:06:17,030 --> 00:06:19,130
+And if you're down here, you'll be
+classified as a one.
+
+126
+00:06:20,280 --> 00:06:21,480
+So this basically is how it works.
+
+127
+00:06:21,480 --> 00:06:25,540
+You basically fit Gaussian distributions
+to the data and then use those Gaussian
+
+128
+00:06:25,540 --> 00:06:28,590
+distributions to draw lines that, assign
+the
+
+129
+00:06:28,590 --> 00:06:31,180
+prop points to the highest posterior
+probabilities.
+
+130
+00:06:33,520 --> 00:06:36,200
+In general, the discriminate function is
+what gets used here.
+
+131
+00:06:36,200 --> 00:06:40,820
+So the basic idea is we have a
+discriminate function that looks like this
+
+132
+00:06:40,820 --> 00:06:47,370
+where u, uk is the mean of class K for all
+our features.
+
+133
+00:06:47,370 --> 00:06:52,230
+Sigma inverse is the inverse of the
+co-variance matrix for that class.
+
+134
+00:06:52,230 --> 00:06:56,190
+Actually, it's the same in co-variance
+matrix for all classes here.
+
+135
+00:06:56,190 --> 00:06:58,800
+And then this is the term, the linear term
+in x,
+
+136
+00:06:58,800 --> 00:07:02,230
+the predictors that we have, and our
+co-variance matrix and the mean.
+
+137
+00:07:03,500 --> 00:07:08,640
+And so basically what we do is we plug in
+our new data value into this function.
+
+138
+00:07:08,640 --> 00:07:11,850
+And we pick the value of k that
+
+139
+00:07:11,850 --> 00:07:16,160
+produces the largest value of this
+particular discriminate function.
+
+140
+00:07:16,160 --> 00:07:18,770
+And that's we how we decide on a class.
+
+141
+00:07:18,770 --> 00:07:22,410
+You can usually estimate these parameters
+by maximum likelihood estimation.
+
+142
+00:07:22,410 --> 00:07:25,650
+If you remember that from the inference
+that you
+
+143
+00:07:25,650 --> 00:07:27,760
+would've taken as part of the data science
+specialization.
+
+144
+00:07:29,700 --> 00:07:34,840
+Now e base does something a little bit
+more to more to simplify the problem.
+
+145
+00:07:34,840 --> 00:07:36,990
+So, again, suppose now we're trying to
+model the
+
+146
+00:07:36,990 --> 00:07:40,300
+probability that y is in a particular
+class, k.
+
+147
+00:07:40,300 --> 00:07:43,910
+And we have a bunch of variables that we
+want to predict with.
+
+148
+00:07:43,910 --> 00:07:46,860
+We can use Bayes' theorem to say the
+probability that the
+
+149
+00:07:46,860 --> 00:07:50,490
+class is K given all these variables that
+we've observed is
+
+150
+00:07:50,490 --> 00:07:54,770
+the prior probability we're in class k
+times the probability for
+
+151
+00:07:54,770 --> 00:07:59,540
+all these features given you're in class k
+divided by some constant.
+
+152
+00:07:59,540 --> 00:08:04,080
+So the way that this can be written is
+that this probability is proportional to.
+
+153
+00:08:04,080 --> 00:08:07,360
+The prior probability times the
+probability of
+
+154
+00:08:07,360 --> 00:08:09,410
+the features, given that we're in class K.
+
+155
+00:08:11,080 --> 00:08:14,300
+In other words, if you picked the largest
+value of this quantity
+
+156
+00:08:14,300 --> 00:08:17,740
+here, it will be the same as picking the
+largest probability here.
+
+157
+00:08:17,740 --> 00:08:20,060
+Because the term in the denominator is
+
+158
+00:08:20,060 --> 00:08:22,180
+just a constant for all the different
+probabilities.
+
+159
+00:08:23,200 --> 00:08:25,060
+We can then break that down a little bit
+further.
+
+160
+00:08:25,060 --> 00:08:31,040
+We can say the probability of the features
+and the class variable k is equal to this
+
+161
+00:08:31,040 --> 00:08:36,580
+prior probability times the probability of
+x one given here in class k.
+
+162
+00:08:36,580 --> 00:08:38,620
+Times the probability of the, all the
+other
+
+163
+00:08:38,620 --> 00:08:42,520
+variables except for X1, conditional on Xi
+and YK.
+
+164
+00:08:42,520 --> 00:08:46,990
+So this is basically just a statement
+about probability that you
+
+165
+00:08:46,990 --> 00:08:50,410
+might remember from your inference class
+and the data science specialization.
+
+166
+00:08:50,410 --> 00:08:52,990
+You can continue to break down in the same
+
+167
+00:08:52,990 --> 00:08:57,280
+way until you get one term for every
+feature.
+
+168
+00:08:57,280 --> 00:09:00,320
+But those features are always conditional
+on all the
+
+169
+00:09:00,320 --> 00:09:04,140
+other variables that you, that have come
+before it.
+
+170
+00:09:04,140 --> 00:09:07,440
+And so that's basically because each
+features may, or
+
+171
+00:09:07,440 --> 00:09:09,510
+each of the predictors may be dependent on
+each other.
+
+172
+00:09:10,700 --> 00:09:13,340
+One assumption you could make to make this
+quite a bit easier would be
+
+173
+00:09:13,340 --> 00:09:17,290
+to just assume that all of the predictor
+variables are independent of each other.
+
+174
+00:09:17,290 --> 00:09:20,330
+In which case they drop out of this
+conditioning argument.
+
+175
+00:09:20,330 --> 00:09:24,080
+And you end up with the prior probability
+times the probability
+
+176
+00:09:24,080 --> 00:09:28,590
+of each feature by itself conditional on
+being in each class.
+
+177
+00:09:28,590 --> 00:09:31,550
+Now this is kind of a naive assumption
+because we're assuming that
+
+178
+00:09:31,550 --> 00:09:34,970
+all the features are independent even
+though we know they're probably not.
+
+179
+00:09:34,970 --> 00:09:38,400
+And that's why this method has the title
+Naive Bayes.
+
+180
+00:09:38,400 --> 00:09:42,020
+And so, it still works reasonably well in
+a large number of applications.
+
+181
+00:09:42,020 --> 00:09:44,530
+And it's particularly useful when you have
+a very large
+
+182
+00:09:44,530 --> 00:09:51,130
+number of features that are, binary or
+are, categorical variables.
+
+183
+00:09:51,130 --> 00:09:53,010
+This very frequently get, comes up in.
+
+184
+00:09:53,010 --> 00:09:56,850
+Text classification and classification of
+other kind of document classification.
+
+185
+00:09:58,620 --> 00:10:01,352
+So just to show you briefly how these two
+work we're,
+
+186
+00:10:01,352 --> 00:10:04,146
+I'm going to show you on the Iris Data
+again and I'm going to
+
+187
+00:10:04,146 --> 00:10:08,214
+load ggplot2 library, I've got these
+variable I'm using to predict and
+
+188
+00:10:08,214 --> 00:10:12,310
+I again have these, three different
+species that I'm trying to predict.
+
+189
+00:10:13,710 --> 00:10:17,370
+And I can fit them, on a training set and
+apply them to a test set.
+
+190
+00:10:17,370 --> 00:10:19,780
+Just like I do with all of our other
+prediction algorithms.
+
+191
+00:10:19,780 --> 00:10:22,460
+So, I again use the create data partition.
+
+192
+00:10:22,460 --> 00:10:23,210
+Create a training set.
+
+193
+00:10:23,210 --> 00:10:24,390
+And a test set.
+
+194
+00:10:24,390 --> 00:10:28,660
+I can then build an lda model on the
+training set, in the following way.
+
+195
+00:10:28,660 --> 00:10:31,500
+I just basically use the train function
+from the cara package.
+
+196
+00:10:31,500 --> 00:10:34,290
+I pass it the training set, and I tell it
+method lda.
+
+197
+00:10:34,290 --> 00:10:37,440
+And then I can do similarly for naive
+base, and nb
+
+198
+00:10:37,440 --> 00:10:42,160
+is the method that we pass for, a naive
+base classification.
+
+199
+00:10:42,160 --> 00:10:45,250
+And I can predict the values from lda and
+from a naive
+
+200
+00:10:45,250 --> 00:10:48,910
+base on the test set and make a table of
+the predictions.
+
+201
+00:10:48,910 --> 00:10:51,940
+And we can see that the predictions agree
+for all but one value.
+
+202
+00:10:51,940 --> 00:10:56,130
+So even though we know that the features
+or the predictors are dependent here,.
+
+203
+00:10:56,130 --> 00:10:58,990
+Using the naive based classification means
+very
+
+204
+00:10:58,990 --> 00:11:01,770
+similar prediction rules to the linear
+discriminate analysis
+
+205
+00:11:01,770 --> 00:11:04,670
+classification and so we can do a
+comparison
+
+206
+00:11:04,670 --> 00:11:06,060
+of the results and we see that just
+
+207
+00:11:06,060 --> 00:11:08,700
+this one value the value that appears
+right
+
+208
+00:11:08,700 --> 00:11:11,420
+here between the two classes appears to be
+
+209
+00:11:11,420 --> 00:11:13,240
+not classified in the same way by the
+
+210
+00:11:13,240 --> 00:11:15,620
+two outputs but overall they perform very
+similarly.
+
+211
+00:11:17,050 --> 00:11:21,280
+You can learn more about nieve based
+classification and other model based
+
+212
+00:11:21,280 --> 00:11:23,620
+classification in the introduction to
+statistical
+
+213
+00:11:23,620 --> 00:11:26,670
+learning and elements of statistical
+learning books.
+
+214
+00:11:26,670 --> 00:11:29,120
+You can also learn about model based
+clustering in
+
+215
+00:11:29,120 --> 00:11:32,170
+more detail in this academic paper that
+I've linked to.
+
+216
+00:11:32,170 --> 00:11:33,680
+And the linear discriminant analysis
+
+217
+00:11:33,680 --> 00:11:36,690
+and quadratic discriminant analysis
+Wikipedia pages.
+
+218
+00:11:36,690 --> 00:11:39,460
+Are also quite good and useful for,
+Reference.
+
