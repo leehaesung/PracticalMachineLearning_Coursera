@@ -1,0 +1,976 @@
+1
+00:00:00,720 --> 00:00:02,442
+One of the most important components of
+
+2
+00:00:02,442 --> 00:00:05,054
+building a machine learning algorithm or
+prediction model
+
+3
+00:00:05,054 --> 00:00:06,986
+is understanding how the data actually
+look
+
+4
+00:00:06,986 --> 00:00:08,880
+and how the data interact with each other.
+
+5
+00:00:08,880 --> 00:00:10,760
+So, the best way to do that is actually
+
+6
+00:00:10,760 --> 00:00:14,480
+by plotting the data, in particular
+plotting the predictors.
+
+7
+00:00:14,480 --> 00:00:17,050
+So for this example we're going to be
+using this wages data.
+
+8
+00:00:17,050 --> 00:00:20,570
+So the wages data is actually data from
+the ISLR package.
+
+9
+00:00:20,570 --> 00:00:22,750
+Which you can find at this link.
+
+10
+00:00:22,750 --> 00:00:25,160
+And it's from the book Introduction to
+Statistical Learning.
+
+11
+00:00:25,160 --> 00:00:27,503
+So we're going to be looking at this data
+
+12
+00:00:27,503 --> 00:00:30,220
+and seeing how we can use it for
+prediction.
+
+13
+00:00:30,220 --> 00:00:31,760
+So if I load the ISLR package.
+
+14
+00:00:31,760 --> 00:00:34,450
+Again I'm going to have to install it
+first and then I can load it.
+
+15
+00:00:34,450 --> 00:00:36,280
+And I also load the ggplot2 package
+because
+
+16
+00:00:36,280 --> 00:00:38,930
+we're going to be using that for some
+plotting.
+
+17
+00:00:38,930 --> 00:00:42,370
+And the caret package, because we're going
+to be using that for model building.
+
+18
+00:00:42,370 --> 00:00:44,510
+The wage data is actually in the ISLR
+package, and
+
+19
+00:00:44,510 --> 00:00:47,610
+I can load it with data and a capital w
+Wage.
+
+20
+00:00:47,610 --> 00:00:49,240
+And then I can look at a summary of that
+wage
+
+21
+00:00:49,240 --> 00:00:51,250
+data to look at all the different
+variables that are in there.
+
+22
+00:00:51,250 --> 00:00:54,250
+So we have the year of the data that's
+collected.
+
+23
+00:00:54,250 --> 00:00:58,100
+The age of the person who is the data is
+collected on.
+
+24
+00:00:58,100 --> 00:01:01,525
+In this case, it's only male people in
+this data set,
+
+25
+00:01:01,525 --> 00:01:06,116
+the marital status of those people, their
+race, education, the region where
+
+26
+00:01:06,116 --> 00:01:09,472
+they were, the data was collected is just
+the Mid Atlantic
+
+27
+00:01:09,472 --> 00:01:13,830
+region, and then the different kinds of
+job classes and their health.
+
+28
+00:01:13,830 --> 00:01:15,960
+So this gives you a little bit of
+information about what
+
+29
+00:01:15,960 --> 00:01:18,180
+the type of data that we're going to be
+looking at.
+
+30
+00:01:18,180 --> 00:01:20,700
+And you can already see that we've
+detected a few interesting
+
+31
+00:01:20,700 --> 00:01:23,700
+characteristics of this data just by
+looking at a summary here.
+
+32
+00:01:23,700 --> 00:01:25,140
+We know that they're all men.
+
+33
+00:01:25,140 --> 00:01:27,290
+We know that they're all in the Mid
+Atlantic region, for example.
+
+34
+00:01:29,500 --> 00:01:31,510
+So then what we do is again, just like
+always,
+
+35
+00:01:31,510 --> 00:01:33,580
+we're going to build a training set and a
+test set.
+
+36
+00:01:33,580 --> 00:01:36,584
+Even before we do exploration, we're
+going to set aside the
+
+37
+00:01:36,584 --> 00:01:39,221
+testing set and we're not going to use it
+for anything
+
+38
+00:01:39,221 --> 00:01:41,671
+until we actually look at the data at the
+end
+
+39
+00:01:41,671 --> 00:01:46,200
+of the, model building experience, and
+apply it just one time.
+
+40
+00:01:46,200 --> 00:01:48,720
+So we're going to do all our plotting in
+the training set.
+
+41
+00:01:48,720 --> 00:01:50,580
+So one example is to use this feature
+
+42
+00:01:50,580 --> 00:01:54,470
+plot, plot that comes from the caret
+package.
+
+43
+00:01:54,470 --> 00:01:56,860
+So this plot will plot basically all of
+
+44
+00:01:56,860 --> 00:01:58,490
+the features against each other so this
+plot
+
+45
+00:01:58,490 --> 00:02:02,210
+looks a little bit confusing for this data
+so I thought I'd just go through it.
+
+46
+00:02:02,210 --> 00:02:07,550
+So here I'm, using as the outcome I'm
+saying the outcome is the wage.
+
+47
+00:02:07,550 --> 00:02:08,904
+And then I'm going to look at all
+
+48
+00:02:08,904 --> 00:02:12,480
+these different variables, age, education,
+and job class.
+
+49
+00:02:12,480 --> 00:02:15,072
+So, first of all I have this y variable so
+that's
+
+50
+00:02:15,072 --> 00:02:18,692
+the outcome that we care about, and here
+the different variables.
+
+51
+00:02:18,692 --> 00:02:23,208
+I've got age, education, you can't read it
+very clearly in this
+
+52
+00:02:23,208 --> 00:02:27,216
+plot, but if you make it yourself you can,
+and job class here.
+
+53
+00:02:27,216 --> 00:02:30,804
+And so, what this plot is, this is the
+plot
+
+54
+00:02:30,804 --> 00:02:34,809
+here of the outcome y versus the job class
+here.
+
+55
+00:02:34,809 --> 00:02:40,258
+So you can see, you can do that for every
+box, so if you want to see the
+
+56
+00:02:40,258 --> 00:02:46,430
+plot of job class versus education, that's
+this plot here.
+
+57
+00:02:46,430 --> 00:02:49,420
+And it's the same plot here, only with the
+axis reversed and so forth.
+
+58
+00:02:49,420 --> 00:02:53,030
+So it shows you all of the variables that
+you have here, plotted against each other.
+
+59
+00:02:53,030 --> 00:02:55,978
+And in particular, what you are looking
+for, here are all the
+
+60
+00:02:55,978 --> 00:03:00,160
+plots corresponding to each of the
+variables plotted versus the y variable.
+
+61
+00:03:00,160 --> 00:03:01,680
+And you're looking for any variable that
+seems
+
+62
+00:03:01,680 --> 00:03:04,160
+to show a relationship with the y
+variable.
+
+63
+00:03:04,160 --> 00:03:06,457
+So, for example, you can see that there
+seems to
+
+64
+00:03:06,457 --> 00:03:09,330
+be a trend here between education and
+salary, for example.
+
+65
+00:03:09,330 --> 00:03:12,540
+So this is one way that you can look at
+all the data.
+
+66
+00:03:12,540 --> 00:03:15,200
+Another thing that you're going to use is
+either Qplot, function
+
+67
+00:03:15,200 --> 00:03:18,440
+in the ggplot2 package or just the plot
+function base R.
+
+68
+00:03:19,500 --> 00:03:22,995
+So here I'm plotting age versus wage, and
+so you can see again it
+
+69
+00:03:22,995 --> 00:03:26,710
+appears that there seems to be some kind
+of trend with age and wages.
+
+70
+00:03:26,710 --> 00:03:28,357
+But you also see, one thing that
+
+71
+00:03:28,357 --> 00:03:31,510
+you notice frequently from making plots
+like this.
+
+72
+00:03:31,510 --> 00:03:33,160
+Here's some very strange patterns.
+
+73
+00:03:33,160 --> 00:03:36,723
+So you see there's this big chunk up here
+of observations that
+
+74
+00:03:36,723 --> 00:03:41,260
+appear to be very different than the
+relationship down here for these chunks.
+
+75
+00:03:41,260 --> 00:03:44,400
+So one thing that we might want to do is
+try to figure out why
+
+76
+00:03:44,400 --> 00:03:46,720
+there, there's that strange relation
+between ages
+
+77
+00:03:46,720 --> 00:03:49,480
+and wages before we build our, our model.
+
+78
+00:03:49,480 --> 00:03:51,886
+So, one thing that we could do is, for
+example,
+
+79
+00:03:51,886 --> 00:03:55,430
+using the ggplot2 package, color that plot
+by different variables.
+
+80
+00:03:55,430 --> 00:04:01,130
+So again, I plotted age versus wage, so on
+the x axis is age, on the y axis is wage.
+
+81
+00:04:01,130 --> 00:04:03,770
+But now I've colored it by the job class.
+
+82
+00:04:03,770 --> 00:04:05,150
+And so you can do that with, by
+
+83
+00:04:05,150 --> 00:04:08,290
+passing the parameter color to the two
+plot function.
+
+84
+00:04:08,290 --> 00:04:11,826
+And so what you see now is that most of
+the individuals that are up
+
+85
+00:04:11,826 --> 00:04:15,029
+in this other chunk, come from the
+information
+
+86
+00:04:15,029 --> 00:04:18,240
+based jobs as opposed to the industrial
+jobs.
+
+87
+00:04:18,240 --> 00:04:19,680
+So that might explain a lot of the
+
+88
+00:04:19,680 --> 00:04:24,200
+difference here between, these two big
+classes of observations.
+
+89
+00:04:24,200 --> 00:04:25,840
+So this gives you a way to sort of
+
+90
+00:04:25,840 --> 00:04:28,560
+detect variables that might be important
+in your model.
+
+91
+00:04:28,560 --> 00:04:32,150
+Because they show, variation in the data.
+
+92
+00:04:32,150 --> 00:04:35,810
+So you can also add regression smoothers.
+
+93
+00:04:35,810 --> 00:04:39,210
+So, for example, now, what I've done is,
+I've again made a
+
+94
+00:04:39,210 --> 00:04:43,510
+plot of age versus wage, but now I've
+colored it by education.
+
+95
+00:04:43,510 --> 00:04:45,580
+And so then what I can do is I can use
+
+96
+00:04:45,580 --> 00:04:51,220
+the geom_smooth function to apply a linear
+smoother to the data.
+
+97
+00:04:51,220 --> 00:04:54,382
+You would've learned about this in
+Exploratory Data Analysis, but
+
+98
+00:04:54,382 --> 00:04:57,360
+if not, you can just see the function
+right here.
+
+99
+00:04:57,360 --> 00:05:00,880
+And so what that does is for every
+different education class, it
+
+100
+00:05:00,880 --> 00:05:03,900
+fits a linear model, so you can see
+there's a purple line here.
+
+101
+00:05:03,900 --> 00:05:07,120
+And that corresponds to people with
+advanced degrees and then you can see for
+
+102
+00:05:07,120 --> 00:05:09,670
+example a green line here, that
+corresponds
+
+103
+00:05:09,670 --> 00:05:12,120
+to people with some college and so forth.
+
+104
+00:05:12,120 --> 00:05:15,030
+And so you can see if there's a different
+relationship for different age groups.
+
+105
+00:05:17,530 --> 00:05:19,297
+The other thing that you might that is
+
+106
+00:05:19,297 --> 00:05:21,579
+often very useful is to break up things
+like
+
+107
+00:05:21,579 --> 00:05:24,832
+the wage variable into different
+categories cause sometimes it's
+
+108
+00:05:24,832 --> 00:05:28,670
+clear that specific categories seem to
+have different relationships.
+
+109
+00:05:28,670 --> 00:05:33,230
+The way I tend to do that is with the cut2
+function, that's in the Hmisc package.
+
+110
+00:05:33,230 --> 00:05:37,134
+So if you load the Hmisc package and then
+use cut2, you can tell
+
+111
+00:05:37,134 --> 00:05:41,670
+it with the g parameter how many groups to
+break the data set into.
+
+112
+00:05:41,670 --> 00:05:45,910
+And it'll break the data set up into
+factors based on quantile groups.
+
+113
+00:05:45,910 --> 00:05:49,355
+So all of the observations that land
+between 20.1 and
+
+114
+00:05:49,355 --> 00:05:52,657
+91.7 on the wage variable will get
+assigned to this
+
+115
+00:05:52,657 --> 00:05:56,103
+factor level and then all the values
+between 91.7 and
+
+116
+00:05:56,103 --> 00:06:00,060
+118.9 will get assigned to this group and
+so forth.
+
+117
+00:06:00,060 --> 00:06:02,210
+And so, what you can do now is you can
+actually
+
+118
+00:06:02,210 --> 00:06:04,330
+use that to, in order to make different
+kinds of plots.
+
+119
+00:06:04,330 --> 00:06:09,875
+So now, suppose I wanted to plot wage
+versus, oh sorry, wage groups versus
+
+120
+00:06:09,875 --> 00:06:16,060
+age, I can now, use qplot again but now I
+can pass it the box plot geometry.
+
+121
+00:06:16,060 --> 00:06:20,530
+And then I can say okay, I want to see the
+plot of these different wage groups
+
+122
+00:06:20,530 --> 00:06:22,800
+versus age and sometimes that can make it
+
+123
+00:06:22,800 --> 00:06:25,190
+easier to see different trends that are
+emerging.
+
+124
+00:06:25,190 --> 00:06:27,140
+For example, you can see here a little
+
+125
+00:06:27,140 --> 00:06:30,130
+bit more clearly the relationship between
+age and wage.
+
+126
+00:06:31,840 --> 00:06:33,500
+The other thing you might want to do is
+you might want
+
+127
+00:06:33,500 --> 00:06:36,990
+to add on top of the box plots, actually
+the points themselves.
+
+128
+00:06:36,990 --> 00:06:38,360
+The reason why you might want to do
+
+129
+00:06:38,360 --> 00:06:40,750
+this is because sometimes box plots can
+obscure how
+
+130
+00:06:40,750 --> 00:06:45,080
+many points are being shown here and so
+one thing that you can do is you can
+
+131
+00:06:45,080 --> 00:06:51,040
+say, pass it both box plot and jitter and
+you can have it, arrange the plot so you
+
+132
+00:06:51,040 --> 00:06:56,230
+can see both the box plot itself and you
+can see the box plot with points overlaid.
+
+133
+00:06:56,230 --> 00:07:00,690
+So that's what grid arrange is doing, it's
+actually generating the two plots.
+
+134
+00:07:00,690 --> 00:07:03,270
+So p1 was the plot that we made on the
+previous slide.
+
+135
+00:07:03,270 --> 00:07:06,160
+And p2 is the plot we made here with
+points overlaid.
+
+136
+00:07:06,160 --> 00:07:09,280
+And grid arrange makes two plots side by
+side.
+
+137
+00:07:09,280 --> 00:07:13,066
+So you can see here from the dots that
+there's a large number of dots in each of
+
+138
+00:07:13,066 --> 00:07:15,493
+the different boxes and so that suggest
+that this
+
+139
+00:07:15,493 --> 00:07:18,200
+trend, any trend a user may actually be
+real.
+
+140
+00:07:18,200 --> 00:07:21,285
+If you observe just one of a few dots in
+the boxes it means maybe
+
+141
+00:07:21,285 --> 00:07:23,403
+that that particular box isn't very well
+
+142
+00:07:23,403 --> 00:07:27,170
+representative of what the data actually
+looked like.
+
+143
+00:07:27,170 --> 00:07:30,310
+Another thing that's very useful is you
+can use the cut variable,
+
+144
+00:07:30,310 --> 00:07:34,420
+the factorized version of the continuous
+variable to look at tables of data.
+
+145
+00:07:34,420 --> 00:07:37,742
+So here I'm making a table comparing this
+factor
+
+146
+00:07:37,742 --> 00:07:40,416
+version of wages to the job class and so I
+
+147
+00:07:40,416 --> 00:07:44,144
+can see for example that there are more
+industrial jobs
+
+148
+00:07:44,144 --> 00:07:48,880
+in the lower wage variable than there are
+information jobs.
+
+149
+00:07:48,880 --> 00:07:52,080
+And that trend reverses itself for the
+highway jobs.
+
+150
+00:07:52,080 --> 00:07:55,390
+There are fewer industrial people and more
+information people.
+
+151
+00:07:55,390 --> 00:07:59,330
+You can also use prop table to actually
+get the proportions in each group.
+
+152
+00:07:59,330 --> 00:08:02,581
+So here it's the proportion, by passing it
+one,
+
+153
+00:08:02,581 --> 00:08:05,700
+I say I want to get the proportion in each
+row.
+
+154
+00:08:05,700 --> 00:08:10,960
+So if I passed it at two here, it would
+give me the proportion in each column.
+
+155
+00:08:10,960 --> 00:08:13,370
+So here I see that 62% of the low wage
+
+156
+00:08:13,370 --> 00:08:17,870
+jobs go, correspond to industrial, and
+37%, 38% correspond to information.
+
+157
+00:08:17,870 --> 00:08:19,720
+And so you can use that to get an
+
+158
+00:08:19,720 --> 00:08:22,550
+idea of how those proportions change
+across different wage levels.
+
+159
+00:08:24,420 --> 00:08:28,570
+Finally you can use density plots to plot
+the values of continuous predictors.
+
+160
+00:08:28,570 --> 00:08:31,100
+So here again I'm using the qplot
+function.
+
+161
+00:08:31,100 --> 00:08:36,020
+I'm plotting the wage variable, and I'm
+plotting a density plot, versus education.
+
+162
+00:08:36,020 --> 00:08:38,330
+So this basically shows where the bulk of
+the data is.
+
+163
+00:08:38,330 --> 00:08:40,620
+So on the x axis is the wage.
+
+164
+00:08:40,620 --> 00:08:43,500
+And on the y axis is sort of the
+proportion of
+
+165
+00:08:43,500 --> 00:08:46,850
+the variable that falls into that bin of
+the x axis.
+
+166
+00:08:46,850 --> 00:08:51,861
+And so you can see, for example, the high
+school grads tend to have more values that
+
+167
+00:08:51,861 --> 00:08:53,689
+are down here in the lower part of
+
+168
+00:08:53,689 --> 00:08:56,467
+the range, and the advanced degree folks
+tend to
+
+169
+00:08:56,467 --> 00:09:01,344
+be a little bit higher, and there's also a
+group, outgroup over here that tends to be
+
+170
+00:09:01,344 --> 00:09:04,189
+very high for both the advanced degree as
+well
+
+171
+00:09:04,189 --> 00:09:06,740
+as the college grads which is shown in
+blue.
+
+172
+00:09:06,740 --> 00:09:11,460
+So sometimes density plots can show things
+that box plots can't necessarily do.
+
+173
+00:09:11,460 --> 00:09:13,112
+It's also easier to overlay multiple
+
+174
+00:09:13,112 --> 00:09:15,680
+distributions when you're doing density
+plots.
+
+175
+00:09:15,680 --> 00:09:18,500
+In other words, if you break things up
+into a bunch of different groups, and you
+
+176
+00:09:18,500 --> 00:09:20,410
+want to see how all the distributions
+change
+
+177
+00:09:20,410 --> 00:09:24,280
+by group, density plots can be very
+useful.
+
+178
+00:09:24,280 --> 00:09:28,960
+So, one thing to keep in mind is to make
+your plots only in the training data.
+
+179
+00:09:28,960 --> 00:09:31,220
+The test set, again, can't be used for
+exploration.
+
+180
+00:09:31,220 --> 00:09:33,730
+That would be similar to training your
+model on the test
+
+181
+00:09:33,730 --> 00:09:37,650
+set, which, as we should, talked about
+previously, will lead to overfitting.
+
+182
+00:09:37,650 --> 00:09:39,020
+Things that you should be looking for in
+these
+
+183
+00:09:39,020 --> 00:09:41,550
+plots is imbalance in the outcomes of the
+predictors.
+
+184
+00:09:41,550 --> 00:09:44,610
+If you see all of the predictors tend to
+be one
+
+185
+00:09:44,610 --> 00:09:48,260
+value in the one outcome group, and not
+another outcome group.
+
+186
+00:09:48,260 --> 00:09:50,690
+Then you see that's a good predictor.
+
+187
+00:09:50,690 --> 00:09:54,402
+But if you see that, you only have three
+of one outcome and 150 of the other
+
+188
+00:09:54,402 --> 00:09:56,606
+outcome, that means it's going to be very
+hard
+
+189
+00:09:56,606 --> 00:09:59,580
+to build an accurate classifier between
+those two classes.
+
+190
+00:09:59,580 --> 00:10:02,601
+You're looking for outliers or weird
+groups outlying the data
+
+191
+00:10:02,601 --> 00:10:06,340
+that might suggest that there are some
+variables you're missing.
+
+192
+00:10:06,340 --> 00:10:09,950
+And groups of points that are not
+explained by any of the predictors.
+
+193
+00:10:09,950 --> 00:10:12,180
+Skewed variables which you're going to
+want to transform and
+
+194
+00:10:12,180 --> 00:10:16,810
+make look better, more sort of nicely
+normally distributed if you're
+
+195
+00:10:16,810 --> 00:10:19,530
+using things like regression models but
+that may not matter
+
+196
+00:10:19,530 --> 00:10:22,490
+as much as if you're using more of machine
+learning methods.
+
+197
+00:10:22,490 --> 00:10:24,330
+For more information on plotting in
+general
+
+198
+00:10:24,330 --> 00:10:27,060
+you can look at the ggplot2 tutorial.
+
+199
+00:10:27,060 --> 00:10:29,769
+You could also take the exploratory data
+analysis class in
+
+200
+00:10:29,769 --> 00:10:32,312
+this data science specialization or you
+can look at the
+
+201
+00:10:32,312 --> 00:10:35,631
+caret visualization tutorial, because
+that'll give you a little bit
+
+202
+00:10:35,631 --> 00:10:39,080
+more information about prediction specific
+plots that might be useful.
+
