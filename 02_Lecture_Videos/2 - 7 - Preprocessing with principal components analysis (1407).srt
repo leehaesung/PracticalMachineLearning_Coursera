@@ -1,0 +1,1321 @@
+1
+00:00:00,210 --> 00:00:01,210
+This is a lecture a lecture about
+
+2
+00:00:01,210 --> 00:00:05,300
+preprossings, preprocessing covariants
+with principal components analysis.
+
+3
+00:00:05,300 --> 00:00:07,520
+The idea is that often you have multiple
+quantitative
+
+4
+00:00:07,520 --> 00:00:10,610
+variables and sometimes they'll be highly
+correlated with each other.
+
+5
+00:00:10,610 --> 00:00:14,580
+In other words, they'll be very similar to
+being the almost the exact same variable.
+
+6
+00:00:14,580 --> 00:00:18,100
+In this case, it's not necessarily useful
+to include every variable in the model.
+
+7
+00:00:18,100 --> 00:00:19,720
+You might want to include some summary
+that
+
+8
+00:00:19,720 --> 00:00:22,800
+captures most of the information in those
+quantitative variables.
+
+9
+00:00:23,850 --> 00:00:26,443
+So, as an example I'm going to use the
+spam data set again.
+
+10
+00:00:26,443 --> 00:00:28,945
+So I've loaded the caret package here, and
+I've loaded
+
+11
+00:00:28,945 --> 00:00:32,070
+the kernel app package, and loaded the
+spam data set.
+
+12
+00:00:32,070 --> 00:00:34,443
+I again, create a training and test set
+and I'm going to
+
+13
+00:00:34,443 --> 00:00:37,579
+perform only the operations on the
+training set that I'm doing here.
+
+14
+00:00:37,579 --> 00:00:39,671
+So that all exploration and model creation
+and
+
+15
+00:00:39,671 --> 00:00:42,920
+feature building has to happen in the
+training set.
+
+16
+00:00:42,920 --> 00:00:45,010
+The first thing that I do is that I
+
+17
+00:00:45,010 --> 00:00:47,910
+leave out just the 58th column of this
+training set.
+
+18
+00:00:47,910 --> 00:00:50,030
+Which in this case is the outcome.
+
+19
+00:00:50,030 --> 00:00:52,410
+So I'm looking at all the other predictor
+variables.
+
+20
+00:00:52,410 --> 00:00:55,270
+And I calculate the correlation between
+all those columns.
+
+21
+00:00:55,270 --> 00:00:57,580
+The correlation between all predictor
+variables.
+
+22
+00:00:57,580 --> 00:00:59,440
+And I take its absolute value.
+
+23
+00:00:59,440 --> 00:01:01,769
+So I'm looking for all the predictor
+variables that that have
+
+24
+00:01:01,769 --> 00:01:04,840
+a very high correlation or are very
+similar to each other.
+
+25
+00:01:04,840 --> 00:01:07,800
+Every variable has a correlation of 1 with
+itself.
+
+26
+00:01:07,800 --> 00:01:09,910
+So I'm not interested in those variable.
+
+27
+00:01:09,910 --> 00:01:11,602
+You know, removing variables that have
+high
+
+28
+00:01:11,602 --> 00:01:13,910
+correlations with themselves, since they
+all do.
+
+29
+00:01:13,910 --> 00:01:17,120
+So I set the diagonal of those matrix,
+that comes out to be equal to 0.
+
+30
+00:01:17,120 --> 00:01:18,972
+That's basically just setting the
+correlation
+
+31
+00:01:18,972 --> 00:01:21,350
+between variables with itself, equal to 0.
+
+32
+00:01:21,350 --> 00:01:24,920
+And then I look, which of these variables
+have a high correlation with each other?
+
+33
+00:01:24,920 --> 00:01:28,990
+In other words, which of the variables
+have a correlation greater than 0.8?
+
+34
+00:01:28,990 --> 00:01:34,310
+So it turns out two variables have a very
+high correlation with each other.
+
+35
+00:01:34,310 --> 00:01:37,329
+They are the num415 and num857.
+
+36
+00:01:37,329 --> 00:01:40,698
+So it's how, if the number 415 and
+
+37
+00:01:40,698 --> 00:01:46,580
+857 appears in the email and frequently
+appears together.
+
+38
+00:01:46,580 --> 00:01:49,780
+This is likely because there's a phone
+number that has similar variables there.
+
+39
+00:01:51,210 --> 00:01:54,382
+So, if I look at the spam dataset, at the
+columns 34
+
+40
+00:01:54,382 --> 00:02:00,058
+and 32, which I got from getting that from
+the previous correlation variable.
+
+41
+00:02:00,058 --> 00:02:02,194
+I see that it's these two variables, these
+
+42
+00:02:02,194 --> 00:02:04,978
+two columns that are highly correlated
+with each other.
+
+43
+00:02:04,978 --> 00:02:08,255
+And if I plot those two columns against
+each other, I see exactly what I'd expect.
+
+44
+00:02:08,255 --> 00:02:12,422
+So, the frequency of four 415 and 857 is
+incredibly highly
+
+45
+00:02:12,422 --> 00:02:16,600
+correlated, this basically lie perfectly
+on a line with each other.
+
+46
+00:02:16,600 --> 00:02:24,270
+So, as the number of 415 appears more
+frequently, so does the number 857.
+
+47
+00:02:24,270 --> 00:02:26,630
+So the idea is, including both of these
+predictors
+
+48
+00:02:26,630 --> 00:02:29,450
+in the model might not necessarily be very
+useful.
+
+49
+00:02:29,450 --> 00:02:33,130
+And so, the basic idea is, how can we take
+those variables
+
+50
+00:02:33,130 --> 00:02:36,680
+and turn them into, say, a single variable
+that might be better?
+
+51
+00:02:36,680 --> 00:02:38,530
+And one idea is to think about it as a
+weighted
+
+52
+00:02:38,530 --> 00:02:42,750
+combination of those predictors that
+explains most of what's going on.
+
+53
+00:02:42,750 --> 00:02:44,090
+So the idea is to pick the
+
+54
+00:02:44,090 --> 00:02:47,680
+combination that captures the most
+information possible.
+
+55
+00:02:47,680 --> 00:02:49,630
+And the benefits here are, you're reducing
+the number
+
+56
+00:02:49,630 --> 00:02:51,540
+of predictors you need to include in your
+model.
+
+57
+00:02:51,540 --> 00:02:52,820
+So that's nice.
+
+58
+00:02:52,820 --> 00:02:54,810
+And you're also reducing noise.
+
+59
+00:02:54,810 --> 00:02:56,540
+In other words, you're averaging or
+combining
+
+60
+00:02:56,540 --> 00:02:58,490
+variables together, so you might reduce
+them together.
+
+61
+00:02:58,490 --> 00:03:00,820
+So you do this in a clever way, you
+
+62
+00:03:00,820 --> 00:03:04,640
+actually gain quite a bit by doing
+principal component analysis.
+
+63
+00:03:04,640 --> 00:03:06,880
+So one idea to think about is just.
+
+64
+00:03:06,880 --> 00:03:08,560
+Basically what you're trying to do is
+figure out a
+
+65
+00:03:08,560 --> 00:03:12,100
+combination of these variables that
+explain close to the variability.
+
+66
+00:03:12,100 --> 00:03:14,847
+So just as an example, here's a
+combination I could do.
+
+67
+00:03:14,847 --> 00:03:23,565
+I could say I could take 0.71 times the
+415 variable plus 0.71 times 857 variable.
+
+68
+00:03:23,565 --> 00:03:25,383
+And create a new variable called x.
+
+69
+00:03:25,383 --> 00:03:29,310
+Which is basically the sum of those two
+variables.
+
+70
+00:03:29,310 --> 00:03:31,900
+Then I could take the difference of those
+two variables.
+
+71
+00:03:31,900 --> 00:03:38,721
+By basically doing 0.71 times 415 minus
+0.71 times 857.
+
+72
+00:03:38,721 --> 00:03:40,671
+So this is basically adding, x is adding
+the
+
+73
+00:03:40,671 --> 00:03:43,480
+two variables together, y is subtracting
+the two variables.
+
+74
+00:03:44,520 --> 00:03:47,710
+So then if I plot those variables versus
+each other, when I add
+
+75
+00:03:47,710 --> 00:03:52,350
+them up, that's the x-axis, and when I
+take the difference, that's the y-axis.
+
+76
+00:03:52,350 --> 00:03:56,560
+And so you can see most of the variability
+is happening in the x-axis.
+
+77
+00:03:56,560 --> 00:04:00,471
+In other words there's lots of points all
+spread out across the x-axis,
+
+78
+00:04:00,471 --> 00:04:04,080
+but most of the points are clustered right
+here at 0 on the y-axis.
+
+79
+00:04:04,080 --> 00:04:06,410
+So that almost all of these points have a
+y value of 0.
+
+80
+00:04:06,410 --> 00:04:10,760
+So, the adding the two variables together
+captures most of the
+
+81
+00:04:10,760 --> 00:04:12,800
+information in those two variables and
+
+82
+00:04:12,800 --> 00:04:16,060
+subtracting the variables takes less
+information.
+
+83
+00:04:16,060 --> 00:04:17,370
+So the idea here is we might want to
+
+84
+00:04:17,370 --> 00:04:20,230
+use the sum of the two variables as a
+predictor.
+
+85
+00:04:20,230 --> 00:04:21,900
+That will reduce the number predicted that
+we will
+
+86
+00:04:21,900 --> 00:04:25,790
+have to use and renew some of the noise.
+
+87
+00:04:25,790 --> 00:04:29,340
+So there are two related problems to how
+you do this in a more general sense.
+
+88
+00:04:29,340 --> 00:04:35,860
+And so the ideas are find a new set of
+variables based on the variables
+
+89
+00:04:35,860 --> 00:04:40,760
+that you have that are uncorrelated and
+explain as much variability as possible.
+
+90
+00:04:40,760 --> 00:04:43,187
+In other words from the previous plot,
+we're looking for
+
+91
+00:04:43,187 --> 00:04:45,510
+the x variable which has lots of variation
+in it.
+
+92
+00:04:45,510 --> 00:04:47,620
+And not the y variable which is almost
+always 0.
+
+93
+00:04:47,620 --> 00:04:50,370
+So if you put the variables together in
+
+94
+00:04:50,370 --> 00:04:54,510
+one matrix, create the best matrix with
+fewer variables.
+
+95
+00:04:54,510 --> 00:04:56,290
+In other words this is lower rank if
+
+96
+00:04:56,290 --> 00:04:59,680
+you're talking mathematically that
+explains the original data.
+
+97
+00:04:59,680 --> 00:05:01,980
+These two problems are very closely
+related to each other.
+
+98
+00:05:01,980 --> 00:05:04,400
+And they're both the idea that, can we use
+
+99
+00:05:04,400 --> 00:05:07,890
+fewer variables to explain almost
+everything that's going on.
+
+100
+00:05:07,890 --> 00:05:09,660
+The first goal is a statistical goal and
+
+101
+00:05:09,660 --> 00:05:11,250
+the second goal is a data compression
+goal.
+
+102
+00:05:11,250 --> 00:05:13,659
+But they're also, they're both very useful
+for machine learning.
+
+103
+00:05:14,940 --> 00:05:18,180
+So there's two related solutions and
+they're very similar to each other.
+
+104
+00:05:18,180 --> 00:05:20,830
+So if x is a matrix with a variable in
+each column, and an
+
+105
+00:05:20,830 --> 00:05:24,570
+observation in each row, like a data in
+frame you usually have in R.
+
+106
+00:05:24,570 --> 00:05:27,460
+Then the singular value decomposition is a
+matrix decomposition.
+
+107
+00:05:27,460 --> 00:05:30,255
+So it takes that data frame X, and breaks
+it up into
+
+108
+00:05:30,255 --> 00:05:34,050
+three matrices, a U matrix, and D matrix,
+and a B matrix.
+
+109
+00:05:34,050 --> 00:05:37,210
+And the V, the columns of U are called the
+left singular vectors.
+
+110
+00:05:37,210 --> 00:05:40,078
+And the columns of B are called the right
+singular vectors.
+
+111
+00:05:40,078 --> 00:05:41,510
+And D is a diagonal matrix.
+
+112
+00:05:41,510 --> 00:05:42,730
+Those are called the singular values.
+
+113
+00:05:44,080 --> 00:05:46,200
+You will learn about this in getting data
+
+114
+00:05:46,200 --> 00:05:50,420
+or exploratory data analysis if you've
+taken those classes.
+
+115
+00:05:50,420 --> 00:05:53,003
+The principle components are equal to the
+right singular
+
+116
+00:05:53,003 --> 00:05:55,060
+vectors if you scale the data in the same
+way.
+
+117
+00:05:55,060 --> 00:05:58,057
+In other words, the solution to both of
+those problems that I talked
+
+118
+00:05:58,057 --> 00:06:01,019
+about on the previous slide is the same if
+you do the right scaling.
+
+119
+00:06:01,019 --> 00:06:03,979
+So the idea here is, these variables in V
+are
+
+120
+00:06:03,979 --> 00:06:08,340
+constructed to explain the maximum amount
+of variation in the data.
+
+121
+00:06:08,340 --> 00:06:11,650
+So, just to show you how this works in
+
+122
+00:06:11,650 --> 00:06:14,630
+a real example, suppose we take that spam
+data set.
+
+123
+00:06:14,630 --> 00:06:18,530
+And we just take those two variables that
+were highly correlated with each other.
+
+124
+00:06:18,530 --> 00:06:19,420
+Variables 34 and 32.
+
+125
+00:06:19,420 --> 00:06:22,251
+So then we do principal components.
+
+126
+00:06:22,251 --> 00:06:25,086
+Same as the singular value decomposition
+on the, on that
+
+127
+00:06:25,086 --> 00:06:28,740
+small data set that just consists of those
+two variables.
+
+128
+00:06:28,740 --> 00:06:32,121
+If we plot the first principle component
+versus the second principle component.
+
+129
+00:06:32,121 --> 00:06:35,763
+We see a plot that is very similar to the
+one that I showed you earlier.
+
+130
+00:06:35,763 --> 00:06:40,080
+Where the first principal component looks
+like adding the two variables together.
+
+131
+00:06:40,080 --> 00:06:41,870
+And the second principal component looks a
+lot
+
+132
+00:06:41,870 --> 00:06:44,600
+like subtracting the two variables from
+each other.
+
+133
+00:06:44,600 --> 00:06:48,110
+So why would we do principal components,
+instead of just adding and subtracting?
+
+134
+00:06:48,110 --> 00:06:51,288
+Well, principal components allows you to
+perform this operation,
+
+135
+00:06:51,288 --> 00:06:53,435
+even if you have more than just two
+variables.
+
+136
+00:06:53,435 --> 00:06:57,375
+You may be able to reduce all of the
+variables down into a very small number
+
+137
+00:06:57,375 --> 00:07:00,284
+of combinations of sums and differences
+and weighted
+
+138
+00:07:00,284 --> 00:07:04,120
+sums and differences of the variables that
+you've observed.
+
+139
+00:07:04,120 --> 00:07:06,823
+So, using principal components can let you
+look at a
+
+140
+00:07:06,823 --> 00:07:10,270
+large number of quantitative variables and
+reduce it quite a bit.
+
+141
+00:07:11,630 --> 00:07:13,109
+The one thing that you can also look at
+
+142
+00:07:13,109 --> 00:07:15,851
+it in this principal component object is
+the rotation matrix.
+
+143
+00:07:15,851 --> 00:07:18,287
+Which is basically how it's summing up the
+
+144
+00:07:18,287 --> 00:07:21,410
+two variable to get each of the principal
+components.
+
+145
+00:07:21,410 --> 00:07:22,900
+And so here you can see why I put 0.71
+
+146
+00:07:22,900 --> 00:07:25,760
+in the sum and the difference on the first
+slide.
+
+147
+00:07:25,760 --> 00:07:35,123
+So, principal component one is just 0.7081
+times num14, 415, and 0.7061 times num857.
+
+148
+00:07:35,123 --> 00:07:39,006
+Principal component two is just the
+difference
+
+149
+00:07:39,006 --> 00:07:44,356
+again, by multiply by 0.7061, and minus
+0.7081.
+
+150
+00:07:44,356 --> 00:07:48,161
+So basically, in this particular case the
+first principal component, the one
+
+151
+00:07:48,161 --> 00:07:52,010
+that explains the most variability is just
+adding the two variables up.
+
+152
+00:07:52,010 --> 00:07:55,100
+And the variable that explains the second
+most variability in these
+
+153
+00:07:55,100 --> 00:07:58,490
+two variables is the taking the difference
+between the two variables.
+
+154
+00:07:59,960 --> 00:08:01,851
+So in this spam data we can do, actually
+do
+
+155
+00:08:01,851 --> 00:08:04,570
+this for a more variables than just the
+two variables.
+
+156
+00:08:04,570 --> 00:08:06,840
+This is why principal components may be
+useful.
+
+157
+00:08:06,840 --> 00:08:09,435
+So here, I'm creating a variable that's
+just going to
+
+158
+00:08:09,435 --> 00:08:12,020
+be the color we're going to color our
+points by.
+
+159
+00:08:12,020 --> 00:08:14,858
+So it's color equal to black if you are
+not
+
+160
+00:08:14,858 --> 00:08:18,830
+a spam and color equal to red if you're a
+spam.
+
+161
+00:08:18,830 --> 00:08:22,990
+And this variable here, or this statement
+here
+
+162
+00:08:22,990 --> 00:08:25,620
+calculates the principal components on the
+entire data set.
+
+163
+00:08:25,620 --> 00:08:27,650
+So you'll notice that I've applied a
+function
+
+164
+00:08:27,650 --> 00:08:30,110
+of the data set, the log 10 transform.
+
+165
+00:08:30,110 --> 00:08:31,470
+And I've added one.
+
+166
+00:08:31,470 --> 00:08:34,402
+I've done this to make the data look a
+little bit more Gaussian.
+
+167
+00:08:34,402 --> 00:08:36,204
+Because some of the variables are normal
+
+168
+00:08:36,204 --> 00:08:38,594
+looking, because some of the variables are
+skewed.
+
+169
+00:08:38,594 --> 00:08:39,837
+And you often have to do that
+
+170
+00:08:39,837 --> 00:08:42,790
+for principal component analysis to look
+sensible.
+
+171
+00:08:42,790 --> 00:08:46,280
+So then I calculated the principal
+components of the entire data set.
+
+172
+00:08:46,280 --> 00:08:47,690
+So in this case I can now again
+
+173
+00:08:47,690 --> 00:08:51,190
+plot principal component one, versus
+principal component two.
+
+174
+00:08:51,190 --> 00:08:55,950
+Principle component one is no longer a
+very easy addition of two variables.
+
+175
+00:08:55,950 --> 00:08:59,000
+It might be some quite complicated
+combination
+
+176
+00:08:59,000 --> 00:09:01,060
+of all the variables in the data set.
+
+177
+00:09:01,060 --> 00:09:04,830
+But it's the combination that explains the
+most variation in the data.
+
+178
+00:09:04,830 --> 00:09:08,200
+Principle component two is the combination
+that explains the second most variation.
+
+179
+00:09:08,200 --> 00:09:10,920
+And principal component three explains the
+third most and so forth.
+
+180
+00:09:10,920 --> 00:09:13,530
+So if I plot principal component one.
+
+181
+00:09:13,530 --> 00:09:15,920
+That's just a variable that I've
+calculated.
+
+182
+00:09:15,920 --> 00:09:17,390
+Versus variable principal component two
+
+183
+00:09:17,390 --> 00:09:19,560
+that's another variable that I've
+calculated.
+
+184
+00:09:19,560 --> 00:09:22,510
+Then I color them by the spam indicator.
+
+185
+00:09:22,510 --> 00:09:23,760
+So, whether each point, so each of
+
+186
+00:09:23,760 --> 00:09:26,420
+these points corresponds to a single
+observation.
+
+187
+00:09:26,420 --> 00:09:28,420
+The red ones correspond to spam
+observations
+
+188
+00:09:28,420 --> 00:09:31,300
+and the black ones just ham observations.
+
+189
+00:09:31,300 --> 00:09:33,441
+You could see that in principal component
+
+190
+00:09:33,441 --> 00:09:36,079
+one space, or along the principal
+component one.
+
+191
+00:09:36,079 --> 00:09:40,370
+There's a little bit of separation of the
+ham messages from the spam messages.
+
+192
+00:09:40,370 --> 00:09:41,910
+In other words the spam messages tend to
+have
+
+193
+00:09:41,910 --> 00:09:43,800
+a little bit higher values than principal
+component one.
+
+194
+00:09:43,800 --> 00:09:47,120
+So this is a way to reduce the size of
+your data set while still
+
+195
+00:09:47,120 --> 00:09:49,020
+capturing a large amount of variation
+which
+
+196
+00:09:49,020 --> 00:09:52,540
+is a, a, the idea behind feature creation.
+
+197
+00:09:54,010 --> 00:09:55,860
+You can do this in caret as well.
+
+198
+00:09:55,860 --> 00:09:58,770
+So you can do it using the pre-process
+function.
+
+199
+00:09:58,770 --> 00:10:00,720
+So this is just using, basically doing
+
+200
+00:10:00,720 --> 00:10:03,880
+a similar type operation with a caret
+package.
+
+201
+00:10:03,880 --> 00:10:05,600
+You pass the pre-process function.
+
+202
+00:10:05,600 --> 00:10:08,130
+The same data set you did before.
+
+203
+00:10:08,130 --> 00:10:09,300
+You tell it what methods you use.
+
+204
+00:10:09,300 --> 00:10:13,110
+In this case you tell it to use principal
+component analysis or PCA.
+
+205
+00:10:13,110 --> 00:10:16,382
+You tell it the number of principal
+components to compute.
+
+206
+00:10:16,382 --> 00:10:19,531
+And then, what we can do is you can
+actually calculate the
+
+207
+00:10:19,531 --> 00:10:24,780
+values of each new principle compo, so the
+principle component are two variables.
+
+208
+00:10:24,780 --> 00:10:27,983
+There is principle component one,
+principle component two.
+
+209
+00:10:27,983 --> 00:10:31,021
+And they're basically a model that you fit
+to the data.
+
+210
+00:10:31,021 --> 00:10:34,022
+So the idea is that if you get a new
+observation you have
+
+211
+00:10:34,022 --> 00:10:39,010
+to predict what the principle component
+will look like for that new variable.
+
+212
+00:10:39,010 --> 00:10:42,390
+So we pass this pre-processed object and
+the data set,
+
+213
+00:10:42,390 --> 00:10:45,470
+to the predict function and that gives us
+the principle component.
+
+214
+00:10:45,470 --> 00:10:47,560
+If we plot them versus each other, you see
+spam pc
+
+215
+00:10:47,560 --> 00:10:51,800
+1, so that's principle component 1 versus
+principle component 2 here.
+
+216
+00:10:51,800 --> 00:10:54,180
+And again you see a little bit of
+separation.
+
+217
+00:10:54,180 --> 00:10:56,380
+Between the ham and the spam messages, in
+
+218
+00:10:56,380 --> 00:10:58,800
+both principle component one and principle
+component two.
+
+219
+00:10:58,800 --> 00:11:02,229
+You can do this, like I showed you before,
+by
+
+220
+00:11:02,229 --> 00:11:09,010
+doing preprocessing with the method PCA,
+using the preProcess function.
+
+221
+00:11:09,010 --> 00:11:13,950
+And then you can create training
+predictions by using the predict function.
+
+222
+00:11:13,950 --> 00:11:16,120
+And then, fitting a model that relates
+
+223
+00:11:16,120 --> 00:11:19,030
+the training variable to the principal
+component.
+
+224
+00:11:19,030 --> 00:11:23,310
+So here I haven't used the full training
+set as the data for fitting my model.
+
+225
+00:11:23,310 --> 00:11:27,687
+I've just [UNKNOWN] the principal
+components for the model fitting.
+
+226
+00:11:27,687 --> 00:11:30,600
+In the test data set you have to use the
+same principal
+
+227
+00:11:30,600 --> 00:11:34,550
+component that you calculated in the
+trained video set for the test variables.
+
+228
+00:11:34,550 --> 00:11:36,450
+So the idea here is we again pass at
+
+229
+00:11:36,450 --> 00:11:39,720
+the pre-process object that we calculated
+in the training set.
+
+230
+00:11:39,720 --> 00:11:41,792
+But now we pass at the new testing data.
+
+231
+00:11:41,792 --> 00:11:43,695
+So this predict function is going to take
+
+232
+00:11:43,695 --> 00:11:46,557
+the principle components we calculated
+from training.
+
+233
+00:11:46,557 --> 00:11:50,700
+And get the new values for the test data
+set on those same principle components.
+
+234
+00:11:51,780 --> 00:11:54,710
+So then, what you can do, is you can
+predict.
+
+235
+00:11:54,710 --> 00:11:58,500
+The, using the modelFit on the original
+data using the test principal components.
+
+236
+00:11:58,500 --> 00:12:04,939
+And you can use the confusionMatrix
+argument in caret to get the accuracy.
+
+237
+00:12:04,939 --> 00:12:07,911
+And so, here we calculated a relatively
+small number of
+
+238
+00:12:07,911 --> 00:12:12,440
+principal components, but still have a
+relatively high accuracy in prediction.
+
+239
+00:12:12,440 --> 00:12:14,240
+So principal component analysis can reduce
+
+240
+00:12:14,240 --> 00:12:16,700
+the number of variables while maintaining
+accuracy.
+
+241
+00:12:18,240 --> 00:12:20,470
+So the other thing that you can do is you
+can
+
+242
+00:12:20,470 --> 00:12:26,190
+actually decide for this analysis to not
+use the predict function separately.
+
+243
+00:12:26,190 --> 00:12:29,710
+You can build it right into your training
+exercise.
+
+244
+00:12:29,710 --> 00:12:32,510
+So if you take the train function from the
+
+245
+00:12:32,510 --> 00:12:35,480
+caret package, and you pass it in a
+training set.
+
+246
+00:12:35,480 --> 00:12:38,400
+But you tell it to pre process with
+principal component analysis.
+
+247
+00:12:38,400 --> 00:12:41,250
+It will do that pre-processing as part of
+the training process.
+
+248
+00:12:41,250 --> 00:12:44,630
+And then when you do the prediction on the
+new data set you just pass
+
+249
+00:12:44,630 --> 00:12:48,290
+it a testing data set and will, it will
+actually calculate the PC's for you.
+
+250
+00:12:48,290 --> 00:12:50,768
+The reason why I showed you the more
+elaborate way
+
+251
+00:12:50,768 --> 00:12:53,931
+of calculating the PC's first and passing
+them to the model.
+
+252
+00:12:53,931 --> 00:12:56,330
+Is so that you can see what's going on
+under the hood.
+
+253
+00:12:56,330 --> 00:13:00,070
+When you pass a command like this, to the
+train function in the caret package.
+
+254
+00:13:02,370 --> 00:13:04,700
+So this is most useful for linear type
+models.
+
+255
+00:13:04,700 --> 00:13:07,108
+This includes linear discriminant
+analysis, linear
+
+256
+00:13:07,108 --> 00:13:10,150
+and generalized linear regression, things
+like that.
+
+257
+00:13:10,150 --> 00:13:12,740
+It can make it a little bit harder to
+interpret the predictors.
+
+258
+00:13:12,740 --> 00:13:15,500
+In the case where I only had two
+variables, it was just the sum
+
+259
+00:13:15,500 --> 00:13:20,020
+and the difference of those variables, it
+was very easy to predict what that meant.
+
+260
+00:13:20,020 --> 00:13:21,450
+In general though, if you do principal
+
+261
+00:13:21,450 --> 00:13:24,250
+components on a large number of
+quantitative variables.
+
+262
+00:13:24,250 --> 00:13:27,760
+In each principal component might be quite
+a complex weighted sum of
+
+263
+00:13:27,760 --> 00:13:30,980
+the variables you've observed and so it
+could be very hard to interpret.
+
+264
+00:13:30,980 --> 00:13:32,300
+You have to watch out for outliers.
+
+265
+00:13:32,300 --> 00:13:36,210
+Outliers can really wreak havoc on
+calculating principal components.
+
+266
+00:13:36,210 --> 00:13:37,560
+So you do that by looking at
+
+267
+00:13:37,560 --> 00:13:40,820
+an exploratory analysis first and
+identifying outliers.
+
+268
+00:13:40,820 --> 00:13:43,522
+Doing transforms, like I did the log ten
+transform of
+
+269
+00:13:43,522 --> 00:13:46,415
+the data, you might do Box Cox
+transformations as well.
+
+270
+00:13:46,415 --> 00:13:49,479
+And again, plotting predictors to identify
+problems is the
+
+271
+00:13:49,479 --> 00:13:52,800
+key place to figure out where this is
+working out.
+
+272
+00:13:52,800 --> 00:13:55,942
+For more information, you can see the
+exploratory data analysis class
+
+273
+00:13:55,942 --> 00:13:59,204
+where we talk about principal component
+analysis and SVD in more detail.
+
+274
+00:13:59,204 --> 00:14:01,624
+And this book the Elements of Statistical
+Learning has
+
+275
+00:14:01,624 --> 00:14:03,895
+a quite nice, if a little bit technical
+overview.
+
+276
+00:14:03,895 --> 00:14:06,330
+Of how principal components work for
+machine learning.
+
