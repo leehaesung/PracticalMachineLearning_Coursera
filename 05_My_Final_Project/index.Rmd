@@ -1,5 +1,5 @@
 ---
-title: "Human Excercise pattern and Recognition - Predicting weight lifting styles"
+title: "Human Activity Recognition - Predicting weight lifting styles"
 author: "Haesung Lee"
 date: "Monday, July 25, 2016"
 output:
