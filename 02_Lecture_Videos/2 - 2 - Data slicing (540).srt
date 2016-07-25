@@ -1,0 +1,508 @@
+1
+00:00:00,360 --> 00:00:03,652
+So this lecture is about data slicing, and
+you might use data slicing
+
+2
+00:00:03,652 --> 00:00:07,284
+either for building your training and
+testing sets right at the beginning of
+
+3
+00:00:07,284 --> 00:00:09,609
+your prediction function creation, or you
+
+4
+00:00:09,609 --> 00:00:11,766
+might use it for performing cross
+validation
+
+5
+00:00:11,766 --> 00:00:16,560
+or boot strapping within your training
+set, in order to evaluate your models.
+
+6
+00:00:16,560 --> 00:00:18,406
+So again, we're going to be using the
+caret
+
+7
+00:00:18,406 --> 00:00:20,833
+package, so I've loaded the caret package
+here, and
+
+8
+00:00:20,833 --> 00:00:22,891
+I'll also lured, loaded the kernlab data
+set
+
+9
+00:00:22,891 --> 00:00:25,210
+again, just so I can load the spam data.
+
+10
+00:00:25,210 --> 00:00:27,350
+So again, this is a data set where we're
+trying
+
+11
+00:00:27,350 --> 00:00:29,436
+to predict whether emails are spam or ham
+and we
+
+12
+00:00:29,436 --> 00:00:31,791
+have a bunch of variables that measure how
+many times
+
+13
+00:00:31,791 --> 00:00:35,480
+a particular word appears, or how often
+capital letters appear.
+
+14
+00:00:35,480 --> 00:00:37,503
+So one thing that we can do right off the
+bat is
+
+15
+00:00:37,503 --> 00:00:41,760
+use createDataPartition, to separate the
+data set into training and test sets.
+
+16
+00:00:41,760 --> 00:00:44,831
+If I do this, what'll happen is I tell it
+which outcome I want to
+
+17
+00:00:44,831 --> 00:00:48,240
+split on, so in this case I want a split
+based on the type.
+
+18
+00:00:48,240 --> 00:00:51,388
+And I say, I want to create a data set
+that's 75%, is
+
+19
+00:00:51,388 --> 00:00:55,784
+allocated to the training set, and 25% is
+allocated to the testing set.
+
+20
+00:00:55,784 --> 00:00:57,657
+So what happens then is that the
+
+21
+00:00:57,657 --> 00:01:00,974
+inTrain variable gets assigned an
+indicator function
+
+22
+00:01:00,974 --> 00:01:05,024
+that I can use to sub, subset out the
+training set and the test set.
+
+23
+00:01:05,024 --> 00:01:09,222
+So, the training set we create by
+subsampling this spam data set, the
+
+24
+00:01:09,222 --> 00:01:13,725
+spam data frame, into only those samples
+that appear in the training set.
+
+25
+00:01:13,725 --> 00:01:16,016
+And then, the testing set is all the
+remaining
+
+26
+00:01:16,016 --> 00:01:18,129
+samples, which you can do in r by using
+this
+
+27
+00:01:18,129 --> 00:01:21,068
+minus sign to indicate that they're, all
+the samples that
+
+28
+00:01:21,068 --> 00:01:23,920
+don't appear in this index set in the
+inTrain variable.
+
+29
+00:01:25,180 --> 00:01:26,903
+So now, that's one way to split your data
+
+30
+00:01:26,903 --> 00:01:29,080
+into a training and test set right at the
+beginning.
+
+31
+00:01:29,080 --> 00:01:32,600
+You might also want to do something like
+cross validation where you
+
+32
+00:01:32,600 --> 00:01:36,190
+split your training set into a bunch of
+smaller data sets.
+
+33
+00:01:36,190 --> 00:01:39,500
+The K-folds that you'll then use to do
+cross validation.
+
+34
+00:01:39,500 --> 00:01:41,322
+So, one way that you can do that is
+
+35
+00:01:41,322 --> 00:01:45,090
+with this createFolds function in the kay
+caret package.
+
+36
+00:01:45,090 --> 00:01:48,420
+So, what you do is again, you pass it the
+outcome that you want to split on.
+
+37
+00:01:48,420 --> 00:01:51,180
+So again, this is the spam type variable.
+
+38
+00:01:51,180 --> 00:01:53,520
+And then we tell it the number of folds
+that we'd like to create.
+
+39
+00:01:53,520 --> 00:01:56,700
+In this case, I say I would like to create
+10 folds.
+
+40
+00:01:56,700 --> 00:02:02,249
+And in this case, I also tell list=TRUE,
+which means it will return each
+
+41
+00:02:02,249 --> 00:02:08,210
+set of imbecies corresponding to a
+particular fold as a set of as a list.
+
+42
+00:02:08,210 --> 00:02:09,960
+And, you can tell it to either return
+
+43
+00:02:09,960 --> 00:02:13,250
+the training set or not return the
+training set.
+
+44
+00:02:13,250 --> 00:02:15,571
+So, for example, if I do this, then I've
+
+45
+00:02:15,571 --> 00:02:18,790
+got a bunch of different folds that I've
+created.
+
+46
+00:02:18,790 --> 00:02:22,260
+And for each one, I want to cre, check the
+length of that fold.
+
+47
+00:02:22,260 --> 00:02:28,230
+And so, for example, in Fold01 there are
+4141 samples.
+
+48
+00:02:28,230 --> 00:02:29,970
+And in Fold02, there's 4140.
+
+49
+00:02:29,970 --> 00:02:30,940
+And so forth.
+
+50
+00:02:30,940 --> 00:02:34,094
+So it split the data set up into ten
+folds, where
+
+51
+00:02:34,094 --> 00:02:38,730
+each fold has approximately the same
+number of samples in it.
+
+52
+00:02:38,730 --> 00:02:40,956
+Then what I can do is if I want to look at
+which
+
+53
+00:02:40,956 --> 00:02:44,393
+samples appear in the first fold, I take
+the first element of the
+
+54
+00:02:44,393 --> 00:02:47,830
+fold's list, and so, when I look at that
+list, it's the first
+
+55
+00:02:47,830 --> 00:02:52,930
+10 elements correspond to the, actually
+the first 10 elements in the sample.
+
+56
+00:02:52,930 --> 00:02:55,582
+In other words, this is split up in order
+
+57
+00:02:55,582 --> 00:02:59,710
+into the first to 4100 samples in the
+first fold.
+
+58
+00:02:59,710 --> 00:03:04,089
+The second 4140 samples in the second fold
+and so forth, so you can actually look
+
+59
+00:03:04,089 --> 00:03:06,371
+at which of the indices corresponding to
+the
+
+60
+00:03:06,371 --> 00:03:09,190
+training set and the test set within those
+K-folds.
+
+61
+00:03:09,190 --> 00:03:12,500
+You can have it also return the test set,
+
+62
+00:03:12,500 --> 00:03:14,740
+or you can have it return the training
+set.
+
+63
+00:03:14,740 --> 00:03:19,561
+So remember I'm, here I'm splitting the
+data set about 75, 25 into
+
+64
+00:03:19,561 --> 00:03:25,160
+training and test sets and so what I can
+do is I can say returnTrain=FALSE.
+
+65
+00:03:25,160 --> 00:03:29,050
+And then what it'll do is it'll actually
+return just the test set samples.
+
+66
+00:03:29,050 --> 00:03:32,057
+So here, you can see that there's much
+smaller number of samples in each
+
+67
+00:03:32,057 --> 00:03:35,710
+fold, and that's because most of the
+samples are going to the training set.
+
+68
+00:03:35,710 --> 00:03:38,659
+And again, you can look at, for fold 1,
+what are
+
+69
+00:03:38,659 --> 00:03:42,820
+the samples that actually correspond to
+the testing set in that fold?
+
+70
+00:03:44,240 --> 00:03:47,956
+You can also do resampling, so if instead
+of doing a full cross validation, you
+
+71
+00:03:47,956 --> 00:03:50,565
+want to do something like resampling or
+bootstrapping,
+
+72
+00:03:50,565 --> 00:03:53,980
+you can use the createResample function,
+resample function.
+
+73
+00:03:53,980 --> 00:03:57,034
+Again, you tell it how many times you
+would like to resample the data
+
+74
+00:03:57,034 --> 00:04:00,600
+and whether you would like a list out, or
+vector out, or matrix out.
+
+75
+00:04:00,600 --> 00:04:05,179
+And so, what this will tell you is, again,
+which samples correspond to a particular
+
+76
+00:04:05,179 --> 00:04:07,915
+fold, and since we're doing resampling
+now, you
+
+77
+00:04:07,915 --> 00:04:10,400
+might get some of the same values back.
+
+78
+00:04:10,400 --> 00:04:14,663
+So, for example, in the first fold, you
+actually get the sample three repeated
+
+79
+00:04:14,663 --> 00:04:16,922
+three different times in that fold because
+
+80
+00:04:16,922 --> 00:04:20,009
+you're re-sampling with replacement from
+the values.
+
+81
+00:04:21,240 --> 00:04:22,830
+You can also use it to create time slices.
+
+82
+00:04:22,830 --> 00:04:27,050
+So if you're analyzing data that you might
+be using for forecasting, you can use
+
+83
+00:04:27,050 --> 00:04:32,620
+it to check what are the time slices where
+you take continuous values in time.
+
+84
+00:04:32,620 --> 00:04:35,520
+So here, I've created a time vector that's
+1 to 1000.
+
+85
+00:04:35,520 --> 00:04:38,826
+The integer is 1 to 1,000 and I want to
+create
+
+86
+00:04:38,826 --> 00:04:43,140
+slices that have a window of about 20
+samples in them.
+
+87
+00:04:43,140 --> 00:04:46,003
+And I want to say I'm going to predict the
+next 10
+
+88
+00:04:46,003 --> 00:04:49,540
+samples out after I take the initial
+window of 20.
+
+89
+00:04:49,540 --> 00:04:53,800
+And so, in the first training set, I can
+see that there are 20 values.
+
+90
+00:04:53,800 --> 00:04:56,739
+And so, there are actually 20 samples that
+have been created
+
+91
+00:04:56,739 --> 00:04:59,280
+in the first window that we're going to be
+using to predict.
+
+92
+00:04:59,280 --> 00:05:01,968
+And if I looked at this test set, it gets
+cut off here, but
+
+93
+00:05:01,968 --> 00:05:05,730
+there would be 10 samples and there would
+be next 10 samples, 21 to 30.
+
+94
+00:05:05,730 --> 00:05:08,893
+And the next subsample would be shifting
+that over and
+
+95
+00:05:08,893 --> 00:05:12,264
+getting a next time slice, but it gets
+continuous sets of
+
+96
+00:05:12,264 --> 00:05:14,442
+numbers all in a row so that you can use
+
+97
+00:05:14,442 --> 00:05:18,120
+the time varying component of the sample
+in order to predict.
+
+98
+00:05:19,770 --> 00:05:22,420
+There's a lot of information in the caret
+tutorials about
+
+99
+00:05:22,420 --> 00:05:24,950
+how to do time slicing, and we'll show
+various examples
+
+100
+00:05:24,950 --> 00:05:26,890
+of it when we build prediction functions
+in the rest
+
+101
+00:05:26,890 --> 00:05:30,350
+of this class, and your homework will
+cover this as well.
+
+102
+00:05:30,350 --> 00:05:33,515
+The paper introducing the caret package,
+again, also has
+
+103
+00:05:33,515 --> 00:05:35,448
+a lot of information about how to do time
+
+104
+00:05:35,448 --> 00:05:37,617
+slicing, and how to do data slicing for
+both
+
+105
+00:05:37,617 --> 00:05:40,684
+creating training and test sets, and for
+cross validation.
+
