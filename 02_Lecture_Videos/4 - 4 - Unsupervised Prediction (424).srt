@@ -1,0 +1,392 @@
+1
+00:00:00,440 --> 00:00:02,080
+So the examples we've talked about so far
+in
+
+2
+00:00:02,080 --> 00:00:05,150
+this class, you often know what the labels
+are.
+
+3
+00:00:05,150 --> 00:00:07,920
+In other words, you're trying to do
+supervised classification, you're
+
+4
+00:00:07,920 --> 00:00:10,870
+trying to predict an outcome that you know
+what it is.
+
+5
+00:00:10,870 --> 00:00:13,500
+But sometimes you don't know the labels
+for prediction,
+
+6
+00:00:13,500 --> 00:00:16,400
+so you have to discover those labels in
+advance.
+
+7
+00:00:16,400 --> 00:00:20,325
+So, one way to do that is to create
+clusters from the data that you've
+
+8
+00:00:20,325 --> 00:00:22,695
+observed, to add names to those clusters
+
+9
+00:00:22,695 --> 00:00:25,970
+and then build a predictor for those
+clusters.
+
+10
+00:00:25,970 --> 00:00:28,557
+In a new data set, you're going to predict
+the cluster and apply
+
+11
+00:00:28,557 --> 00:00:31,550
+the name that you come up with in the
+previous data set.
+
+12
+00:00:31,550 --> 00:00:34,980
+This adds several levels of difficulty to
+the prediction problem.
+
+13
+00:00:34,980 --> 00:00:39,190
+First of all, creating the clusters is not
+a perfectly noiseless process.
+
+14
+00:00:39,190 --> 00:00:41,206
+Second of all, coming up with the right
+names, in
+
+15
+00:00:41,206 --> 00:00:45,130
+other words interpreting the clusters well
+is an incredibly challenging problem.
+
+16
+00:00:45,130 --> 00:00:47,080
+And if you've taken exploratory data
+analysis
+
+17
+00:00:47,080 --> 00:00:49,720
+in our data science specialization, you'll
+understand why.
+
+18
+00:00:50,740 --> 00:00:54,151
+Building a predictor for the clusters is
+basically using the algorithms that we've
+
+19
+00:00:54,151 --> 00:00:56,024
+learned throughout the course of this
+class,
+
+20
+00:00:56,024 --> 00:00:57,910
+as well as predicting on those clusters.
+
+21
+00:00:57,910 --> 00:01:01,520
+So I'll just show you a quick example of
+how you could do this.
+
+22
+00:01:01,520 --> 00:01:03,452
+So, if I load the iris data and the
+
+23
+00:01:03,452 --> 00:01:06,834
+ggplot library, I can then create a
+training and test
+
+24
+00:01:06,834 --> 00:01:08,904
+set for the iris data just like I have
+
+25
+00:01:08,904 --> 00:01:13,630
+in previous examples, but I could ignore
+the species clusters.
+
+26
+00:01:13,630 --> 00:01:19,070
+So one thing that I could do is I could
+perform actually a k-means clustering.
+
+27
+00:01:19,070 --> 00:01:21,666
+If you remember that k-means clustering
+from the
+
+28
+00:01:21,666 --> 00:01:25,760
+exploratory data analysis section of the
+data science specialization.
+
+29
+00:01:25,760 --> 00:01:28,996
+If you don't, you can look it up on
+Wikipedia.
+
+30
+00:01:28,996 --> 00:01:34,460
+And the basic idea here is to basically
+create three different clusters.
+
+31
+00:01:34,460 --> 00:01:35,666
+So I was telling it to create
+
+32
+00:01:35,666 --> 00:01:38,560
+three different clusters, ignoring the
+species information.
+
+33
+00:01:40,120 --> 00:01:45,220
+So then what I can do is, I can basically
+assign to those clusters different colors.
+
+34
+00:01:45,220 --> 00:01:47,186
+And so here I've plotted those three
+
+35
+00:01:47,186 --> 00:01:50,169
+different clusters that are created by
+performing
+
+36
+00:01:50,169 --> 00:01:52,835
+this k-means clustering, so there's a
+cluster
+
+37
+00:01:52,835 --> 00:01:55,069
+here, a cluster here and a cluster here.
+
+38
+00:01:55,069 --> 00:01:58,525
+Those clusters actually are relatively
+close to the clusters
+
+39
+00:01:58,525 --> 00:02:00,916
+you would get if you used the species
+labels
+
+40
+00:02:00,916 --> 00:02:04,370
+themselves, but that's not a typical
+outcome, often it's
+
+41
+00:02:04,370 --> 00:02:07,740
+very hard to label the clusters that you
+get.
+
+42
+00:02:07,740 --> 00:02:10,237
+So in this case, I can make a table of the
+cluster
+
+43
+00:02:10,237 --> 00:02:14,670
+versus species, and I can see that cluster
+2 corresponds to this species.
+
+44
+00:02:14,670 --> 00:02:20,110
+Cluster 3 corresponds to this species and
+cluster 1 corresponds to this species.
+
+45
+00:02:20,110 --> 00:02:22,933
+So in general, I wouldn't know what those
+species names were, and
+
+46
+00:02:22,933 --> 00:02:25,320
+I would have to come up with names for
+each of my clusters.
+
+47
+00:02:26,420 --> 00:02:30,264
+And then I can fit a model that relates
+the cluster variable that I've just
+
+48
+00:02:30,264 --> 00:02:34,610
+created, to all the predictor variables
+and I could do it in the training set.
+
+49
+00:02:34,610 --> 00:02:38,090
+In this case, I am doing it with a
+classification tree.
+
+50
+00:02:38,090 --> 00:02:41,419
+I can then do a prediction in a, a
+training set,
+
+51
+00:02:41,419 --> 00:02:44,333
+and I can see that I do a reasonably good
+job
+
+52
+00:02:44,333 --> 00:02:48,995
+of predicting this cluster and this
+cluster but cluster 1 and
+
+53
+00:02:48,995 --> 00:02:54,670
+cluster 3 sometimes get mix, mixed up in
+my prediction model.
+
+54
+00:02:54,670 --> 00:02:57,189
+That's because I have both error or
+variation in
+
+55
+00:02:57,189 --> 00:02:59,893
+my prediction building and error and
+variation in my
+
+56
+00:02:59,893 --> 00:03:02,228
+cluster building, so it ends up being a
+quite
+
+57
+00:03:02,228 --> 00:03:06,770
+a challenging problem to do, unsupervised
+prediction in this way.
+
+58
+00:03:06,770 --> 00:03:08,960
+I can then apply it on the test data set.
+
+59
+00:03:08,960 --> 00:03:11,753
+So if I predict on the test data set, in
+general I wouldn't
+
+60
+00:03:11,753 --> 00:03:15,070
+know what the labels are, but here I'm
+showing what the labels are.
+
+61
+00:03:15,070 --> 00:03:17,824
+So, here I'm predicting on a new data set
+
+62
+00:03:17,824 --> 00:03:21,700
+and making a table versus the actual known
+species.
+
+63
+00:03:21,700 --> 00:03:24,361
+And so I can see this actually does quite
+a reasonable
+
+64
+00:03:24,361 --> 00:03:29,620
+job here of predicting the different
+species into different clustered labels.
+
+65
+00:03:29,620 --> 00:03:34,519
+In general, this is quite a hard problem,
+so care must be taken in the labeling the
+
+66
+00:03:34,519 --> 00:03:39,930
+clusters, and performing the unsupervised
+analysis and understanding how that works.
+
+67
+00:03:42,040 --> 00:03:43,753
+The cl_predict function in the clue
+
+68
+00:03:43,753 --> 00:03:46,295
+package provides similar functionality to
+what I've
+
+69
+00:03:46,295 --> 00:03:49,444
+just described here, but in general it
+makes a little bit more sense
+
+70
+00:03:49,444 --> 00:03:50,768
+to sort of build your own
+
+71
+00:03:50,768 --> 00:03:53,587
+approach if you're doing unsupervised
+prediction because
+
+72
+00:03:53,587 --> 00:03:58,010
+you really need to think carefully about
+how you're going to define the clusters.
+
+73
+00:03:58,010 --> 00:04:01,040
+Be very wary of over interpretation of
+this type of clusters.
+
+74
+00:04:01,040 --> 00:04:03,600
+This is in fact an exploratory technique.
+
+75
+00:04:03,600 --> 00:04:07,240
+And so the clusters may change depend on
+the way that you sample the data.
+
+76
+00:04:07,240 --> 00:04:09,183
+This is actually one basic approach to
+
+77
+00:04:09,183 --> 00:04:12,159
+building things like recommendation
+engines, where you
+
+78
+00:04:12,159 --> 00:04:14,890
+identify clusters of people that have
+similar
+
+79
+00:04:14,890 --> 00:04:18,450
+tastes and assign their tastes to new
+individuals.
+
+80
+00:04:18,450 --> 00:04:20,320
+You can read more about unsupervised
+prediction in the
+
+81
+00:04:20,320 --> 00:04:24,020
+elements of statistical learning and
+introduction to statistical learning.
+
