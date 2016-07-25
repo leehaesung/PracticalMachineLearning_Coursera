@@ -33,3 +33,5 @@ The data for this project come from this source: http://groupware.les.inf.puc-ri
 The goal of our project is to predict the manner in which they did the exercise. This is the "classe" variable in the training set. We also created a report describing how we built our model, how we used cross validation, and what we think the expected out of sample error is, and why we made the choices we did. We also use our prediction model to predict 20 different test cases. 
 
 
+## My Project Solution
+* [Human Excercise pattern and Recognition](Human Excercise pattern and Recognition) 
