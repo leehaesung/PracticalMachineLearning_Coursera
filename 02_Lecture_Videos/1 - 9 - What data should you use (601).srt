@@ -1,0 +1,628 @@
+1
+00:00:00,240 --> 00:00:02,304
+After defining the question of interest,
+the next
+
+2
+00:00:02,304 --> 00:00:04,410
+most important thing is to identify the
+data set.
+
+3
+00:00:04,410 --> 00:00:05,691
+That will allow you to create the
+
+4
+00:00:05,691 --> 00:00:08,550
+best possible predictions, which are
+machine learning algorithms.
+
+5
+00:00:09,630 --> 00:00:11,311
+So an example of a really successful
+predictor
+
+6
+00:00:11,311 --> 00:00:14,190
+here in the United States is something
+called FiveThirtyEight.
+
+7
+00:00:14,190 --> 00:00:17,316
+This was a blog that was designed to build
+an election forecasting model
+
+8
+00:00:17,316 --> 00:00:21,760
+to predict who would win the Presidential
+and other elections in The United States.
+
+9
+00:00:21,760 --> 00:00:26,262
+And to do that, the statistician behind
+538, one of the most famous statisticians
+
+10
+00:00:26,262 --> 00:00:30,295
+in the world, Nate Silver, used polling
+information from a wide variety of polls
+
+11
+00:00:30,295 --> 00:00:33,510
+and averaged them together to try to get a
+best prediction of who is
+
+12
+00:00:33,510 --> 00:00:37,350
+going to win which votes and which states
+in order to get the best vote.
+
+13
+00:00:37,350 --> 00:00:40,820
+A prediction of who would vote for who
+when it came time for the election.
+
+14
+00:00:40,820 --> 00:00:44,530
+It was very successful in predicting both
+the 2008 and 2012 elections.
+
+15
+00:00:44,530 --> 00:00:48,090
+This is an example of using like data to
+predict like.
+
+16
+00:00:48,090 --> 00:00:50,901
+In other words, he took polling data from
+organizations like
+
+17
+00:00:50,901 --> 00:00:53,498
+the Gallup polling agencies in the United
+States, and he
+
+18
+00:00:53,498 --> 00:00:56,039
+took all that data that was asking people
+directly, who
+
+19
+00:00:56,039 --> 00:00:58,436
+are you likely to vote for in the upcoming
+election?
+
+20
+00:00:58,436 --> 00:01:00,371
+In other words, he used data where people
+
+21
+00:01:00,371 --> 00:01:02,528
+were asked the same question they were
+going to
+
+22
+00:01:02,528 --> 00:01:04,628
+be asked when they went into the polls the
+
+23
+00:01:04,628 --> 00:01:06,860
+ballot and decide who they were going to
+vote for.
+
+24
+00:01:08,130 --> 00:01:10,242
+And so, the one thing that he did, which
+is
+
+25
+00:01:10,242 --> 00:01:13,000
+sort of clever and I think that it proves
+his predictions
+
+26
+00:01:13,000 --> 00:01:15,405
+compared to a lot of other people, is that
+he took
+
+27
+00:01:15,405 --> 00:01:18,420
+that data, and he recognized the actual
+quirks of the data.
+
+28
+00:01:18,420 --> 00:01:22,262
+So, he realized that some polls were
+actually biased in one way or the other.
+
+29
+00:01:22,262 --> 00:01:25,720
+In other words, a particular pollster
+might ask questions that
+
+30
+00:01:25,720 --> 00:01:28,665
+led people to say that they would vote for
+one candidate
+
+31
+00:01:28,665 --> 00:01:31,802
+more than the other, even when they might
+not necessarily
+
+32
+00:01:31,802 --> 00:01:34,420
+vote that way when it came time to vote
+for real.
+
+33
+00:01:34,420 --> 00:01:37,456
+So what he would do is, he would actually
+weight the polls by
+
+34
+00:01:37,456 --> 00:01:41,310
+how close they were to being, sort of,
+unbiased polls or accurate polls.
+
+35
+00:01:41,310 --> 00:01:43,333
+And so, this is an example where finding
+
+36
+00:01:43,333 --> 00:01:46,665
+the right dataset and combining it with
+simple understanding
+
+37
+00:01:46,665 --> 00:01:49,224
+of what's really going on scientifically
+can have
+
+38
+00:01:49,224 --> 00:01:53,430
+maximum possible benefit in terms of
+making strong predictions.
+
+39
+00:01:53,430 --> 00:01:56,329
+And the key idea here is, if you want to
+predict something about
+
+40
+00:01:56,329 --> 00:01:59,360
+X, use data that's as closely related to X
+as you possibly can.
+
+41
+00:01:59,360 --> 00:02:01,820
+There are a bunch of other examples of
+this.
+
+42
+00:02:01,820 --> 00:02:04,443
+So, one example is what's called
+Moneyball, so this is
+
+43
+00:02:04,443 --> 00:02:07,068
+actually turned into a movie that starred
+Brad Pitt, but
+
+44
+00:02:07,068 --> 00:02:09,582
+at the beginning, it was just, there were
+some people
+
+45
+00:02:09,582 --> 00:02:12,390
+that were trying to predict how well
+players would perform.
+
+46
+00:02:12,390 --> 00:02:15,085
+And in particular perform, how well they
+would perform at
+
+47
+00:02:15,085 --> 00:02:18,220
+gaining wins for a baseball team in the
+United States.
+
+48
+00:02:18,220 --> 00:02:19,939
+And what they would do is they would
+actually
+
+49
+00:02:19,939 --> 00:02:22,633
+use information about that player's
+performance, as well as other
+
+50
+00:02:22,633 --> 00:02:24,445
+players that were similar to them in the
+past in
+
+51
+00:02:24,445 --> 00:02:27,060
+order to predict, predict how well that
+player would perform.
+
+52
+00:02:27,060 --> 00:02:28,658
+So again, like predicting like.
+
+53
+00:02:28,658 --> 00:02:30,945
+This theme repeats itself in the Netflix
+prize,
+
+54
+00:02:30,945 --> 00:02:33,623
+where people were trying to predict movie
+preferences or
+
+55
+00:02:33,623 --> 00:02:35,909
+what movies people would like, and they
+did that
+
+56
+00:02:35,909 --> 00:02:38,950
+based on the past movie preferences of
+those people.
+
+57
+00:02:38,950 --> 00:02:40,841
+In other words, they found movie
+preference data
+
+58
+00:02:40,841 --> 00:02:42,610
+and used it to predict movie preference
+data.
+
+59
+00:02:43,670 --> 00:02:46,899
+It was also the background to the Heritage
+Health prize, where the goal is to
+
+60
+00:02:46,899 --> 00:02:48,413
+try to predict which people would be
+
+61
+00:02:48,413 --> 00:02:51,970
+hospitalized, and they used data about
+previous hospitalizations.
+
+62
+00:02:51,970 --> 00:02:54,840
+Again using data about the exact same
+process
+
+63
+00:02:54,840 --> 00:02:56,790
+that they were trying to predict in the
+future.
+
+64
+00:02:56,790 --> 00:03:00,095
+So, the closer that you can be to the
+actual data about the process that
+
+65
+00:03:00,095 --> 00:03:01,943
+you care about, the more often than not
+
+66
+00:03:01,943 --> 00:03:04,260
+that you, the better your predictions will
+be.
+
+67
+00:03:05,260 --> 00:03:07,223
+It's not necessarily a hard rule, so,
+
+68
+00:03:07,223 --> 00:03:09,592
+for example, people used Google searches
+to try
+
+69
+00:03:09,592 --> 00:03:11,556
+and predict flu outbreaks, but this has
+
+70
+00:03:11,556 --> 00:03:13,751
+recently pointed out to have major flaws,
+in
+
+71
+00:03:13,751 --> 00:03:16,178
+the sense that, if people's searches
+changed,
+
+72
+00:03:16,178 --> 00:03:17,968
+or if the properties of the ways those
+
+73
+00:03:17,968 --> 00:03:20,164
+searches were connected to the flu
+changed,
+
+74
+00:03:20,164 --> 00:03:23,170
+their predictions would actually be quite
+far off.
+
+75
+00:03:23,170 --> 00:03:25,840
+And some people have suggested that Google
+flu trends is not
+
+76
+00:03:25,840 --> 00:03:28,790
+necessarily a very good way to estimate
+the prevalence of flu.
+
+77
+00:03:28,790 --> 00:03:32,360
+The looser the prediction, the harder the
+prediction may be.
+
+78
+00:03:32,360 --> 00:03:35,650
+So, for example, Oncotype DX is a
+prediction algorithm based on gene
+
+79
+00:03:35,650 --> 00:03:39,270
+expression, which is a measure of a
+molecule inside of your body.
+
+80
+00:03:39,270 --> 00:03:41,692
+And, or actually a subset of molecules in
+your
+
+81
+00:03:41,692 --> 00:03:43,925
+body, and it, they use that to predict how
+
+82
+00:03:43,925 --> 00:03:45,972
+long you will live or how well you'll do
+
+83
+00:03:45,972 --> 00:03:49,350
+under different therapies in when you have
+breast cancer.
+
+84
+00:03:49,350 --> 00:03:52,014
+And so, here, the connections are little
+bit looser, but it's
+
+85
+00:03:52,014 --> 00:03:54,540
+still a connection that you can definitely
+make in your head.
+
+86
+00:03:54,540 --> 00:03:57,857
+The data properties do matter, so, for
+example, if
+
+87
+00:03:57,857 --> 00:04:00,660
+you measure the people that would have
+sort of
+
+88
+00:04:00,660 --> 00:04:04,053
+a high prevalence of flu-like symptoms,
+you could do
+
+89
+00:04:04,053 --> 00:04:06,485
+that using CDC data or flu near you, and
+
+90
+00:04:06,485 --> 00:04:10,839
+algorithms like Google flu-trends might
+overestimate the number of
+
+91
+00:04:10,839 --> 00:04:13,790
+flu case if there was something that was
+causing
+
+92
+00:04:13,790 --> 00:04:16,741
+them to search for similar search terms
+that had
+
+93
+00:04:16,741 --> 00:04:20,960
+nothing to do with how often they were
+flu-related symptoms.
+
+94
+00:04:20,960 --> 00:04:23,890
+So this is an example where knowing how
+the data actually
+
+95
+00:04:23,890 --> 00:04:26,840
+connects to the thing you're actually
+trying to predict is crucially important.
+
+96
+00:04:26,840 --> 00:04:30,090
+This is, in fact, the most common mistake
+in machine learning.
+
+97
+00:04:30,090 --> 00:04:32,107
+So, machine learning is often thought of
+as
+
+98
+00:04:32,107 --> 00:04:35,050
+this black box procedure that computer
+scientists have created
+
+99
+00:04:35,050 --> 00:04:37,010
+where they just pushed input data in one
+end
+
+100
+00:04:37,010 --> 00:04:39,440
+and out comes a prediction in the other
+end.
+
+101
+00:04:39,440 --> 00:04:42,100
+This is an example of a prediction that's
+a little bit silly.
+
+102
+00:04:42,100 --> 00:04:45,613
+So, this was a, comes from a paper that
+appeared in the New England Journal of
+
+103
+00:04:45,613 --> 00:04:48,589
+Medicine, and they plotted chocolate
+consumption in kilograms
+
+104
+00:04:48,589 --> 00:04:50,680
+per year per capita on the X axis.
+
+105
+00:04:50,680 --> 00:04:52,747
+And on the Y-axis, the number of Nobel
+prizes
+
+106
+00:04:52,747 --> 00:04:56,370
+per 10 million dollar, 10 million people
+in the population.
+
+107
+00:04:56,370 --> 00:04:58,722
+And so you can see if there's a trend here
+that, as you
+
+108
+00:04:58,722 --> 00:05:02,600
+consume more chocolate, you tend to get
+more Nobel prizes per million people.
+
+109
+00:05:02,600 --> 00:05:04,504
+And so they reported here an R squared and
+
+110
+00:05:04,504 --> 00:05:07,640
+a P value suggesting this was a highly
+significant relationship,
+
+111
+00:05:07,640 --> 00:05:09,544
+but you can think of a whole bunch of
+other
+
+112
+00:05:09,544 --> 00:05:12,404
+variables that might relate these two
+things to each other.
+
+113
+00:05:12,404 --> 00:05:14,820
+So, for example, you might eat more
+chocolate if you
+
+114
+00:05:14,820 --> 00:05:18,230
+come from Europe, and these are mostly
+European nations up here.
+
+115
+00:05:18,230 --> 00:05:21,550
+And the Nobel prize is given out by
+European organization so
+
+116
+00:05:21,550 --> 00:05:25,110
+you might imagine that more European
+people also win Nobel prizes.
+
+117
+00:05:25,110 --> 00:05:28,021
+This has nothing to do with the ability of
+chocolate consumption per
+
+118
+00:05:28,021 --> 00:05:30,830
+se to predict whether you will get a Nobel
+prize or not.
+
+119
+00:05:30,830 --> 00:05:34,839
+And so this is an example where, if you
+just naively build a prediction algorithm,
+
+120
+00:05:34,839 --> 00:05:37,188
+you'll claim that you're being able to
+predict
+
+121
+00:05:37,188 --> 00:05:39,765
+very well, but if the characteristics
+change, so,
+
+122
+00:05:39,765 --> 00:05:42,229
+for example, if the Nobel committee starts
+giving
+
+123
+00:05:42,229 --> 00:05:44,290
+out more prizes to, say, Asian nations as
+
+124
+00:05:44,290 --> 00:05:46,810
+opposed to European nations, you'll see
+that this
+
+125
+00:05:46,810 --> 00:05:49,490
+prediction algorithm won't work very well
+any more.
+
+126
+00:05:49,490 --> 00:05:51,312
+So the key point to take home is that, as
+
+127
+00:05:51,312 --> 00:05:53,745
+often as possible use like data to predict
+like, and
+
+128
+00:05:53,745 --> 00:05:56,622
+when you're using data that isn't related,
+be very careful
+
+129
+00:05:56,622 --> 00:06:00,200
+about interpreting why your prediction
+algorithm works or doesn't work.
+
