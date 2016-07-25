@@ -1,0 +1,1600 @@
+1
+00:00:00,210 --> 00:00:02,130
+This lecture is about covariate creation.
+
+2
+00:00:02,130 --> 00:00:06,920
+Covariates are sometimes called predictors
+and sometimes called features.
+
+3
+00:00:06,920 --> 00:00:08,923
+They're the variables that you will
+actually
+
+4
+00:00:08,923 --> 00:00:10,669
+include in your model that you're going
+
+5
+00:00:10,669 --> 00:00:14,880
+to be using to combine them to predict
+whatever outcome that you care about.
+
+6
+00:00:14,880 --> 00:00:18,250
+There are two levels of covariate
+creation, or feature creation.
+
+7
+00:00:18,250 --> 00:00:21,000
+The first level is, taking the raw data
+that you
+
+8
+00:00:21,000 --> 00:00:24,240
+have and turning it into a predictor that
+you can use.
+
+9
+00:00:24,240 --> 00:00:30,690
+So the raw data often takes the form of an
+image, or a text file, or a website.
+
+10
+00:00:30,690 --> 00:00:33,870
+That kind of information is very hard to
+build a predictive model around when you
+
+11
+00:00:33,870 --> 00:00:36,530
+haven't summarized the information in some
+useful
+
+12
+00:00:36,530 --> 00:00:39,040
+way into either a quantitative or
+qualitative variable.
+
+13
+00:00:40,040 --> 00:00:41,755
+So what we want to do is take that raw
+
+14
+00:00:41,755 --> 00:00:44,951
+data and turn it into features or
+covariates which are variables
+
+15
+00:00:44,951 --> 00:00:47,674
+that describe the data as much as possible
+while giving
+
+16
+00:00:47,674 --> 00:00:52,960
+some compression and making it easier to
+fit standard machine-learning algorithms.
+
+17
+00:00:52,960 --> 00:00:55,543
+So the idea here is, so suppose you have a
+email,
+
+18
+00:00:55,543 --> 00:00:58,315
+this is an email, an example email here on
+the left.
+
+19
+00:00:58,315 --> 00:01:00,922
+And so it's very hard to plug the email
+itself into
+
+20
+00:01:00,922 --> 00:01:05,147
+a prediction function, because most
+prediction functions are based on the idea
+
+21
+00:01:05,147 --> 00:01:08,876
+of taking a small number of variables and
+building a quantitative model
+
+22
+00:01:08,876 --> 00:01:12,070
+around them and it doesn't work for a free
+text for example.
+
+23
+00:01:13,200 --> 00:01:15,792
+So the first thing that you need to do is
+create some
+
+24
+00:01:15,792 --> 00:01:19,880
+features, and those features are just
+variables that describe the raw data.
+
+25
+00:01:19,880 --> 00:01:21,559
+So in this case, in the case of an email,
+we
+
+26
+00:01:21,559 --> 00:01:24,180
+might think of different ways that we
+could describe this email.
+
+27
+00:01:24,180 --> 00:01:27,290
+For example, when I calculate the average
+number of
+
+28
+00:01:27,290 --> 00:01:30,753
+capitals that are in the email, in this
+case 100%
+
+29
+00:01:30,753 --> 00:01:33,650
+of the letters in the email are capital
+letters,
+
+30
+00:01:33,650 --> 00:01:37,490
+you might say what's the frequency a
+particular word appears.
+
+31
+00:01:37,490 --> 00:01:40,250
+So for example, you might say, how often
+does you appear?
+
+32
+00:01:40,250 --> 00:01:45,510
+And you appears twice in this email, so we
+say that we calculate two for this email.
+
+33
+00:01:45,510 --> 00:01:46,650
+That's a feature.
+
+34
+00:01:46,650 --> 00:01:48,520
+You might also calculate the number of
+dollar signs.
+
+35
+00:01:48,520 --> 00:01:51,650
+This might be a really good predictor of
+whether an email is spam or not.
+
+36
+00:01:51,650 --> 00:01:54,565
+And so here you can see there are a large
+number of dollar signs,
+
+37
+00:01:54,565 --> 00:01:59,000
+there are eight of them, so we calculated
+another feature of that data set.
+
+38
+00:01:59,000 --> 00:02:02,272
+So this step, the raw data of the
+covariate, usually involves a
+
+39
+00:02:02,272 --> 00:02:05,302
+lot of thinking about the structure of the
+data that you have
+
+40
+00:02:05,302 --> 00:02:08,394
+and what is the right way to extract,
+extract the most useful
+
+41
+00:02:08,394 --> 00:02:10,214
+information in the fewest number of
+
+42
+00:02:10,214 --> 00:02:13,800
+variables that captures everything that
+you want.
+
+43
+00:02:13,800 --> 00:02:16,460
+The next stage is transforming tidy
+covariates.
+
+44
+00:02:16,460 --> 00:02:18,980
+In other words, we calculated this number,
+say capital
+
+45
+00:02:18,980 --> 00:02:22,230
+average, the average number of capitals in
+the data set.
+
+46
+00:02:22,230 --> 00:02:24,637
+But it might not be the average number
+that's
+
+47
+00:02:24,637 --> 00:02:27,422
+related very well to the outcome that we
+care about,
+
+48
+00:02:27,422 --> 00:02:30,208
+it might be the average number of capitals
+squared or
+
+49
+00:02:30,208 --> 00:02:33,350
+cubed, or it might be some other function
+of that.
+
+50
+00:02:33,350 --> 00:02:35,020
+And so the next stage is transforming
+
+51
+00:02:35,020 --> 00:02:38,120
+the variables into sort of more useful
+variables.
+
+52
+00:02:38,120 --> 00:02:40,818
+So for example, if we load the kernlab
+data
+
+53
+00:02:40,818 --> 00:02:42,908
+and the spam data set, we can take the
+
+54
+00:02:42,908 --> 00:02:46,281
+capital average, so the, this is basically
+this variable
+
+55
+00:02:46,281 --> 00:02:49,960
+right here, the fraction of letters that
+are capitals.
+
+56
+00:02:49,960 --> 00:02:53,150
+And we could square that number, and
+assign it to a new
+
+57
+00:02:53,150 --> 00:02:55,980
+variable, capital average squared, that
+might
+
+58
+00:02:55,980 --> 00:02:58,490
+be useful later in our prediction
+algorithm.
+
+59
+00:02:58,490 --> 00:03:01,420
+So those are the two steps in creating
+covariates.
+
+60
+00:03:01,420 --> 00:03:03,040
+So the first step the raw data,
+
+61
+00:03:03,040 --> 00:03:05,840
+the covariate really depends heavily on
+the application.
+
+62
+00:03:05,840 --> 00:03:09,030
+So like I showed you on the previous
+slide, in an email case, it
+
+63
+00:03:09,030 --> 00:03:12,840
+might be extracting the fraction of times
+a word appears or something like that.
+
+64
+00:03:12,840 --> 00:03:15,811
+In a case of voice, it might be knowing
+something about
+
+65
+00:03:15,811 --> 00:03:20,260
+the frequency or the timbre of which
+voices are typically fall.
+
+66
+00:03:20,260 --> 00:03:24,270
+In the case of images, it might be
+identifying features of the images.
+
+67
+00:03:24,270 --> 00:03:27,820
+So if it's faces, where are the noses or
+the ears or the eyes are?
+
+68
+00:03:27,820 --> 00:03:31,068
+And it will depend greatly what your
+application is.
+
+69
+00:03:31,068 --> 00:03:35,980
+And the balancing act here is definitely
+summarization versus information loss.
+
+70
+00:03:35,980 --> 00:03:38,398
+In other words, it, the, the best features
+
+71
+00:03:38,398 --> 00:03:41,711
+are features that capture only the
+relevant information in,
+
+72
+00:03:41,711 --> 00:03:44,001
+say, the image or the email, and throw out
+
+73
+00:03:44,001 --> 00:03:47,380
+all the information that's not really
+useful at all.
+
+74
+00:03:47,380 --> 00:03:50,374
+And so the idea is that you have think
+very carefully about how to
+
+75
+00:03:50,374 --> 00:03:54,230
+pick the right features that explain most
+of what's happening in your raw data.
+
+76
+00:03:55,570 --> 00:03:57,900
+So some examples here, for text files, it
+might
+
+77
+00:03:57,900 --> 00:04:00,630
+be the frequency of words or frequency of
+phrases.
+
+78
+00:04:00,630 --> 00:04:03,848
+There's this cool site, Google ngrams,
+which tells you about the
+
+79
+00:04:03,848 --> 00:04:07,990
+frequency of different phrases that appear
+in books going back in time.
+
+80
+00:04:07,990 --> 00:04:12,810
+For images, it might be edges and corners,
+blobs and ridges for example.
+
+81
+00:04:12,810 --> 00:04:16,680
+These are all ideas about how do you
+identify different structures in an image.
+
+82
+00:04:16,680 --> 00:04:18,660
+For websites it might be the number and
+
+83
+00:04:18,660 --> 00:04:21,440
+type of images, where buttons are, colors
+and videos.
+
+84
+00:04:21,440 --> 00:04:25,594
+This is a huge area of importance in web
+development which is called
+
+85
+00:04:25,594 --> 00:04:28,503
+A/B testing, which is called randomized
+trials
+
+86
+00:04:28,503 --> 00:04:31,759
+and statistics, which is basically showing
+different
+
+87
+00:04:31,759 --> 00:04:33,907
+versions of a website with different
+
+88
+00:04:33,907 --> 00:04:36,887
+values of these different features and
+predicting
+
+89
+00:04:36,887 --> 00:04:41,217
+which one will introduce a more clicks or
+get more people to buy products.
+
+90
+00:04:41,217 --> 00:04:43,094
+For people you can imagine features of
+
+91
+00:04:43,094 --> 00:04:45,799
+people are their height, weight, hair
+color, etc.
+
+92
+00:04:45,799 --> 00:04:51,230
+It's basically any summary of the raw data
+that you can make as a potential feature.
+
+93
+00:04:51,230 --> 00:04:54,700
+And often this involves quite a bit of
+scientific thinking and business
+
+94
+00:04:54,700 --> 00:04:59,360
+acumen to know what the right covariates
+are for a particular problem.
+
+95
+00:04:59,360 --> 00:05:01,000
+So the more knowledge you have of a
+system,
+
+96
+00:05:01,000 --> 00:05:03,690
+the better job you'll do at feature
+extraction in general.
+
+97
+00:05:03,690 --> 00:05:07,270
+In general it's a good idea to have a
+really clear understanding of why
+
+98
+00:05:07,270 --> 00:05:10,890
+this set of data is useful for, to
+predicting the outcome you care about.
+
+99
+00:05:12,190 --> 00:05:15,544
+So there's this balance between
+summarization and information loss, and in
+
+100
+00:05:15,544 --> 00:05:18,510
+general, it's better to err on the side of
+creating more features.
+
+101
+00:05:18,510 --> 00:05:20,546
+You lose less information and then filter
+some
+
+102
+00:05:20,546 --> 00:05:23,270
+of those features out during your
+model-building process.
+
+103
+00:05:23,270 --> 00:05:24,920
+This can all be automated and has
+
+104
+00:05:24,920 --> 00:05:27,551
+been automated in various different ways,
+but you
+
+105
+00:05:27,551 --> 00:05:29,018
+generally have to use a lot of
+
+106
+00:05:29,018 --> 00:05:31,774
+caution when using that approach because
+sometimes a
+
+107
+00:05:31,774 --> 00:05:33,917
+particular feature will be very useful in
+
+108
+00:05:33,917 --> 00:05:36,180
+the training set that you created but
+won't
+
+109
+00:05:36,180 --> 00:05:40,010
+be very useful in a new set of data and
+the test set won't generalize well.
+
+110
+00:05:41,830 --> 00:05:45,570
+So the second level is taking tidy
+covariates, so these are features you've
+
+111
+00:05:45,570 --> 00:05:49,860
+already created on the data set, and then
+creating new covariates out of them.
+
+112
+00:05:49,860 --> 00:05:53,027
+Usually this is transformations or
+functions of the covariates,
+
+113
+00:05:53,027 --> 00:05:56,612
+that might be useful when building a
+prediction model.
+
+114
+00:05:56,612 --> 00:05:58,646
+This can sometimes be more necessary
+
+115
+00:05:58,646 --> 00:06:01,731
+for methods like, regression, or support
+vector
+
+116
+00:06:01,731 --> 00:06:05,667
+machines that might depend a little bit
+more on what the distribution of
+
+117
+00:06:05,667 --> 00:06:09,801
+the data are, and a little bit less for
+things like classification trees,
+
+118
+00:06:09,801 --> 00:06:11,178
+where the idea here is you
+
+119
+00:06:11,178 --> 00:06:15,360
+don't necessarily have as much model-based
+prediction.
+
+120
+00:06:15,360 --> 00:06:19,260
+In other words, you don't depend quite so
+much on the data looking a particular way.
+
+121
+00:06:20,310 --> 00:06:23,257
+On the other hand, in general, it's a good
+idea to spend
+
+122
+00:06:23,257 --> 00:06:26,447
+some time making sure you have the right
+covariates in your model.
+
+123
+00:06:26,447 --> 00:06:29,344
+So you, when you create these functions or
+decide on these
+
+124
+00:06:29,344 --> 00:06:32,075
+functions, you have to do it only in the
+training set.
+
+125
+00:06:32,075 --> 00:06:35,170
+This is a common theme of machine
+learning.
+
+126
+00:06:35,170 --> 00:06:37,290
+Building features can only happen in the
+training
+
+127
+00:06:37,290 --> 00:06:39,560
+set, it can't happen in the test set.
+
+128
+00:06:39,560 --> 00:06:42,423
+Later when you apply your prediction to
+your function to the test set, you
+
+129
+00:06:42,423 --> 00:06:45,900
+will make that same function of the
+covariate so you can apply your predictor.
+
+130
+00:06:45,900 --> 00:06:49,072
+But the original creation or thinking
+about what covariates to build has
+
+131
+00:06:49,072 --> 00:06:52,456
+to happen only in the training set,
+otherwise you'll lead to overfitting.
+
+132
+00:06:52,456 --> 00:06:55,600
+And the best approach I've found is
+through exploratory analysis,
+
+133
+00:06:55,600 --> 00:06:58,361
+so basically making plots and making
+tables of the data, and
+
+134
+00:06:58,361 --> 00:07:01,016
+trying to understand what are the patterns
+of variation in
+
+135
+00:07:01,016 --> 00:07:03,645
+your data set, and how they might relate
+to the outcome.
+
+136
+00:07:03,645 --> 00:07:05,489
+When you're using the care package or
+
+137
+00:07:05,489 --> 00:07:07,678
+doing this analysis in r, the new
+covariates
+
+138
+00:07:07,678 --> 00:07:11,950
+need to be added to data frames so that
+they can be used in downstream prediction.
+
+139
+00:07:11,950 --> 00:07:14,910
+And it's important to make sure that the
+names of the new variables are
+
+140
+00:07:14,910 --> 00:07:17,900
+recognizable so that you can use the same
+name on your testing data set.
+
+141
+00:07:19,310 --> 00:07:21,140
+So here's an example data set.
+
+142
+00:07:21,140 --> 00:07:24,930
+So here we're loading in this data from
+the ISLR package, and
+
+143
+00:07:24,930 --> 00:07:29,750
+we're loading the care package and we're
+getting this data on wages.
+
+144
+00:07:29,750 --> 00:07:31,958
+So here again I'm going to build a
+training and test set
+
+145
+00:07:31,958 --> 00:07:34,970
+so I can do all the covariate creation in
+the training set.
+
+146
+00:07:34,970 --> 00:07:37,311
+So I use the create data partition
+function to
+
+147
+00:07:37,311 --> 00:07:39,909
+create the index, indices for the two data
+sets.
+
+148
+00:07:39,909 --> 00:07:43,340
+Then I separate the data into a training
+set and into a test set.
+
+149
+00:07:45,640 --> 00:07:50,456
+So one idea is that's very common when
+building machine learning algorithms is to
+
+150
+00:07:50,456 --> 00:07:53,388
+turn covariates that are qualitative, or
+factor
+
+151
+00:07:53,388 --> 00:07:57,170
+variables, into what are called dummy
+variables.
+
+152
+00:07:57,170 --> 00:07:59,100
+So you probably learned a little bit about
+this in your
+
+153
+00:07:59,100 --> 00:08:00,820
+regression modeling class if you've taken
+
+154
+00:08:00,820 --> 00:08:02,910
+it through this data science
+specialization.
+
+155
+00:08:02,910 --> 00:08:05,073
+But the basic idea is suppose we have a
+variable, in this
+
+156
+00:08:05,073 --> 00:08:08,060
+case let's look in the training set at the
+variable called job class.
+
+157
+00:08:08,060 --> 00:08:09,756
+So that job class has two different
+
+158
+00:08:09,756 --> 00:08:13,480
+levels, it's either industrial, or it's
+information.
+
+159
+00:08:13,480 --> 00:08:17,054
+So one thing that we could try to do is
+try to plug that variable directly into
+
+160
+00:08:17,054 --> 00:08:19,097
+a prediction model, but the values of that
+
+161
+00:08:19,097 --> 00:08:21,560
+variable will be a actually a set of
+characters.
+
+162
+00:08:21,560 --> 00:08:24,330
+It'll either be industrial, or it'll be
+information.
+
+163
+00:08:24,330 --> 00:08:27,440
+And it's sometimes hard for prediction
+algorithms to use those
+
+164
+00:08:27,440 --> 00:08:32,140
+qualitative information variables, in
+order to actually do the prediction.
+
+165
+00:08:32,140 --> 00:08:35,696
+So one thing we might want to do is turn
+it into a quantitative variable, and the
+
+166
+00:08:35,696 --> 00:08:37,118
+way that you can do that with the
+
+167
+00:08:37,118 --> 00:08:40,100
+care package is with this dummy variables
+function.
+
+168
+00:08:40,100 --> 00:08:44,730
+So basically it says we're going to pass
+in a model so the outcome is wage.
+
+169
+00:08:44,730 --> 00:08:47,710
+Job class is going to be the predictor
+variable, and tr, training
+
+170
+00:08:47,710 --> 00:08:51,360
+set is the set where we're going to be
+building those dummy variables.
+
+171
+00:08:51,360 --> 00:08:53,160
+And then if you predict, if you use the
+
+172
+00:08:53,160 --> 00:08:56,500
+predict function, this dummy's object and
+a new data set,
+
+173
+00:08:56,500 --> 00:08:58,410
+in this case we're just going to apply it
+to
+
+174
+00:08:58,410 --> 00:09:02,640
+the training data set, you get, two new
+variables out.
+
+175
+00:09:02,640 --> 00:09:04,521
+So the first is an indicator that you are
+
+176
+00:09:04,521 --> 00:09:08,840
+industrial, and the second is an indicator
+that you're information.
+
+177
+00:09:08,840 --> 00:09:11,764
+If the indicator that you're industrial is
+one, it
+
+178
+00:09:11,764 --> 00:09:15,760
+means that for that person, they had an
+industrial job.
+
+179
+00:09:15,760 --> 00:09:21,000
+If it's zero it means for that person,
+they had not an industrial job.
+
+180
+00:09:21,000 --> 00:09:22,690
+So the same thing is true for information.
+
+181
+00:09:22,690 --> 00:09:25,356
+If it's zero that means they had not an
+information
+
+182
+00:09:25,356 --> 00:09:28,980
+job, and if it's one, they have an
+information job.
+
+183
+00:09:28,980 --> 00:09:31,815
+So, in this case, where's there only two
+different levels
+
+184
+00:09:31,815 --> 00:09:35,486
+of this variable, there's only industrial
+and information, then whenever
+
+185
+00:09:35,486 --> 00:09:38,993
+you're one for industrial, you're zero for
+information, and whenever
+
+186
+00:09:38,993 --> 00:09:43,410
+you're zero for industrial, you're one for
+information and so forth.
+
+187
+00:09:43,410 --> 00:09:45,364
+But if you had three variables here, it
+would
+
+188
+00:09:45,364 --> 00:09:47,782
+probably have, every column would have two
+zeros, because
+
+189
+00:09:47,782 --> 00:09:49,839
+those are the two classes you don't belong
+to,
+
+190
+00:09:49,839 --> 00:09:51,650
+and a one for the class that you belong
+to.
+
+191
+00:09:51,650 --> 00:09:53,142
+So this is taking these factor or
+
+192
+00:09:53,142 --> 00:09:56,420
+qualitative variables and turning em into
+quantitative variables.
+
+193
+00:09:57,660 --> 00:09:59,660
+Another thing that happens is that some of
+
+194
+00:09:59,660 --> 00:10:04,500
+the variables are basically have no
+variability in them.
+
+195
+00:10:04,500 --> 00:10:08,534
+So it's often that you'll create a feature
+for example, if you create a
+
+196
+00:10:08,534 --> 00:10:13,090
+feature that says for emails, does it have
+any letters in it at all?
+
+197
+00:10:13,090 --> 00:10:16,113
+Almost every single email will have lots,
+have at least one
+
+198
+00:10:16,113 --> 00:10:19,210
+letter in it, so that variable will always
+be equal to true.
+
+199
+00:10:19,210 --> 00:10:21,206
+It's always got letters in it, so it has
+no
+
+200
+00:10:21,206 --> 00:10:24,376
+variability and it's probably not going to
+be a useful covariate.
+
+201
+00:10:24,376 --> 00:10:28,922
+So one thing that you can use is this near
+zero variable or function in carrot
+
+202
+00:10:28,922 --> 00:10:31,955
+to identity those variables that have very
+little
+
+203
+00:10:31,955 --> 00:10:35,220
+variability and will likely not be good
+predictors.
+
+204
+00:10:35,220 --> 00:10:39,070
+So you apply it to a dataframe that's the
+training data set.
+
+205
+00:10:39,070 --> 00:10:41,040
+And here I'm telling it to save the
+metrics so
+
+206
+00:10:41,040 --> 00:10:45,130
+that we can see how it's calculating what
+the variables are.
+
+207
+00:10:45,130 --> 00:10:50,524
+So, for example, here we can see that it
+tells us the percentage of unique
+
+208
+00:10:50,524 --> 00:10:56,092
+values for a particular variable, so in,
+in this case the variable has
+
+209
+00:10:56,092 --> 00:11:03,313
+about 0.33% unique values, and it's not,
+not near zero variable, near zero variance
+
+210
+00:11:03,313 --> 00:11:07,228
+variable, but for example, sex, the
+variable
+
+211
+00:11:07,228 --> 00:11:10,186
+sex, only is basically males and so
+
+212
+00:11:10,186 --> 00:11:12,724
+it has a very low frequency ratio.
+
+213
+00:11:12,724 --> 00:11:18,552
+In other words, it's basically all one
+category, and so, this ends up being
+
+214
+00:11:18,552 --> 00:11:24,377
+a near zero variable and so, it will be,
+you could use this column of the matrix
+
+215
+00:11:24,377 --> 00:11:30,381
+to throw out all those variables like sex
+and, in this case, like region that are
+
+216
+00:11:30,381 --> 00:11:34,357
+variables that don't really have any
+variability in
+
+217
+00:11:34,357 --> 00:11:38,960
+them and shouldn't be used in prediction
+algorithms.
+
+218
+00:11:38,960 --> 00:11:40,202
+So this is a nice way to throw
+
+219
+00:11:40,202 --> 00:11:42,860
+those sort of less meaningful predictors
+out right away.
+
+220
+00:11:44,320 --> 00:11:46,720
+The other thing that you might do is, so
+instead of
+
+221
+00:11:46,720 --> 00:11:50,630
+fitting, if you do linear regression or
+generalized linear regression as
+
+222
+00:11:50,630 --> 00:11:54,190
+your prediction algorithm, which we'll
+talk about, in a future lecture,
+
+223
+00:11:54,190 --> 00:11:57,590
+the idea will be to fit, basically
+straight lines through the data.
+
+224
+00:11:57,590 --> 00:12:00,955
+Sometimes, you want to be able to fit
+curvy lines, and one way
+
+225
+00:12:00,955 --> 00:12:03,931
+to do that is with a basis functions, and
+so you can find
+
+226
+00:12:03,931 --> 00:12:07,815
+those, for example, in the splines
+package, and so one thing that you
+
+227
+00:12:07,815 --> 00:12:12,768
+can do is create this, the bs function
+will create a polynomial variable.
+
+228
+00:12:12,768 --> 00:12:16,267
+So in this case, we pass at a single
+variable, in this case, the training set,
+
+229
+00:12:16,267 --> 00:12:17,835
+we take the age variable, and we say
+
+230
+00:12:17,835 --> 00:12:20,980
+we want a third degree polynomial for this
+variable.
+
+231
+00:12:20,980 --> 00:12:24,500
+So when you do that, you essentially get,
+you'll get a three-column matrix out.
+
+232
+00:12:24,500 --> 00:12:26,700
+So this is now three new variables.
+
+233
+00:12:26,700 --> 00:12:31,850
+This variable corresponds to age, the
+actual age values.
+
+234
+00:12:31,850 --> 00:12:34,019
+There are scales for computational
+purposes.
+
+235
+00:12:35,080 --> 00:12:38,950
+The second column will correspond to
+something like age squared.
+
+236
+00:12:38,950 --> 00:12:40,948
+So, in other words, you're allowing it to
+
+237
+00:12:40,948 --> 00:12:44,150
+fit a quadratic relationship between age
+and the outcome.
+
+238
+00:12:44,150 --> 00:12:46,721
+And the third column will correspond to
+age cubed, so
+
+239
+00:12:46,721 --> 00:12:49,650
+you allow a cubic relationship between age
+and the outcome.
+
+240
+00:12:49,650 --> 00:12:51,748
+So this'll, if you include these
+covariates
+
+241
+00:12:51,748 --> 00:12:53,145
+in the model instead of just the
+
+242
+00:12:53,145 --> 00:12:55,082
+age variable when you're fitting a linear
+
+243
+00:12:55,082 --> 00:12:57,360
+regression, you allow for curvy model
+fitting.
+
+244
+00:12:57,360 --> 00:12:59,437
+So just to show you an example of that,
+here I
+
+245
+00:12:59,437 --> 00:13:03,670
+fit a linear model, you'll remember that
+from your linear modeling class.
+
+246
+00:13:03,670 --> 00:13:06,520
+So, the wage is the outcome.
+
+247
+00:13:06,520 --> 00:13:09,723
+Again the tilde tells you what's we're
+predicting it with.
+
+248
+00:13:09,723 --> 00:13:12,287
+Here we pass it that BS basis, in other
+words, we
+
+249
+00:13:12,287 --> 00:13:16,120
+pass it all the predictors that we
+generated from the polynomial model.
+
+250
+00:13:16,120 --> 00:13:19,360
+So in this case, it's age, age squared and
+age cubed.
+
+251
+00:13:20,670 --> 00:13:23,680
+And then we can plot the age data versus
+the wage data.
+
+252
+00:13:23,680 --> 00:13:27,950
+So that's age on the x axis, wage on the y
+axis.
+
+253
+00:13:27,950 --> 00:13:29,740
+And you can see that there's, kind
+
+254
+00:13:29,740 --> 00:13:32,690
+of, a curvilinear relationship between
+these two variables.
+
+255
+00:13:32,690 --> 00:13:35,530
+And so we can plot age and the predicted
+values
+
+256
+00:13:35,530 --> 00:13:40,091
+from our linear model, including the, the
+curvy terms, polynomial
+
+257
+00:13:40,091 --> 00:13:42,781
+terms and you see you get a curve fit
+through
+
+258
+00:13:42,781 --> 00:13:45,810
+the data set as opposed to just a straight
+line.
+
+259
+00:13:45,810 --> 00:13:48,530
+So that's one way that you can generate
+new variables is
+
+260
+00:13:48,530 --> 00:13:51,890
+by allowing more flexibility in the way
+that you model specific variables.
+
+261
+00:13:53,510 --> 00:13:56,620
+So then on the test set, you'll have to
+predict those same variables.
+
+262
+00:13:56,620 --> 00:13:58,864
+So this is the idea that's incredibly
+critical
+
+263
+00:13:58,864 --> 00:14:01,680
+for machine learning when you create new
+covariates.
+
+264
+00:14:01,680 --> 00:14:04,924
+You have to create the covariates on the
+task data set
+
+265
+00:14:04,924 --> 00:14:09,910
+using the exact same procedure that you
+used on the training set.
+
+266
+00:14:09,910 --> 00:14:13,741
+So you can do that by saying I'm going to
+predict from this
+
+267
+00:14:13,741 --> 00:14:18,510
+variable that I created using the BS
+function, a new set of values.
+
+268
+00:14:18,510 --> 00:14:20,410
+This is the testing set age values.
+
+269
+00:14:20,410 --> 00:14:22,894
+So these are the values that I'm going to
+actually plug in to
+
+270
+00:14:22,894 --> 00:14:26,150
+my prediction model when I'm testing it
+out on the test set.
+
+271
+00:14:26,150 --> 00:14:29,839
+This is as opposed to creating a new set
+of, predictors based on
+
+272
+00:14:29,839 --> 00:14:34,504
+just applying the BS function directly to
+this age variable, which would be creating
+
+273
+00:14:34,504 --> 00:14:37,676
+a new set of variables on the test set
+that isn't related to
+
+274
+00:14:37,676 --> 00:14:42,070
+the variables that you created on the
+training set and may introduce some bias.
+
+275
+00:14:43,800 --> 00:14:46,139
+So a little bit about this idea, these
+ideas
+
+276
+00:14:46,139 --> 00:14:48,922
+and some future reading for you, So level
+one
+
+277
+00:14:48,922 --> 00:14:53,438
+feature creation is basically all about
+science or, application
+
+278
+00:14:53,438 --> 00:14:56,608
+specific knowledge, I've found that the
+best way to do
+
+279
+00:14:56,608 --> 00:14:59,059
+it, find things for a specific
+application, that I
+
+280
+00:14:59,059 --> 00:15:01,306
+haven't talked about here, or that you
+don't know
+
+281
+00:15:01,306 --> 00:15:03,860
+about, or you're new to, is Googling
+feature extraction
+
+282
+00:15:03,860 --> 00:15:06,580
+for the type of data that you're trying to
+analyze.
+
+283
+00:15:06,580 --> 00:15:08,030
+Feature extraction for images.
+
+284
+00:15:08,030 --> 00:15:09,870
+Feature extraction for voice.
+
+285
+00:15:09,870 --> 00:15:11,350
+Things like that.
+
+286
+00:15:11,350 --> 00:15:14,047
+you, you can also just look up that
+particular data
+
+287
+00:15:14,047 --> 00:15:16,821
+type and see as much information as you
+can about it.
+
+288
+00:15:16,821 --> 00:15:20,045
+In particular you're looking for what are
+the salient
+
+289
+00:15:20,045 --> 00:15:25,033
+characteristics that are likely to be
+different between individual samples.
+
+290
+00:15:25,033 --> 00:15:27,796
+In general you want to err on the side of
+overcreation of features
+
+291
+00:15:27,796 --> 00:15:29,433
+because you can always filter them out
+
+292
+00:15:29,433 --> 00:15:32,240
+later in the machine learning algorithm
+process.
+
+293
+00:15:32,240 --> 00:15:35,016
+In some applications like images and
+voices,
+
+294
+00:15:35,016 --> 00:15:38,149
+it's often both possible and pretty much
+necessary
+
+295
+00:15:38,149 --> 00:15:41,139
+to create features that aren't necessarily
+just
+
+296
+00:15:41,139 --> 00:15:43,640
+things that you imagine out of your mind.
+
+297
+00:15:43,640 --> 00:15:46,719
+It's very hard to know exactly what the
+right components of
+
+298
+00:15:46,719 --> 00:15:49,551
+an image to include as features in a
+model, and so there
+
+299
+00:15:49,551 --> 00:15:52,569
+are things like you may have heard of deep
+learning which is
+
+300
+00:15:52,569 --> 00:15:56,350
+basically a way of creating features for
+things like images and voice.
+
+301
+00:15:56,350 --> 00:15:58,993
+And this is a nice tutorial I've linked to
+here, that
+
+302
+00:15:58,993 --> 00:16:03,340
+kind of explains how that feature creation
+process works for those things.
+
+303
+00:16:03,340 --> 00:16:07,342
+But in general, automatic feature creation
+requires an equal level of thinking to
+
+304
+00:16:07,342 --> 00:16:09,459
+make sure that the features being
+generated
+
+305
+00:16:09,459 --> 00:16:11,700
+by your feature creation process make
+sense.
+
+306
+00:16:12,770 --> 00:16:16,920
+Level 2 feature creation covariates to new
+covariates can be
+
+307
+00:16:16,920 --> 00:16:21,690
+done a lot with the preProcess components
+of the caret package.
+
+308
+00:16:21,690 --> 00:16:24,521
+You can create new, new covariates using
+basically any of
+
+309
+00:16:24,521 --> 00:16:26,790
+the functions in r, if they make sense to
+you.
+
+310
+00:16:26,790 --> 00:16:30,070
+The key is, again, making lots of plots
+and doing exploratory analysis
+
+311
+00:16:30,070 --> 00:16:33,720
+to see where the connections between the
+predictors and the outcome are.
+
+312
+00:16:33,720 --> 00:16:38,610
+You can create new covariates if you think
+they will improve fit.
+
+313
+00:16:38,610 --> 00:16:41,476
+Again, you can kind of err on the side of
+overcreation of features,
+
+314
+00:16:41,476 --> 00:16:43,387
+but sometimes features just are, are, sort
+
+315
+00:16:43,387 --> 00:16:45,570
+of, nonsensical and you shouldn't create
+them.
+
+316
+00:16:46,850 --> 00:16:48,640
+Be careful about overfitting in the sense
+that
+
+317
+00:16:48,640 --> 00:16:50,180
+if you create lots of features that are
+
+318
+00:16:50,180 --> 00:16:53,080
+particularly good for just your training
+set, they
+
+319
+00:16:53,080 --> 00:16:54,820
+may not work well in the test set.
+
+320
+00:16:54,820 --> 00:16:57,461
+And so a good idea is if you overcreate
+lots of features
+
+321
+00:16:57,461 --> 00:17:02,300
+to do some filtering before you actually
+apply your machine learning algorithm.
+
+322
+00:17:02,300 --> 00:17:04,515
+This tutorial on preprocessing with caret
+is very good.
+
+323
+00:17:04,515 --> 00:17:07,691
+It's a good place to start for really
+basic preprocessing.
+
+324
+00:17:07,691 --> 00:17:10,049
+And if you want a flit spline model like
+the
+
+325
+00:17:10,049 --> 00:17:13,013
+ones I talked about with flexible curves,
+you can use
+
+326
+00:17:13,013 --> 00:17:15,978
+the gam method in the caret package which
+allows smoothing
+
+327
+00:17:15,978 --> 00:17:19,580
+of multiple variables using a different
+smooth for every variables.
+
+328
+00:17:20,590 --> 00:17:23,411
+And more on feature creation and data
+tidying is in the
+
+329
+00:17:23,411 --> 00:17:25,606
+getting data, Getting and Cleaning Data
+
+330
+00:17:25,606 --> 00:17:28,130
+course from the Data Science
+specialization.
+
