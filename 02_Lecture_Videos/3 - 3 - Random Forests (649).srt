@@ -1,0 +1,623 @@
+1
+00:00:00,650 --> 00:00:02,590
+This lecture is about random forests,
+which you can think
+
+2
+00:00:02,590 --> 00:00:06,370
+of as an extension to bagging for
+classification and regression trees.
+
+3
+00:00:06,370 --> 00:00:10,210
+The basic idea is very similar to bagging
+in the sense that we bootstrap
+
+4
+00:00:10,210 --> 00:00:15,480
+samples, so we take a resample of our
+observed data, and our training data set.
+
+5
+00:00:15,480 --> 00:00:18,120
+And then we rebuild classification or
+regression
+
+6
+00:00:18,120 --> 00:00:20,000
+trees on each of those bootstrap samples.
+
+7
+00:00:21,490 --> 00:00:24,564
+The one difference is that at each split,
+when we split the
+
+8
+00:00:24,564 --> 00:00:28,840
+data each time in a classification tree,
+we also bootstrap the variables.
+
+9
+00:00:28,840 --> 00:00:30,350
+In other words, only a subset of
+
+10
+00:00:30,350 --> 00:00:33,660
+the variables is considered at each
+potential split.
+
+11
+00:00:33,660 --> 00:00:37,140
+This makes for a diverse set of potential
+trees that can be built.
+
+12
+00:00:37,140 --> 00:00:40,350
+And so the idea is we grow a large number
+of trees.
+
+13
+00:00:40,350 --> 00:00:42,650
+And then we either vote or average those
+trees
+
+14
+00:00:42,650 --> 00:00:45,140
+in order to get the prediction for a new
+outcome.
+
+15
+00:00:45,140 --> 00:00:48,740
+The pros for this approach are that it's
+quite accurate.
+
+16
+00:00:48,740 --> 00:00:51,830
+And along with boosting, it's one of the
+most, widely
+
+17
+00:00:51,830 --> 00:00:56,630
+used and highly accurate methods for
+prediction in competitions like Kaggle.
+
+18
+00:00:56,630 --> 00:00:58,850
+The cons are that it's, it can be quite
+slow.
+
+19
+00:00:58,850 --> 00:01:01,240
+It has to build a large number of trees.
+
+20
+00:01:01,240 --> 00:01:03,595
+And it can be hard to interpret, in the
+sense that
+
+21
+00:01:03,595 --> 00:01:07,180
+you might have a large number of trees
+that are averaged together.
+
+22
+00:01:07,180 --> 00:01:10,111
+And those trees represent bootstrap
+samples with bootstrap nodes
+
+23
+00:01:10,111 --> 00:01:12,420
+that can be a little bit complicated to
+understand.
+
+24
+00:01:12,420 --> 00:01:14,855
+It can also lead to a little bit of
+overfitting
+
+25
+00:01:14,855 --> 00:01:18,123
+which can be complicated by the fact that
+it's very hard
+
+26
+00:01:18,123 --> 00:01:21,714
+to understand which trees are leading to
+that overfitting, and so
+
+27
+00:01:21,714 --> 00:01:25,910
+it's very important to use cross
+validation when building random forests.
+
+28
+00:01:27,440 --> 00:01:29,200
+Here's an example of how this works in
+practice.
+
+29
+00:01:29,200 --> 00:01:31,140
+So the idea is that you build a large
+number
+
+30
+00:01:31,140 --> 00:01:35,270
+of trees where each tree is based on a
+bootstrap sample.
+
+31
+00:01:35,270 --> 00:01:39,800
+So, for example, this tree is built on a
+random subsample of your data and this is
+
+32
+00:01:39,800 --> 00:01:41,710
+a separate random subsample of the data
+and
+
+33
+00:01:41,710 --> 00:01:44,460
+this is a separate random subsample of the
+data.
+
+34
+00:01:44,460 --> 00:01:46,980
+And then at each node we allow a different
+
+35
+00:01:46,980 --> 00:01:49,790
+subset of the variables to potentially
+contribute to the splits.
+
+36
+00:01:50,940 --> 00:01:52,530
+Then if we get a new observation, say
+
+37
+00:01:52,530 --> 00:01:55,930
+this V observation here, we run that
+observation through
+
+38
+00:01:55,930 --> 00:02:00,840
+tree one, and it ends up at this leaf down
+here at the bottom of that, tree.
+
+39
+00:02:00,840 --> 00:02:03,820
+And so it gets a particular prediction
+here.
+
+40
+00:02:03,820 --> 00:02:06,210
+Then the next, we take that same
+observation,
+
+41
+00:02:06,210 --> 00:02:07,980
+we run it through the next tree, and
+
+42
+00:02:07,980 --> 00:02:10,350
+it goes down a slightly different leaf,
+and
+
+43
+00:02:10,350 --> 00:02:13,020
+it gets a slightly different set of
+predictions here.
+
+44
+00:02:13,020 --> 00:02:14,948
+And finally we go down the third tree,
+
+45
+00:02:14,948 --> 00:02:18,300
+and we get an even different set of
+predictions.
+
+46
+00:02:18,300 --> 00:02:21,340
+Then what we do is we basically average
+those predictions together in order
+
+47
+00:02:21,340 --> 00:02:25,230
+to get the predictive probabilities of
+each class across all the different trees.
+
+48
+00:02:27,260 --> 00:02:28,990
+So I'm going to show you an example of how
+this works.
+
+49
+00:02:28,990 --> 00:02:30,780
+I'm going to load the iris data in and I'm
+
+50
+00:02:30,780 --> 00:02:34,380
+going to use the ggplot2 package for
+showing some plots.
+
+51
+00:02:34,380 --> 00:02:36,620
+I'm going to build a training set and a
+test set
+
+52
+00:02:36,620 --> 00:02:38,870
+again building the data set only on the
+training set.
+
+53
+00:02:40,080 --> 00:02:41,929
+In the caret package, I use the train
+function
+
+54
+00:02:41,929 --> 00:02:44,480
+just like I've used for the other model
+building.
+
+55
+00:02:44,480 --> 00:02:46,593
+I send it the training data set and I tell
+
+56
+00:02:46,593 --> 00:02:49,680
+it method equals rf, which is the random
+forest method.
+
+57
+00:02:50,730 --> 00:02:54,810
+I'm also telling it to fit the outcome to
+be Species
+
+58
+00:02:54,810 --> 00:02:58,830
+and to use any of the other predictive
+variables as potential predictors.
+
+59
+00:02:58,830 --> 00:03:00,160
+I'm setting prox equals true.
+
+60
+00:03:00,160 --> 00:03:01,590
+You'll see why I'm doing that in a minute
+
+61
+00:03:01,590 --> 00:03:04,050
+because it produces a little bit of extra
+information.
+
+62
+00:03:04,050 --> 00:03:07,420
+And then I could use when I'm building
+these model fits.
+
+63
+00:03:07,420 --> 00:03:09,847
+So here it tells me that I built the model
+and I've
+
+64
+00:03:09,847 --> 00:03:11,922
+done bootstrap re-sampling and then, I
+
+65
+00:03:11,922 --> 00:03:14,700
+tried a bunch of different tuning
+parameters.
+
+66
+00:03:14,700 --> 00:03:18,350
+And so the tuning parameter in particular
+is the number of
+
+67
+00:03:18,350 --> 00:03:21,440
+basically tries, or number of repeated
+trees that it's going to build.
+
+68
+00:03:23,000 --> 00:03:26,760
+I can look at a specific tree in our final
+model fit using the get tree function.
+
+69
+00:03:26,760 --> 00:03:29,024
+So I applied get tree here to our final
+
+70
+00:03:29,024 --> 00:03:31,588
+model and I say I want the second tree
+out.
+
+71
+00:03:31,588 --> 00:03:34,250
+And this is what the tree looks like.
+
+72
+00:03:34,250 --> 00:03:38,700
+So each of these columns, or each of these
+rows corresponds to a particular split.
+
+73
+00:03:38,700 --> 00:03:41,730
+And so, you can see what the left daughter
+of the
+
+74
+00:03:41,730 --> 00:03:44,990
+tree is, the right daughter of the tree,
+which variable we're splitting
+
+75
+00:03:44,990 --> 00:03:48,620
+on, what's the value where that variable
+is split and then
+
+76
+00:03:48,620 --> 00:03:51,380
+what the prediction is going to be out of
+that particular split.
+
+77
+00:03:53,360 --> 00:03:57,430
+You can use this centers information as
+well to see what
+
+78
+00:03:57,430 --> 00:04:00,830
+the predictions would be, or the center of
+the class predictions.
+
+79
+00:04:00,830 --> 00:04:03,480
+So what I've done here is, I'm looking at
+two particular variables.
+
+80
+00:04:03,480 --> 00:04:05,330
+The petal length and the petal width.
+
+81
+00:04:05,330 --> 00:04:09,500
+So I plotted petal width on the X axis and
+petal length on the Y axis.
+
+82
+00:04:09,500 --> 00:04:11,510
+I then get the class centers.
+
+83
+00:04:11,510 --> 00:04:14,580
+So these are going to be the centers for
+the predicted values.
+
+84
+00:04:14,580 --> 00:04:16,854
+So I'm going to send in the model fit, and
+I'm going to give
+
+85
+00:04:16,854 --> 00:04:20,150
+it this prox variable which we asked for
+in the previous fitting.
+
+86
+00:04:20,150 --> 00:04:22,570
+And when I'm going to tell it we're
+looking at the training data set.
+
+87
+00:04:22,570 --> 00:04:25,850
+And so that gives us the class centers.
+
+88
+00:04:25,850 --> 00:04:28,370
+Those class centers will then, we can then
+plot
+
+89
+00:04:28,370 --> 00:04:30,990
+those to see where they fall in the data.
+
+90
+00:04:30,990 --> 00:04:36,010
+So now, I've created the centers data set,
+as well as the species data set.
+
+91
+00:04:36,010 --> 00:04:40,820
+And what I'm going to do is plot petal
+width versus petal length.
+
+92
+00:04:40,820 --> 00:04:43,460
+And I'm going to color it by species in
+the training data.
+
+93
+00:04:43,460 --> 00:04:46,040
+That's what I did with this qplot command.
+
+94
+00:04:46,040 --> 00:04:48,650
+Then I'm going to add points on top of
+that.
+
+95
+00:04:48,650 --> 00:04:54,742
+That are the petal width and petal length,
+corresponding to the color being the
+
+96
+00:04:54,742 --> 00:05:00,980
+species, and now I am using it from the
+irsP which is the centers of the data set.
+
+97
+00:05:00,980 --> 00:05:04,140
+So what you can see is each dot here
+represents an observation.
+
+98
+00:05:04,140 --> 00:05:06,220
+And the x's show the color center, or
+
+99
+00:05:06,220 --> 00:05:10,530
+the observation centers for each of the
+different predictions.
+
+100
+00:05:10,530 --> 00:05:15,500
+So you can see that we predict the, each
+species has a prediction for these two
+
+101
+00:05:15,500 --> 00:05:17,450
+variables that's right in the center of
+the
+
+102
+00:05:17,450 --> 00:05:19,700
+cloud of points corresponding to that
+particular species.
+
+103
+00:05:19,700 --> 00:05:23,930
+You can then predict new values using the
+predict functions.
+
+104
+00:05:23,930 --> 00:05:28,530
+So you past to predict our model fit and
+the testing data set.
+
+105
+00:05:28,530 --> 00:05:32,560
+And here, I'm also setting a variable,
+testing predict right, which
+
+106
+00:05:32,560 --> 00:05:35,230
+is that we got the prediction right in the
+data set.
+
+107
+00:05:35,230 --> 00:05:39,390
+In other words, our prediction is equal to
+the testing data set species.
+
+108
+00:05:39,390 --> 00:05:41,779
+I can then make a table of our predictions
+versus
+
+109
+00:05:41,779 --> 00:05:44,920
+the species to see what that variable
+would look like.
+
+110
+00:05:44,920 --> 00:05:49,716
+So I can see for example I missed two
+values here with my random forest model.
+
+111
+00:05:49,716 --> 00:05:53,040
+But overall [INAUDIBLE] it was highly
+accurate in the prediction.
+
+112
+00:05:53,040 --> 00:05:55,510
+I can then look and see which of the two
+that I missed.
+
+113
+00:05:55,510 --> 00:05:59,098
+And perhaps unsurprisingly you can see the
+two that I missed,
+
+114
+00:05:59,098 --> 00:06:03,860
+marked in red here, are the two that,
+in-between, two separate classes.
+
+115
+00:06:03,860 --> 00:06:07,775
+So remember there was one class up in this
+right corner, and one class right here in
+
+116
+00:06:07,775 --> 00:06:10,044
+the middle, and this cloud, and the two
+points
+
+117
+00:06:10,044 --> 00:06:12,570
+that lie right on the border we were
+misclassified.
+
+118
+00:06:12,570 --> 00:06:15,710
+So you can kind of use this to explore,
+and see where
+
+119
+00:06:15,710 --> 00:06:18,450
+your prediction is doing well and where
+your prediction is doing poorly.
+
+120
+00:06:19,920 --> 00:06:21,300
+Random forests are usually one of the top
+
+121
+00:06:21,300 --> 00:06:24,640
+performing algorithms along with boosting
+in any prediction contests.
+
+122
+00:06:24,640 --> 00:06:28,240
+They're often difficult to interpret
+because of these multiple trees that we're
+
+123
+00:06:28,240 --> 00:06:32,230
+fitting but they can be very accurate for
+a wide range of problems.
+
+124
+00:06:32,230 --> 00:06:35,364
+You can check out the rfcv function to
+make sure that cross validation
+
+125
+00:06:35,364 --> 00:06:39,000
+is being performed, but the train function
+in caret also handles that for you.
+
+126
+00:06:39,000 --> 00:06:41,430
+For more information you can read about
+
+127
+00:06:41,430 --> 00:06:44,240
+random forests directly from the inventor
+here.
+
+128
+00:06:44,240 --> 00:06:46,641
+The Wikipedia page for random forests is
+also quite good,
+
+129
+00:06:46,641 --> 00:06:49,150
+and the elements of statistical learning
+covers it as well.
+
