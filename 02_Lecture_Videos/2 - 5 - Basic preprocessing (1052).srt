@@ -1,0 +1,1011 @@
+1
+00:00:00,270 --> 00:00:03,170
+This lecture's about preprocessing
+predictor variables.
+
+2
+00:00:03,170 --> 00:00:06,449
+And, so as we saw on previous lectures,
+you need to plot the variables
+
+3
+00:00:06,449 --> 00:00:10,490
+upfront so you can see if there's any sort
+of weird behavior of those variables.
+
+4
+00:00:10,490 --> 00:00:12,530
+And sometimes predictors will look very
+strange
+
+5
+00:00:12,530 --> 00:00:14,468
+or the distribution will be very strange,
+and
+
+6
+00:00:14,468 --> 00:00:16,159
+you might need to transform them in order
+
+7
+00:00:16,159 --> 00:00:18,470
+to make them more useful for prediction
+algorithms.
+
+8
+00:00:18,470 --> 00:00:21,990
+This is particularly true when you're
+using model based algorithms.
+
+9
+00:00:21,990 --> 00:00:24,442
+Like linear discriminate analysis, naive
+Bayes,
+
+10
+00:00:24,442 --> 00:00:26,400
+linear regression and things like that.
+
+11
+00:00:26,400 --> 00:00:28,060
+We'll talk about all those methods later
+in the
+
+12
+00:00:28,060 --> 00:00:30,520
+class, but just keep in mind that
+pre-processing can
+
+13
+00:00:30,520 --> 00:00:33,260
+be more useful often when you're using
+model based
+
+14
+00:00:33,260 --> 00:00:36,240
+approaches, then when you're using more
+non parametric approaches.
+
+15
+00:00:37,370 --> 00:00:38,330
+So, why preprocess?
+
+16
+00:00:38,330 --> 00:00:41,433
+Here again I'm loading the later, the
+caret package, and I'm
+
+17
+00:00:41,433 --> 00:00:45,430
+learning the kernlab package and then I'm
+attaching the spam data.
+
+18
+00:00:45,430 --> 00:00:49,054
+Again just like I talked about previously,
+when you're deciding how to preprocess
+
+19
+00:00:49,054 --> 00:00:51,720
+data, or how to explore data we only look
+at the training set.
+
+20
+00:00:51,720 --> 00:00:54,850
+So, we split data right away into training
+and testing
+
+21
+00:00:54,850 --> 00:00:58,500
+data and we set the testing data aside for
+later.
+
+22
+00:00:58,500 --> 00:01:00,940
+Now if I look at one of the variables, so
+again, this is spam data,
+
+23
+00:01:00,940 --> 00:01:04,630
+so we're trying to predict whether the
+data is spam or if it's good emails, ham.
+
+24
+00:01:04,630 --> 00:01:10,830
+And, so the variables are things like how
+many capitals do we see in a row?
+
+25
+00:01:10,830 --> 00:01:15,320
+What's the run length for the number of
+capitals in a row in an email?
+
+26
+00:01:15,320 --> 00:01:18,680
+If you take, make a histogram of those
+values, you see, for example,.
+
+27
+00:01:18,680 --> 00:01:21,299
+That almost all of the run links are very
+small,
+
+28
+00:01:21,299 --> 00:01:23,930
+but there are a few that are much, much
+larger.
+
+29
+00:01:23,930 --> 00:01:27,693
+This is an example of a variable that is
+very skewed, and, so it's
+
+30
+00:01:27,693 --> 00:01:29,373
+very hard to deal with in model
+
+31
+00:01:29,373 --> 00:01:32,980
+based predictors and so you might want to
+preProcess.
+
+32
+00:01:32,980 --> 00:01:37,070
+So, if you take the mean of this variable,
+it's about 4.7.
+
+33
+00:01:37,070 --> 00:01:40,240
+But the standard deviation is huge, it's
+much much larger.
+
+34
+00:01:40,240 --> 00:01:43,180
+So, it's much more highly variable
+variable.
+
+35
+00:01:43,180 --> 00:01:46,022
+And so, what you might want to do is do
+some sort of preprocessing, so
+
+36
+00:01:46,022 --> 00:01:48,276
+the machine learning algorithms don't get
+tricked by
+
+37
+00:01:48,276 --> 00:01:50,290
+the fact that it's skewed and highly
+variable.
+
+38
+00:01:51,340 --> 00:01:55,549
+So, one way that you can do this is by
+basically standardizing variables, and the
+
+39
+00:01:55,549 --> 00:01:57,745
+usual way to standardize variables, is to
+
+40
+00:01:57,745 --> 00:02:01,300
+take the variable values, and subtract
+their mean.
+
+41
+00:02:01,300 --> 00:02:04,270
+Then put, so you take the value, subtract
+the mean,
+
+42
+00:02:04,270 --> 00:02:07,870
+and then divide that whole quantity by the
+standard deviation.
+
+43
+00:02:07,870 --> 00:02:11,770
+When you do that the mean of the variables
+that you have will be zero.
+
+44
+00:02:11,770 --> 00:02:13,820
+And the standard deviation will be one, so
+that will
+
+45
+00:02:13,820 --> 00:02:17,270
+reduce a lot of that variability that we
+saw previously.
+
+46
+00:02:17,270 --> 00:02:20,050
+And it will, standardize the variable
+somewhat.
+
+47
+00:02:21,420 --> 00:02:23,240
+One thing to keep in mind is, again, when
+
+48
+00:02:23,240 --> 00:02:25,970
+we apply a prediction algorithm to the
+test set.
+
+49
+00:02:25,970 --> 00:02:28,160
+We have to be aware that we can only
+
+50
+00:02:28,160 --> 00:02:30,470
+use parameters that we estimated in the
+training set.
+
+51
+00:02:30,470 --> 00:02:34,290
+In other words, when we apply this same
+standardization
+
+52
+00:02:34,290 --> 00:02:36,840
+to the test set, we have to use the
+
+53
+00:02:36,840 --> 00:02:40,000
+mean from the training set, and the
+standard deviation
+
+54
+00:02:40,000 --> 00:02:43,230
+from the training set, to standardize the
+testing set values.
+
+55
+00:02:43,230 --> 00:02:44,680
+What does this mean?
+
+56
+00:02:44,680 --> 00:02:47,090
+It means that when you do the
+standardization, the
+
+57
+00:02:47,090 --> 00:02:49,960
+mean will not be exactly zero in the test
+set.
+
+58
+00:02:49,960 --> 00:02:53,005
+And the standard deviation will not be
+exactly one, because
+
+59
+00:02:53,005 --> 00:02:56,590
+we've standardized by parameters estimated
+in the training set, but
+
+60
+00:02:56,590 --> 00:02:59,758
+hopefully they'll be close to those values
+even though we're
+
+61
+00:02:59,758 --> 00:03:03,220
+using not the exact values built in the
+test set.
+
+62
+00:03:03,220 --> 00:03:07,340
+You can also use the preProcess function
+to do a lot of standardization for you.
+
+63
+00:03:07,340 --> 00:03:10,800
+So, the preprocess function is a function
+that is built into the caret package.
+
+64
+00:03:10,800 --> 00:03:12,130
+And here I'm passing it all of
+
+65
+00:03:12,130 --> 00:03:14,710
+the training variables except for one,
+except for
+
+66
+00:03:14,710 --> 00:03:18,650
+the 58th in the data set, which is the
+actual outcome that we care about.
+
+67
+00:03:18,650 --> 00:03:21,930
+And I'm telling it to center every
+variable and scale every variable.
+
+68
+00:03:21,930 --> 00:03:26,000
+That will do that same transformation that
+we talked about previously to
+
+69
+00:03:26,000 --> 00:03:29,460
+the data, where you subtract the mean and
+divide by the standard deviation.
+
+70
+00:03:29,460 --> 00:03:31,620
+And you can see that by looking at the
+
+71
+00:03:31,620 --> 00:03:35,280
+mean of the value capitalAve, just like we
+did before.
+
+72
+00:03:35,280 --> 00:03:37,603
+And you can see that after using the
+preProcess function
+
+73
+00:03:37,603 --> 00:03:39,840
+the mean is zero, and the standard
+deviation is one.
+
+74
+00:03:39,840 --> 00:03:43,606
+So, preprocess can be used to perform a
+lot of the preprocessing
+
+75
+00:03:43,606 --> 00:03:47,110
+tool, techniques that you, you used to
+have to do by hand.
+
+76
+00:03:47,110 --> 00:03:53,900
+The other thing that you can do is you can
+use the object that's created
+
+77
+00:03:53,900 --> 00:03:59,020
+using the preprocessing technique to apply
+that same preprocessing to the test set.
+
+78
+00:03:59,020 --> 00:04:03,630
+So, here this preObj was the object used
+on the previous slide.
+
+79
+00:04:03,630 --> 00:04:07,440
+That was the object that we created by
+preprocessing the training set.
+
+80
+00:04:09,000 --> 00:04:11,240
+So, looking at that value we can see, now,
+
+81
+00:04:11,240 --> 00:04:16,110
+if we pass the testing set to the predict
+function.
+
+82
+00:04:16,110 --> 00:04:17,832
+Then what it'll do is it will take
+
+83
+00:04:17,832 --> 00:04:20,967
+the values calculated on the preprocessing
+object and apply
+
+84
+00:04:20,967 --> 00:04:25,146
+them to the test set object, and so again,
+in the pre, post process test set data
+
+85
+00:04:25,146 --> 00:04:27,175
+the mean won't exactly be equal to zero
+
+86
+00:04:27,175 --> 00:04:30,249
+for any variable and the standard
+deviation won't exactly
+
+87
+00:04:30,249 --> 00:04:32,338
+be equal to one, but they'll be close,
+
+88
+00:04:32,338 --> 00:04:35,200
+because we used the training set values to
+normalize.
+
+89
+00:04:36,260 --> 00:04:39,446
+You can also pass the preprocessed
+commands directly
+
+90
+00:04:39,446 --> 00:04:42,830
+to the train function in caret, as an
+argument.
+
+91
+00:04:42,830 --> 00:04:45,591
+So, for example here we can send to the
+preprocessed
+
+92
+00:04:45,591 --> 00:04:49,796
+argument of the train function, the
+command, the parameters center
+
+93
+00:04:49,796 --> 00:04:52,305
+and scale, and that will center and scale
+all of
+
+94
+00:04:52,305 --> 00:04:56,560
+the predictors, before using those
+predictors in the prediction model.
+
+95
+00:04:56,560 --> 00:05:00,830
+The other thing that you can do is do
+other kinds of transformation.
+
+96
+00:05:00,830 --> 00:05:03,851
+So, centering and scaling is one approach,
+and that will take
+
+97
+00:05:03,851 --> 00:05:06,310
+care of some the problems that we see in
+these data.
+
+98
+00:05:06,310 --> 00:05:10,140
+You can remove, very strongly biased
+predictors
+
+99
+00:05:10,140 --> 00:05:12,270
+or predictors that have super high
+variability.
+
+100
+00:05:12,270 --> 00:05:13,840
+The other thing that you can do is use
+other
+
+101
+00:05:13,840 --> 00:05:18,100
+different kinds of transformations one
+example is the box cox transforms.
+
+102
+00:05:18,100 --> 00:05:20,758
+Box cox transforms are a set of
+transformations
+
+103
+00:05:20,758 --> 00:05:23,417
+that take continuous data, and try to make
+them
+
+104
+00:05:23,417 --> 00:05:25,611
+look like normal data and they do that by
+
+105
+00:05:25,611 --> 00:05:29,480
+estimating a specific set of parameters
+using maximum likelihood.
+
+106
+00:05:29,480 --> 00:05:32,060
+So, if I use the preprocess function and I
+tell it to
+
+107
+00:05:32,060 --> 00:05:36,090
+perform box cox transformations on each of
+the variables, and then I predict.
+
+108
+00:05:37,180 --> 00:05:41,480
+Each of the different variables using that
+preprocess object on the training set.
+
+109
+00:05:41,480 --> 00:05:44,650
+I can look at the capital average values,
+
+110
+00:05:44,650 --> 00:05:46,460
+and I can make a histogram of those
+values.
+
+111
+00:05:46,460 --> 00:05:50,770
+And now, remember in the original plot on
+the histogram, they looked
+
+112
+00:05:50,770 --> 00:05:54,420
+like a huge pile at zero and a few values
+that were large.
+
+113
+00:05:54,420 --> 00:05:56,970
+And now you see something that look a
+little bit more like
+
+114
+00:05:56,970 --> 00:05:59,480
+a normal distribution, a little bit more
+like a bell curve here.
+
+115
+00:05:59,480 --> 00:06:02,470
+You will notice that it doesn't take care
+of all of the problems.
+
+116
+00:06:02,470 --> 00:06:05,846
+So, for example there's still a stack set
+of values here at zero and
+
+117
+00:06:05,846 --> 00:06:07,207
+in the Q-Q plot, so this is
+
+118
+00:06:07,207 --> 00:06:10,960
+showing the theoretical quantiles of the
+normal distribution.
+
+119
+00:06:10,960 --> 00:06:13,803
+Versus the sample quintiles that we
+calculated for our
+
+120
+00:06:13,803 --> 00:06:16,769
+preProcess data, you can see that they
+don't perfectly
+
+121
+00:06:16,769 --> 00:06:19,426
+line up and in particular there's this
+again chunk
+
+122
+00:06:19,426 --> 00:06:21,587
+down here at the bottom these don't lie on
+
+123
+00:06:21,587 --> 00:06:24,243
+a perfect 45 degree line, and that's
+because if
+
+124
+00:06:24,243 --> 00:06:26,404
+you have a bunch of values that are
+exactly
+
+125
+00:06:26,404 --> 00:06:28,875
+equal to zero this is a continuous
+transform and
+
+126
+00:06:28,875 --> 00:06:31,600
+it doesn't take care of values that are
+repeated.
+
+127
+00:06:31,600 --> 00:06:33,736
+So, it doesn't take care of a lot of the
+problems that
+
+128
+00:06:33,736 --> 00:06:36,970
+would happen, would occur with using a
+variable that's highly skewed though.
+
+129
+00:06:38,760 --> 00:06:42,370
+So, the thing that we can do is also
+impute data for these data sets.
+
+130
+00:06:42,370 --> 00:06:44,120
+So, it's very common to have missing data.
+
+131
+00:06:44,120 --> 00:06:46,427
+And when you're using missing data in
+
+132
+00:06:46,427 --> 00:06:49,980
+the data sets, the prediction algorithms
+often fail.
+
+133
+00:06:49,980 --> 00:06:53,610
+Prediction algorithms are built not to
+handle missing data in most cases.
+
+134
+00:06:53,610 --> 00:06:56,290
+So, if you have some missing data.
+
+135
+00:06:56,290 --> 00:07:00,100
+You can impute them using something called
+k-nearest neighbor's imputation.
+
+136
+00:07:00,100 --> 00:07:02,040
+So here we set the seed again, because
+this is
+
+137
+00:07:02,040 --> 00:07:05,760
+a randomized algorithm, and we want to get
+reproducible results.
+
+138
+00:07:05,760 --> 00:07:08,800
+And I take just these capital average
+values
+
+139
+00:07:08,800 --> 00:07:12,260
+and, I create a new variable called
+CapAve.
+
+140
+00:07:13,410 --> 00:07:18,060
+Then I generate randomly a bunch of values
+using the rbinom function
+
+141
+00:07:18,060 --> 00:07:22,370
+to set equal to NA and I set those values
+to be missing.
+
+142
+00:07:22,370 --> 00:07:25,537
+So, now this variable capAve is exactly
+like the capitalAve
+
+143
+00:07:25,537 --> 00:07:28,529
+valuable only it has a subset of values
+that are missing.
+
+144
+00:07:29,840 --> 00:07:32,120
+So, now I want to know how would I handle
+those missing values?
+
+145
+00:07:32,120 --> 00:07:37,170
+I did this so that we could see how we
+could handle missing values in a dataset.
+
+146
+00:07:37,170 --> 00:07:39,120
+So, one thing that you going to do is you
+going to get
+
+147
+00:07:39,120 --> 00:07:43,510
+news as preProcess function and tell it to
+do k-nearest neighbors imputation.
+
+148
+00:07:43,510 --> 00:07:46,250
+K-nearest neighbors computation find the
+k.
+
+149
+00:07:46,250 --> 00:07:48,239
+So if k equal to ten, then the 10
+
+150
+00:07:48,239 --> 00:07:51,650
+nearest, data vectors that look most like
+data vector
+
+151
+00:07:51,650 --> 00:07:54,636
+with the missing value, and average the
+values of
+
+152
+00:07:54,636 --> 00:07:59,320
+the variable that's missing and compute
+them at that position.
+
+153
+00:07:59,320 --> 00:08:02,512
+So, if we do that, then we can predict on
+our training set, all of
+
+154
+00:08:02,512 --> 00:08:04,486
+the new values, including the ones that
+
+155
+00:08:04,486 --> 00:08:07,580
+have been imputed with the k-nearest
+imputation algorithm.
+
+156
+00:08:08,680 --> 00:08:10,406
+We can then standardize those values,
+
+157
+00:08:10,406 --> 00:08:12,604
+using the same standardization procedure
+that we
+
+158
+00:08:12,604 --> 00:08:16,280
+did before, by subtracting the mean and
+divided by the standard dev, deviation.
+
+159
+00:08:17,780 --> 00:08:21,740
+One thing you can do is you can look at
+the comparison between the
+
+160
+00:08:21,740 --> 00:08:25,423
+actual, in this case, when we set some of
+the values to be equal
+
+161
+00:08:25,423 --> 00:08:29,245
+to NA in advance, we can look at the
+values that were imputed, and
+
+162
+00:08:29,245 --> 00:08:33,590
+the values that were truly there before we
+removed them and made them NAs.
+
+163
+00:08:33,590 --> 00:08:37,560
+And we can see how close those two values
+are to each other.
+
+164
+00:08:37,560 --> 00:08:40,060
+And so, you can see, for example, that.
+
+165
+00:08:40,060 --> 00:08:42,360
+Those values are relatively close to each
+other.
+
+166
+00:08:42,360 --> 00:08:44,460
+Most of the differences are very close to
+zero.
+
+167
+00:08:44,460 --> 00:08:47,430
+Here you can see the values are mostly
+very close to zero.
+
+168
+00:08:47,430 --> 00:08:50,670
+So the imputation work relatively well.
+
+169
+00:08:50,670 --> 00:08:54,320
+You can also do look at just the values
+that were imputed.
+
+170
+00:08:54,320 --> 00:08:56,180
+So again here I'm looking at a capAve
+
+171
+00:08:56,180 --> 00:08:59,700
+quantile of the same difference between
+the imputed values.
+
+172
+00:08:59,700 --> 00:09:02,850
+And the true values, they're only for the
+ones that were missing.
+
+173
+00:09:02,850 --> 00:09:07,380
+And here you can see again, most of the
+values are close to zero, but here we're
+
+174
+00:09:07,380 --> 00:09:08,910
+only looking at the ones we're missing, so
+
+175
+00:09:08,910 --> 00:09:11,900
+clearly some of them are more variable
+than previously.
+
+176
+00:09:11,900 --> 00:09:14,620
+And then you can look at the ones that
+
+177
+00:09:14,620 --> 00:09:16,810
+were not the ones that we selected to be
+NA.
+
+178
+00:09:16,810 --> 00:09:19,940
+And you can see that they're even closer
+to each other, and
+
+179
+00:09:19,940 --> 00:09:23,440
+so the ones that got imputed are a little
+bit further apart.
+
+180
+00:09:23,440 --> 00:09:24,900
+But aren't that much further apart.
+
+181
+00:09:26,770 --> 00:09:28,451
+So, there is a lot more to learn
+
+182
+00:09:28,451 --> 00:09:32,470
+about training and testing sets in terms
+of transformations.
+
+183
+00:09:32,470 --> 00:09:34,940
+But train, but the things to keep in mind
+are that
+
+184
+00:09:34,940 --> 00:09:37,980
+training in test sets must be processed in
+the same way.
+
+185
+00:09:37,980 --> 00:09:40,659
+The caret package handles a lot of this
+under the hood in
+
+186
+00:09:40,659 --> 00:09:43,930
+the sense that if you train a data set
+using preProcess functions.
+
+187
+00:09:44,954 --> 00:09:47,964
+Built into the train function and caret
+way
+
+188
+00:09:47,964 --> 00:09:51,900
+it applies that preprocessed function to
+the test set.
+
+189
+00:09:51,900 --> 00:09:55,970
+It will handle all of the preprocessing in
+the correct way for you.
+
+190
+00:09:55,970 --> 00:09:57,550
+In general, you need to pay attention to
+the
+
+191
+00:09:57,550 --> 00:10:00,130
+fact that anything you do to the training
+set.
+
+192
+00:10:00,130 --> 00:10:02,080
+Will create a set of parameters.
+
+193
+00:10:02,080 --> 00:10:04,900
+You must use only those parameters when
+you apply it to the test set.
+
+194
+00:10:04,900 --> 00:10:08,630
+You can't estimate new transformations on
+the test set alone.
+
+195
+00:10:08,630 --> 00:10:12,800
+And that means that the test set
+transformations will likely be imperfect.
+
+196
+00:10:12,800 --> 00:10:14,619
+Especially if the test and training sets
+are
+
+197
+00:10:14,619 --> 00:10:17,390
+diff, collected at different times or in
+different ways.
+
+198
+00:10:17,390 --> 00:10:19,910
+Some of the transformations won't
+necessarily work as well.
+
+199
+00:10:21,040 --> 00:10:23,539
+All of the tra, transformations I'm
+talking about, so
+
+200
+00:10:23,539 --> 00:10:26,710
+far other than imputation are based on
+continuous variables.
+
+201
+00:10:26,710 --> 00:10:28,610
+When dealing with factor variables it's a
+little
+
+202
+00:10:28,610 --> 00:10:31,630
+bit more difficult to know what's the
+right transformation.
+
+203
+00:10:31,630 --> 00:10:34,380
+Most machine learning algorithms are built
+to deal with either
+
+204
+00:10:34,380 --> 00:10:38,560
+binary predictors, in which the binary
+predictors are not pre-processed.
+
+205
+00:10:38,560 --> 00:10:42,052
+Or continuous predictors in which case
+sometimes it's expected
+
+206
+00:10:42,052 --> 00:10:44,980
+that, the data are preprocessed to look
+more normal.
+
+207
+00:10:44,980 --> 00:10:47,196
+You can go to this link that I've linked
+here to look, into
+
+208
+00:10:47,196 --> 00:10:48,781
+more information about how to preProcess
+
+209
+00:10:48,781 --> 00:10:50,560
+data for prediction using the caret
+package.
+
