@@ -1,0 +1,472 @@
+1
+00:00:00,310 --> 00:00:04,790
+This lecture's about ROC curves, or
+Receiver Operating characteristic curves.
+
+2
+00:00:04,790 --> 00:00:06,830
+These are very commonly used techniques to
+measure
+
+3
+00:00:06,830 --> 00:00:08,970
+the quality or goodness of a prediction
+algorithm.
+
+4
+00:00:10,000 --> 00:00:13,210
+So in binary classification, you're
+usually predicting one of two categories.
+
+5
+00:00:13,210 --> 00:00:14,380
+So, again, you might be predicting whether
+
+6
+00:00:14,380 --> 00:00:17,170
+someone's alive or dead, or sick or
+healthy.
+
+7
+00:00:17,170 --> 00:00:18,770
+You might also be predicting whether they
+will click
+
+8
+00:00:18,770 --> 00:00:20,680
+on an ad or they won't click on that ad.
+
+9
+00:00:20,680 --> 00:00:23,410
+But your predictions often come out to be
+quantitative.
+
+10
+00:00:23,410 --> 00:00:26,330
+In other words almost all the modeling
+algorithms that we have won't
+
+11
+00:00:26,330 --> 00:00:29,130
+just assign you to one class or the other,
+they might give you
+
+12
+00:00:29,130 --> 00:00:32,660
+say a probability of being alive, or a
+prediction on a scale of
+
+13
+00:00:32,660 --> 00:00:35,650
+1 to 10 about whether you will click on
+the ad or not.
+
+14
+00:00:35,650 --> 00:00:37,440
+The cut iff you choose gives different
+results.
+
+15
+00:00:37,440 --> 00:00:39,745
+In other words, if we predict a
+probability
+
+16
+00:00:39,745 --> 00:00:41,988
+that you're going to be alive is 0.7 and
+we
+
+17
+00:00:41,988 --> 00:00:43,982
+say all the people above 0.5 will be
+
+18
+00:00:43,982 --> 00:00:48,000
+assigned to be alive, then that's one
+prediction algorithm.
+
+19
+00:00:48,000 --> 00:00:51,070
+Alternatively if you say only people with
+a probability
+
+20
+00:00:51,070 --> 00:00:53,680
+of about 28 will be predicted to be alive.
+
+21
+00:00:53,680 --> 00:00:56,560
+Then that will give you a different
+prediction for that same person.
+
+22
+00:00:56,560 --> 00:00:59,731
+And the different cut offs will have
+different properties, they will be better
+
+23
+00:00:59,731 --> 00:01:03,460
+at finding people that are alive or better
+at finding people that are dead.
+
+24
+00:01:03,460 --> 00:01:06,280
+So if people use what's called an ROC
+curve.
+
+25
+00:01:06,280 --> 00:01:09,130
+And so the idea is on the y axis what
+
+26
+00:01:09,130 --> 00:01:13,350
+they usually plot is one minus the
+specificity in other words
+
+27
+00:01:13,350 --> 00:01:16,320
+the probability of being a false positive
+and on the y
+
+28
+00:01:16,320 --> 00:01:21,590
+axis they plot the sensitivity over the
+probability at true positive.
+
+29
+00:01:21,590 --> 00:01:24,280
+And so what they're trying to do then is
+make a curve
+
+30
+00:01:24,280 --> 00:01:29,470
+where every single point along this curve
+corresponds to exactly one cut off.
+
+31
+00:01:29,470 --> 00:01:31,930
+So for a particular cutoff, you get a
+certain
+
+32
+00:01:31,930 --> 00:01:34,340
+probability of being a false positive or a
+certain
+
+33
+00:01:34,340 --> 00:01:37,520
+specificity, and that's this point, one
+minus the specificity
+
+34
+00:01:37,520 --> 00:01:40,020
+is this point right here on this x axis.
+
+35
+00:01:40,020 --> 00:01:41,743
+At the same time, you get a certain
+
+36
+00:01:41,743 --> 00:01:44,850
+sensitivity, and that's this point here,
+on the Y-axis.
+
+37
+00:01:44,850 --> 00:01:46,910
+And so, you can use these ROC curves to
+
+38
+00:01:46,910 --> 00:01:51,260
+define, whether an algorithm is good or
+bad by plotting
+
+39
+00:01:51,260 --> 00:01:53,950
+a different point for every single, cutoff
+that you
+
+40
+00:01:53,950 --> 00:01:57,170
+might choose, and then plotting a curve
+through those points.
+
+41
+00:01:57,170 --> 00:02:00,810
+So this is an example of a couple of,
+algorithms that are used to predict.
+
+42
+00:02:00,810 --> 00:02:03,720
+So these are examples of what real ROC
+curves look like.
+
+43
+00:02:03,720 --> 00:02:07,870
+So, for example, if you want to look at,
+say, the NetChop algorithm.
+
+44
+00:02:07,870 --> 00:02:10,396
+And you look at say 1 minus the
+specificity is equal
+
+45
+00:02:10,396 --> 00:02:14,030
+to 0.2 in other words this specificity is
+quite high, it's 0.8.
+
+46
+00:02:14,030 --> 00:02:18,650
+You can trace that number up and you can
+get about here on the curve
+
+47
+00:02:18,650 --> 00:02:20,450
+the red curve in this case and that
+
+48
+00:02:20,450 --> 00:02:22,460
+corresponds to a sensitivity to only about
+0.4.
+
+49
+00:02:22,460 --> 00:02:25,980
+So it's very highly specific but not very
+sensitive.
+
+50
+00:02:25,980 --> 00:02:29,900
+And similarly if you move out here to the
+right on the Y X axis.
+
+51
+00:02:29,900 --> 00:02:34,310
+You'll get less and less specificity, and
+more and more sensitivity.
+
+52
+00:02:34,310 --> 00:02:37,340
+And so this curve tells you a little bit
+about the tradeoffs.
+
+53
+00:02:37,340 --> 00:02:39,532
+Now although the curve tells you a little
+bit about the tradeoffs,
+
+54
+00:02:39,532 --> 00:02:42,096
+you may actually want to know which of
+these prediction algorithms is better.
+
+55
+00:02:42,096 --> 00:02:44,934
+And one way that people use to quantify
+one curve versus
+
+56
+00:02:44,934 --> 00:02:48,460
+the other, is they basically calculate the
+area under the curve.
+
+57
+00:02:48,460 --> 00:02:51,509
+In other words, they follow, say, the red
+curve
+
+58
+00:02:51,509 --> 00:02:55,284
+here, and they trace the entire area
+underneath that curve,
+
+59
+00:02:55,284 --> 00:02:57,751
+so that'd be this area down here, and so
+
+60
+00:02:57,751 --> 00:03:02,570
+that area quantifies how good, that
+particular prediction algorithm is.
+
+61
+00:03:02,570 --> 00:03:05,878
+So, the higher the area the better the
+predictor is, and some
+
+62
+00:03:05,878 --> 00:03:10,410
+standard, there are some standard values
+that make sense to pay attention to.
+
+63
+00:03:10,410 --> 00:03:14,520
+So, if the area under the curve or AUC is
+
+64
+00:03:14,520 --> 00:03:18,330
+equal to 0.5 that's equivalent to a
+prediction algorithm that's just
+
+65
+00:03:18,330 --> 00:03:21,440
+on the 45 degree line and that's
+equivalent to basically randomly
+
+66
+00:03:21,440 --> 00:03:23,990
+guessing whether you're going to be a true
+positive or false positive.
+
+67
+00:03:23,990 --> 00:03:26,437
+So, 0.5 is actually quite bad, anything
+less
+
+68
+00:03:26,437 --> 00:03:29,070
+than 0.5 is actually worse than random
+guessing.
+
+69
+00:03:29,070 --> 00:03:31,310
+So, it's worse than flipping a coin.
+
+70
+00:03:31,310 --> 00:03:35,480
+AUC of 1 is a perfect classifier, in other
+words you get perfect sensitivity and
+
+71
+00:03:35,480 --> 00:03:37,990
+specificity for, for a certain value of
+the
+
+72
+00:03:37,990 --> 00:03:41,350
+prediction algorithm, and so that's the
+perfect classifier.
+
+73
+00:03:41,350 --> 00:03:43,330
+In general, it depends on the field, and
+it depends on the
+
+74
+00:03:43,330 --> 00:03:47,620
+problem you are looking at, people often
+think of an AUC above 0.8.
+
+75
+00:03:47,620 --> 00:03:49,590
+Could be considered to be something that's
+sort
+
+76
+00:03:49,590 --> 00:03:53,020
+of a good AUC of a particular prediction
+algorithm.
+
+77
+00:03:53,020 --> 00:03:56,790
+In general something to pay attention to
+is what, how did you just look at
+
+78
+00:03:56,790 --> 00:04:02,200
+a ROC curve and decide whether it's a good
+ROC curve or a bad ROC curve.
+
+79
+00:04:02,200 --> 00:04:05,080
+So remember the 45 degree line corresponds
+to just guessing.
+
+80
+00:04:05,080 --> 00:04:08,028
+In other words, the sensitivity and the
+specificity
+
+81
+00:04:08,028 --> 00:04:10,460
+match each other on this predictive o
+line.
+
+82
+00:04:11,500 --> 00:04:15,280
+So, a perfect classifier goes at one minus
+the specificity.
+
+83
+00:04:15,280 --> 00:04:19,560
+So, one minus the specificity of zero
+means perfect specificity and
+
+84
+00:04:19,560 --> 00:04:24,350
+it jumps straight away up to perfect
+sensitivity and then straight over.
+
+85
+00:04:24,350 --> 00:04:27,510
+So that curve represent a perfect
+classifier
+
+86
+00:04:27,510 --> 00:04:29,550
+when it goes straight up to this corner.
+
+87
+00:04:29,550 --> 00:04:31,955
+So the further you are towards the upper
+left
+
+88
+00:04:31,955 --> 00:04:34,960
+hand corner of the plot the better the ROC
+is.
+
+89
+00:04:34,960 --> 00:04:37,480
+And the farther you are down to this
+bottom right
+
+90
+00:04:37,480 --> 00:04:40,650
+hand corner of the plot the worse the ROC
+is.
+
+91
+00:04:40,650 --> 00:04:43,610
+And so points along the, the, graphs along
+the
+
+92
+00:04:43,610 --> 00:04:47,322
+forty five degree line or below are
+considered pretty bad.
+
+93
+00:04:47,322 --> 00:04:50,409
+And you want your curve to look, to go as
+straight up towards this
+
+94
+00:04:50,409 --> 00:04:53,890
+top left hand corner and over as over as
+much as you possibly can.
+
+95
+00:04:53,890 --> 00:04:57,226
+So that's how you interpret an ROC curve,
+which will be used later when
+
+96
+00:04:57,226 --> 00:04:59,787
+we're picking out particular values of,
+predictors
+
+97
+00:04:59,787 --> 00:05:02,360
+of binary outputs that output quantitative
+numbers.
+
