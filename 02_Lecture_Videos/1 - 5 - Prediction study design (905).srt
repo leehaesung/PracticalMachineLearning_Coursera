@@ -1,0 +1,886 @@
+1
+00:00:00,390 --> 00:00:02,220
+In the last lecture we learned about in
+sample
+
+2
+00:00:02,220 --> 00:00:04,100
+and out of sample errors as well as over
+fitting.
+
+3
+00:00:04,100 --> 00:00:07,470
+In this lecture we'll talk about
+prediction study design or how to minimize
+
+4
+00:00:07,470 --> 00:00:11,450
+the problems that can be caused by in
+sample verses out of sample errors.
+
+5
+00:00:11,450 --> 00:00:13,400
+So in prediction study design the first
+thing that
+
+6
+00:00:13,400 --> 00:00:14,790
+we need to do is to find our error rate.
+
+7
+00:00:14,790 --> 00:00:17,190
+So in this lecture we're just going to use
+a generic error rate, but in the
+
+8
+00:00:17,190 --> 00:00:18,510
+next lecture we'll talk about what are
+
+9
+00:00:18,510 --> 00:00:20,280
+the different possible error rates you can
+choose.
+
+10
+00:00:21,360 --> 00:00:24,394
+Then you need to split your data, the data
+that you're going to be using
+
+11
+00:00:24,394 --> 00:00:26,215
+to build and validate your model into
+three
+
+12
+00:00:26,215 --> 00:00:29,300
+components, well, two components and one
+optional component.
+
+13
+00:00:29,300 --> 00:00:32,110
+So there's a training set that must be
+created
+
+14
+00:00:32,110 --> 00:00:34,890
+in order to build your model, a testing
+set to
+
+15
+00:00:34,890 --> 00:00:38,190
+evaluate your model, and optionally a
+validation set as well,
+
+16
+00:00:38,190 --> 00:00:40,970
+which is also going to be used to validate
+your model.
+
+17
+00:00:40,970 --> 00:00:42,160
+So what you do is on the training
+
+18
+00:00:42,160 --> 00:00:45,510
+set, you pick features using
+cross-validation, for example.
+
+19
+00:00:45,510 --> 00:00:47,796
+We'll talk about what cross-validation is
+later in
+
+20
+00:00:47,796 --> 00:00:49,722
+the course, but the idea is basically to
+
+21
+00:00:49,722 --> 00:00:51,295
+use that training set to pick which of
+
+22
+00:00:51,295 --> 00:00:53,990
+the features that are most important in
+your model.
+
+23
+00:00:53,990 --> 00:00:57,120
+Then use that same technique to actually
+pick the prediction function
+
+24
+00:00:57,120 --> 00:01:00,180
+and estimate all the parameters that you
+might be interested in.
+
+25
+00:01:00,180 --> 00:01:03,060
+We build a model using the training set.
+
+26
+00:01:03,060 --> 00:01:05,980
+If there's no validation set, then we
+apply the best
+
+27
+00:01:05,980 --> 00:01:09,610
+model that we have to our test set exactly
+one time.
+
+28
+00:01:09,610 --> 00:01:12,310
+And so the, why do we only apply it one
+time?
+
+29
+00:01:12,310 --> 00:01:16,308
+If we applied multiple models to our
+testing set, then, and pick the best
+
+30
+00:01:16,308 --> 00:01:20,930
+one, then we're using the test set, in
+some sense, to train the model.
+
+31
+00:01:20,930 --> 00:01:23,170
+In other words, we're still getting an
+optimistic view of
+
+32
+00:01:23,170 --> 00:01:26,730
+what the data error would be on a
+completely new dataset.
+
+33
+00:01:26,730 --> 00:01:30,770
+So you should apply the prediction model
+to the test set exactly one time.
+
+34
+00:01:31,930 --> 00:01:35,234
+If there's a validation set and a test set
+then you might apply your
+
+35
+00:01:35,234 --> 00:01:38,844
+best prediction models all to your test
+set and refine them a little bit.
+
+36
+00:01:38,844 --> 00:01:42,513
+So what you might find is that some
+features don't work so well when you're
+
+37
+00:01:42,513 --> 00:01:44,669
+doing out of sample prediction and you
+might
+
+38
+00:01:44,669 --> 00:01:46,780
+refine and adjust your model a little bit.
+
+39
+00:01:46,780 --> 00:01:49,907
+But now, again, like I said, your test set
+error is going to be
+
+40
+00:01:49,907 --> 00:01:53,820
+a little bit optimistic error for what
+your actual out of sample error will be.
+
+41
+00:01:53,820 --> 00:01:56,565
+And so what we do is we again, apply our
+model to exactly
+
+42
+00:01:56,565 --> 00:02:00,750
+one time to the validation set, only the
+best one to get our prediction.
+
+43
+00:02:00,750 --> 00:02:03,983
+So in other words, the idea is that there
+is one dataset that's
+
+44
+00:02:03,983 --> 00:02:07,399
+held out from the very start, that you
+only apply exactly one model
+
+45
+00:02:07,399 --> 00:02:10,571
+to, and you never do any training or
+tuning or testing to, and
+
+46
+00:02:10,571 --> 00:02:14,049
+that will give you a good estimate of your
+out of sample error rates.
+
+47
+00:02:15,100 --> 00:02:16,790
+So an important point to keep in mind when
+
+48
+00:02:16,790 --> 00:02:18,830
+you doing this is to know what the
+benchmarks are.
+
+49
+00:02:18,830 --> 00:02:22,310
+So this is an example of a leaderboard
+from a [UNKNOWN] competition.
+
+50
+00:02:22,310 --> 00:02:26,503
+And so they often give you benchmarks,
+marking grey here on this plot
+
+51
+00:02:26,503 --> 00:02:30,500
+that shows what happens if you say make
+all the values equal to 0.
+
+52
+00:02:30,500 --> 00:02:32,011
+And it's a good idea to know
+
+53
+00:02:32,011 --> 00:02:35,104
+what the prediction benchmark are because
+sometimes if
+
+54
+00:02:35,104 --> 00:02:39,773
+you prediction algorithm is performing way
+better than it should be or way worse than
+
+55
+00:02:39,773 --> 00:02:43,782
+it should be, the benchmarks will give you
+some idea of what you should be
+
+56
+00:02:43,782 --> 00:02:45,886
+doing wrong, and they'll tell you if
+
+57
+00:02:45,886 --> 00:02:48,820
+your prediction algorithm is kind of going
+astray.
+
+58
+00:02:49,860 --> 00:02:53,371
+So this is the studied design that was
+used in the Netflix prize, so they had
+
+59
+00:02:53,371 --> 00:02:56,329
+a 100 million ident-user-ident pairs, in
+other words,
+
+60
+00:02:56,329 --> 00:02:59,270
+movies that people had given their
+preference on.
+
+61
+00:02:59,270 --> 00:03:02,610
+They split that into a training data set,
+which they were going
+
+62
+00:03:02,610 --> 00:03:07,140
+to give to, users that we're going to
+build models for prediction.
+
+63
+00:03:07,140 --> 00:03:10,970
+Then, they held out, a bunch of ratings
+that we're not going
+
+64
+00:03:10,970 --> 00:03:14,800
+to be shown at all to the people that are
+building the models.
+
+65
+00:03:14,800 --> 00:03:17,360
+And so, what they provided for people who
+were building motels,
+
+66
+00:03:17,360 --> 00:03:20,300
+was a training set, and what they called a
+probe data set.
+
+67
+00:03:20,300 --> 00:03:22,795
+So, you would train your model on the
+training data
+
+68
+00:03:22,795 --> 00:03:24,825
+set and then you would apply it to the
+probe
+
+69
+00:03:24,825 --> 00:03:26,681
+data set to get some idea of what the out
+
+70
+00:03:26,681 --> 00:03:30,566
+of sample error would be, before
+submitting it to Netflix.
+
+71
+00:03:30,566 --> 00:03:32,882
+Then what Netflix would do is they would
+take your
+
+72
+00:03:32,882 --> 00:03:36,170
+predictions and they would apply it only
+to a quiz set.
+
+73
+00:03:36,170 --> 00:03:40,334
+So this quiz set you didn't get at get to
+actually see, and you couldn't build your
+
+74
+00:03:40,334 --> 00:03:42,297
+model on, but if we give you some better
+
+75
+00:03:42,297 --> 00:03:44,440
+idea of how well your model would perform
+at
+
+76
+00:03:44,440 --> 00:03:47,178
+a sample, but in general people could
+submit multiple
+
+77
+00:03:47,178 --> 00:03:49,440
+submissions to this quiz set and so they
+might
+
+78
+00:03:49,440 --> 00:03:51,760
+actually tune their models a little bit
+and get
+
+79
+00:03:51,760 --> 00:03:55,020
+a little bit better performance on the
+quiz set.
+
+80
+00:03:55,020 --> 00:03:57,000
+And so what they did ultimately was for
+the
+
+81
+00:03:57,000 --> 00:04:00,340
+final evaluation of all the different
+teams, they applied the
+
+82
+00:04:00,340 --> 00:04:02,750
+model just one time to this test set that
+
+83
+00:04:02,750 --> 00:04:05,250
+was held out to the very end of the
+competition.
+
+84
+00:04:05,250 --> 00:04:07,069
+And so at the very end of the competition
+
+85
+00:04:07,069 --> 00:04:09,442
+they got an unbiased estimate of how well
+this model
+
+86
+00:04:09,442 --> 00:04:11,539
+would work on a completely new set of data
+that
+
+87
+00:04:11,539 --> 00:04:14,210
+the participants in the competition never
+had a look at.
+
+88
+00:04:15,280 --> 00:04:18,107
+So this idea was actually very important
+in their study design and it
+
+89
+00:04:18,107 --> 00:04:21,331
+actually turned out that some teams that
+did better on the quiz set, actually
+
+90
+00:04:21,331 --> 00:04:23,958
+didn't do quite as well on the test set
+and that was because they
+
+91
+00:04:23,958 --> 00:04:27,010
+were tuning in their models or over
+fitting their models to the quiz set.
+
+92
+00:04:27,010 --> 00:04:28,898
+So this is an important take home message
+for
+
+93
+00:04:28,898 --> 00:04:31,245
+you, in the sense that if you're building
+prediction
+
+94
+00:04:31,245 --> 00:04:33,234
+models, you always have to hold one data
+set,
+
+95
+00:04:33,234 --> 00:04:36,720
+and leave it completely aside while you're
+building your models.
+
+96
+00:04:36,720 --> 00:04:39,016
+This is now used by group professionals so
+
+97
+00:04:39,016 --> 00:04:41,377
+Kaggle is a company that actually runs
+lots
+
+98
+00:04:41,377 --> 00:04:44,986
+of co, competitions for prediction
+competitions for a
+
+99
+00:04:44,986 --> 00:04:48,289
+whole bunch of different data sets
+provided by companies.
+
+100
+00:04:48,289 --> 00:04:52,444
+And they always do a similar model in the
+sense that they always have a leader board
+
+101
+00:04:52,444 --> 00:04:55,010
+that consists of the predictions that
+people have
+
+102
+00:04:55,010 --> 00:04:58,080
+submitted for a validation data set that
+they have.
+
+103
+00:04:58,080 --> 00:05:00,183
+But it's not necessarily the data set that
+they'll
+
+104
+00:05:00,183 --> 00:05:02,600
+use to validate their methods at the very
+end.
+
+105
+00:05:02,600 --> 00:05:04,960
+That data set is held out until the very
+end, and each
+
+106
+00:05:04,960 --> 00:05:07,750
+person gets to apply their algorithm to
+that data set only one time.
+
+107
+00:05:09,340 --> 00:05:11,420
+Something to keep in mind is that when
+you're splitting your
+
+108
+00:05:11,420 --> 00:05:14,650
+data sets up into training, testing and
+validation sets, they can
+
+109
+00:05:14,650 --> 00:05:17,210
+get a little bit small, but you need to
+avoid small
+
+110
+00:05:17,210 --> 00:05:21,740
+sample sizes, particularly if you're
+dealing with the test set size.
+
+111
+00:05:21,740 --> 00:05:26,235
+And the reason why is, suppose you were
+predicting a binary outcome, so in my
+
+112
+00:05:26,235 --> 00:05:31,410
+case, a very common thing to try to do is
+to predict diseased versus healthy.
+
+113
+00:05:31,410 --> 00:05:34,480
+And in general, it might be something
+like, whether people will
+
+114
+00:05:34,480 --> 00:05:37,340
+click on an ad, or whether they won't
+click on an ad.
+
+115
+00:05:37,340 --> 00:05:39,350
+Then one classifier is just flipping a
+coin.
+
+116
+00:05:39,350 --> 00:05:42,230
+You could always just flip a coin, and
+say, they'll be diseased if
+
+117
+00:05:42,230 --> 00:05:47,090
+the coin is heads, and not diseased if the
+coin comes out tails.
+
+118
+00:05:47,090 --> 00:05:50,726
+And so the probability of a perfect
+classification, using this
+
+119
+00:05:50,726 --> 00:05:54,450
+really silly algorithm is one half raised
+to the sample size.
+
+120
+00:05:54,450 --> 00:05:56,395
+In other words, half the time you'll be
+
+121
+00:05:56,395 --> 00:05:59,110
+right, just by chance by flipping the
+coin.
+
+122
+00:05:59,110 --> 00:06:02,480
+And each time, supposing each prediction
+is independent,
+
+123
+00:06:02,480 --> 00:06:04,840
+then each time that you flip a coin, then
+
+124
+00:06:04,840 --> 00:06:08,160
+you'll get one half times that, a number
+will
+
+125
+00:06:08,160 --> 00:06:11,300
+be the decrease in accuracy that you would
+get.
+
+126
+00:06:11,300 --> 00:06:13,597
+So if you were pr-, test set has only one
+sample in
+
+127
+00:06:13,597 --> 00:06:17,440
+it, then you have about a 50/50 chance of
+getting that sample right.
+
+128
+00:06:17,440 --> 00:06:21,245
+So, even if you got prediction accuracy of
+100% on the test set,
+
+129
+00:06:21,245 --> 00:06:24,671
+you would have a 50% chance of that, even
+with a coin flip.
+
+130
+00:06:24,671 --> 00:06:27,088
+With n equals 2, you only have a, you
+
+131
+00:06:27,088 --> 00:06:30,881
+still only have a 25% chance of 100%
+accuracy.
+
+132
+00:06:30,881 --> 00:06:33,498
+And with n equals 10 in your test set, now
+
+133
+00:06:33,498 --> 00:06:38,033
+you have, only about a .1% chance of
+getting 100% accuracy.
+
+134
+00:06:38,033 --> 00:06:40,414
+So if you see that 100% accuracy you'll
+feel a little bit
+
+135
+00:06:40,414 --> 00:06:44,500
+more confident that it's actually true and
+it's not something that's just random.
+
+136
+00:06:44,500 --> 00:06:45,970
+So this suggests that we should make sure
+
+137
+00:06:45,970 --> 00:06:48,900
+that especially our test sizes are of
+relatively
+
+138
+00:06:48,900 --> 00:06:50,700
+large size so we can be sure that
+
+139
+00:06:50,700 --> 00:06:53,190
+we're not just getting good prediction
+accuracy by chance.
+
+140
+00:06:54,620 --> 00:06:56,291
+So some rules of thumb, these are by
+
+141
+00:06:56,291 --> 00:06:58,464
+no means set in stone, but they are
+reasonable
+
+142
+00:06:58,464 --> 00:07:02,540
+rules of thumb that I've used and I think
+a lot of people have used similar ones.
+
+143
+00:07:02,540 --> 00:07:04,442
+So you set, when you get a new data set,
+
+144
+00:07:04,442 --> 00:07:07,269
+if it's large enough, you'll set 60% of
+your data set
+
+145
+00:07:07,269 --> 00:07:09,402
+to be training, 20% of your data set to be
+
+146
+00:07:09,402 --> 00:07:12,930
+test, and 20% of your valid, data set to
+be validation.
+
+147
+00:07:12,930 --> 00:07:15,370
+This is again assuming that your test and
+validation
+
+148
+00:07:15,370 --> 00:07:18,290
+data sets won't be too small if you do
+that.
+
+149
+00:07:18,290 --> 00:07:20,880
+If you have a medium sample size what you
+might do is you might take 60%
+
+150
+00:07:20,880 --> 00:07:25,460
+of your data set to be training and 40% of
+your data set to be testing.
+
+151
+00:07:25,460 --> 00:07:27,380
+This means you don't get to refine your
+models in
+
+152
+00:07:27,380 --> 00:07:29,900
+a test set and then apply them to a
+validation set.
+
+153
+00:07:29,900 --> 00:07:33,350
+But it might insure that your testing site
+is of sufficient size.
+
+154
+00:07:33,350 --> 00:07:34,970
+Finally, if you have a very small sample
+size.
+
+155
+00:07:34,970 --> 00:07:37,370
+First of all, you might reconsider whether
+you have enough samples
+
+156
+00:07:37,370 --> 00:07:39,980
+to be able to build a prediction algorithm
+in the first place.
+
+157
+00:07:39,980 --> 00:07:43,599
+But suppose your dead set on building a
+prediction or machine learning
+
+158
+00:07:43,599 --> 00:07:47,277
+algorithm, then the idea might be to do
+cross validation and report the
+
+159
+00:07:47,277 --> 00:07:50,404
+caveat of the small sample size and the
+fact that you never got
+
+160
+00:07:50,404 --> 00:07:53,310
+to predict this in an out of sample or a
+testing data set.
+
+161
+00:07:53,310 --> 00:07:53,810
+So
+
+162
+00:07:55,410 --> 00:07:59,090
+some principles to remember are the test
+set or the validation set
+
+163
+00:07:59,090 --> 00:08:02,350
+should be set aside and never looked at
+when building your model.
+
+164
+00:08:02,350 --> 00:08:04,225
+In other words, you would need to have one
+
+165
+00:08:04,225 --> 00:08:06,368
+data set which you apply only one model
+to, only
+
+166
+00:08:06,368 --> 00:08:08,566
+one time, and that data set should be
+completely
+
+167
+00:08:08,566 --> 00:08:12,160
+independent of anything you use to build
+the prediction model.
+
+168
+00:08:12,160 --> 00:08:15,190
+In general you want to randomly sample the
+training and test set and
+
+169
+00:08:15,190 --> 00:08:17,850
+random might depend on the type of
+sampling that you want to do.
+
+170
+00:08:17,850 --> 00:08:20,760
+So for example, if you have, time fit time
+force
+
+171
+00:08:20,760 --> 00:08:24,448
+data, in other words you have, data
+collected over time, you
+
+172
+00:08:24,448 --> 00:08:28,007
+might want to build your, training set in
+chunks of time, but
+
+173
+00:08:28,007 --> 00:08:32,700
+again, random chunks of time and build
+them on random predictions.
+
+174
+00:08:32,700 --> 00:08:35,920
+Your data set much reflect the structure
+of the problem.
+
+175
+00:08:35,920 --> 00:08:40,530
+In other words, if you want to sample any
+data set that might have sources
+
+176
+00:08:40,530 --> 00:08:45,120
+of dependence over time or across space,
+you need to sample your data in chunks.
+
+177
+00:08:45,120 --> 00:08:47,910
+This is called backtesting in finance.
+
+178
+00:08:47,910 --> 00:08:50,660
+And it's basically the idea that you want
+to be able
+
+179
+00:08:50,660 --> 00:08:55,510
+to use chunks of data that consist of
+observations over time.
+
+180
+00:08:55,510 --> 00:08:58,610
+All subsets should re, reflect as much
+diversity as possible.
+
+181
+00:08:58,610 --> 00:09:00,680
+If you do random assignment, it does this.
+
+182
+00:09:00,680 --> 00:09:02,480
+You might also try balancing by features.
+
+183
+00:09:02,480 --> 00:09:05,470
+This can be a little bit tricky, but it
+often is a useful idea.
+
