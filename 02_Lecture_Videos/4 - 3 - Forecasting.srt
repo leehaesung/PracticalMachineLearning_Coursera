@@ -1,0 +1,666 @@
+1
+00:00:00,250 --> 00:00:02,170
+This lecture is about forecasting, which
+is
+
+2
+00:00:02,170 --> 00:00:04,610
+a very specific kind of prediction
+problem.
+
+3
+00:00:04,610 --> 00:00:07,270
+And it's typically applied to things like
+time series data.
+
+4
+00:00:07,270 --> 00:00:10,558
+So, for example, this is the stock of
+information for
+
+5
+00:00:10,558 --> 00:00:14,250
+Google on the NASDAQ, and so is this
+symbol GOOG.
+
+6
+00:00:14,250 --> 00:00:15,923
+And you can see over time that there's a
+
+7
+00:00:15,923 --> 00:00:18,420
+price for this stock and it goes up and
+down.
+
+8
+00:00:18,420 --> 00:00:21,870
+So this introduces some very specific
+kinds of dependent structure and
+
+9
+00:00:21,870 --> 00:00:23,860
+some additional challenges that must be
+
+10
+00:00:23,860 --> 00:00:26,590
+taken into account when performing
+prediction.
+
+11
+00:00:26,590 --> 00:00:30,202
+And so, first of all, the data are
+dependent over time, and so, that alone
+
+12
+00:00:30,202 --> 00:00:32,460
+makes prediction a little bit more
+challenging
+
+13
+00:00:32,460 --> 00:00:34,951
+than it is when you have independent
+examples.
+
+14
+00:00:34,951 --> 00:00:38,600
+There's also some specific pattern types
+that should be paid attention to.
+
+15
+00:00:38,600 --> 00:00:42,163
+Trends, such as long term increases or
+decreases, seasonal
+
+16
+00:00:42,163 --> 00:00:44,843
+patterns are very common in this kind of
+data.
+
+17
+00:00:44,843 --> 00:00:49,130
+For example, seasonal patterns over weeks,
+months, years, etc.
+
+18
+00:00:49,130 --> 00:00:52,120
+Cycles, patterns that rise and fall
+periodically over
+
+19
+00:00:52,120 --> 00:00:55,230
+a period that's longer than a year, for
+example.
+
+20
+00:00:55,230 --> 00:00:58,159
+Here, the subsampling and the training and
+test can be a little bit
+
+21
+00:00:58,159 --> 00:00:59,990
+more complicated because you can't just
+
+22
+00:00:59,990 --> 00:01:02,670
+randomly assign samples into training and
+test.
+
+23
+00:01:02,670 --> 00:01:06,107
+You have to take advantage of the fact
+that there's actually specific
+
+24
+00:01:06,107 --> 00:01:09,440
+times that are being sampled and that
+points are dependent in time.
+
+25
+00:01:10,510 --> 00:01:14,050
+Similar issues arise in predictions of
+spatial den, spatial data.
+
+26
+00:01:14,050 --> 00:01:17,979
+For example, there's dependency between
+nearby observations and there may
+
+27
+00:01:17,979 --> 00:01:21,980
+be location-specific effects that have to
+be modeled when doing prediction.
+
+28
+00:01:23,040 --> 00:01:25,039
+Typically, the goal here is to predict one
+or
+
+29
+00:01:25,039 --> 00:01:27,829
+more observations into the future and all
+standard prediction
+
+30
+00:01:27,829 --> 00:01:29,670
+algorithms can be used, but you have to be
+
+31
+00:01:29,670 --> 00:01:31,690
+a little bit cautious about how you use
+them.
+
+32
+00:01:33,050 --> 00:01:34,260
+So, one thing to be aware of is
+
+33
+00:01:34,260 --> 00:01:36,660
+that you have to be careful of spurious
+correlations.
+
+34
+00:01:36,660 --> 00:01:39,785
+So, time series can often be correlate for
+reasons that
+
+35
+00:01:39,785 --> 00:01:43,110
+do not make them good for predicting one
+from the other.
+
+36
+00:01:43,110 --> 00:01:45,600
+So, if you look at, you can go to Google
+Correlate to
+
+37
+00:01:45,600 --> 00:01:49,700
+correlate different words over time, the
+frequency of different words over time.
+
+38
+00:01:49,700 --> 00:01:52,709
+And so, for example, here you can see a
+correlation between the
+
+39
+00:01:52,709 --> 00:01:56,406
+Google stock price, shown in blue, and
+solitaire network, which is in red.
+
+40
+00:01:56,406 --> 00:01:59,809
+And so, those don't necessarily have
+anything to do with each other at
+
+41
+00:01:59,809 --> 00:02:03,326
+all, but they have a very high
+correlation, and you might think you might
+
+42
+00:02:03,326 --> 00:02:06,443
+be able to predict one from the other,
+even though in the future,
+
+43
+00:02:06,443 --> 00:02:09,110
+they might diverge substantially because
+they aren't
+
+44
+00:02:09,110 --> 00:02:11,180
+necessarily related to each other at all.
+
+45
+00:02:12,220 --> 00:02:14,267
+It's also very common in geographic
+analysis.
+
+46
+00:02:14,267 --> 00:02:16,652
+This is actually a cartoon from xkcd
+
+47
+00:02:16,652 --> 00:02:20,948
+that shows that heat maps particularly
+population-based
+
+48
+00:02:20,948 --> 00:02:26,210
+heat maps had very similar shapes because
+of the place where many people live.
+
+49
+00:02:26,210 --> 00:02:30,521
+So for example, the users of a particular
+site or the subscribers
+
+50
+00:02:30,521 --> 00:02:35,125
+to a particular magazine or the consume,
+consumers of a particular type of
+
+51
+00:02:35,125 --> 00:02:39,877
+website may all appear in the very similar
+places because the highest density
+
+52
+00:02:39,877 --> 00:02:44,360
+in population in the United States is over
+here on the Eastern seaboard.
+
+53
+00:02:44,360 --> 00:02:47,694
+And so, you see very similar heat maps of
+a
+
+54
+00:02:47,694 --> 00:02:51,980
+large number of individuals at all of
+those different places.
+
+55
+00:02:51,980 --> 00:02:55,300
+You should also beware of extrapolation.
+
+56
+00:02:55,300 --> 00:02:58,350
+So this is a kind of a funny example that
+shows what happens
+
+57
+00:02:58,350 --> 00:03:02,680
+if you extrapolate time series out without
+being careful about what could happen.
+
+58
+00:03:02,680 --> 00:03:06,692
+So this shows on a long scale the winning
+time of a
+
+59
+00:03:06,692 --> 00:03:12,290
+large number of oh sorry, of races that
+occurred at the Olympics.
+
+60
+00:03:12,290 --> 00:03:14,800
+The blue times are men and the red times
+are
+
+61
+00:03:14,800 --> 00:03:18,533
+women, and these authors of this paper
+extrapolated out into
+
+62
+00:03:18,533 --> 00:03:21,475
+the future and said that in 2156 that
+would be
+
+63
+00:03:21,475 --> 00:03:24,889
+when women would run faster than men in
+the sprint.
+
+64
+00:03:24,889 --> 00:03:28,368
+And while we don't know when that, when or
+when that may or may not
+
+65
+00:03:28,368 --> 00:03:30,521
+occur, one thing that was pointed out is
+
+66
+00:03:30,521 --> 00:03:33,700
+that this kind of extrapolation is very
+dangerous.
+
+67
+00:03:33,700 --> 00:03:36,362
+Eventually at some time in the future,
+both men and women
+
+68
+00:03:36,362 --> 00:03:39,310
+will be predicted to run negative times
+for the 100 meters.
+
+69
+00:03:39,310 --> 00:03:40,890
+And so, you have to be very careful
+
+70
+00:03:40,890 --> 00:03:43,190
+about how far out you extrapolate from
+your data.
+
+71
+00:03:44,520 --> 00:03:46,818
+So, I'm going to show a quick example of
+some
+
+72
+00:03:46,818 --> 00:03:50,290
+forecasting using the quantmod package and
+some Google data.
+
+73
+00:03:50,290 --> 00:03:53,435
+So, if I load this quantmod package and I
+can, I
+
+74
+00:03:53,435 --> 00:03:57,920
+can load in a bunch of data from the
+Google stock symbol.
+
+75
+00:03:57,920 --> 00:04:01,250
+And I can get it from the Google finance
+data set.
+
+76
+00:04:01,250 --> 00:04:06,691
+And so if I look at this Google variable,
+I get the open, high,
+
+77
+00:04:06,691 --> 00:04:12,899
+low, close, and volume information for a
+particular Google stock from
+
+78
+00:04:12,899 --> 00:04:18,079
+the 1st of January, 2008 to December 31st,
+2013.
+
+79
+00:04:19,550 --> 00:04:23,110
+So I can summarize this monthly and store
+it as a time series.
+
+80
+00:04:23,110 --> 00:04:25,660
+So I can use the two monthly variable or
+
+81
+00:04:25,660 --> 00:04:28,680
+function to convert that to a monthly time
+series.
+
+82
+00:04:28,680 --> 00:04:31,730
+And I can just take the opening
+information, and then I
+
+83
+00:04:31,730 --> 00:04:36,180
+can create a time series object using the
+ts function in R.
+
+84
+00:04:36,180 --> 00:04:38,828
+And if I plot that, I can see here's the
+
+85
+00:04:38,828 --> 00:04:43,820
+monthly opening prices for Google over a
+period of seven years.
+
+86
+00:04:45,910 --> 00:04:49,546
+So, an example time series decomposition
+would decompose this
+
+87
+00:04:49,546 --> 00:04:52,305
+time series into a trend, any kind of
+consistent
+
+88
+00:04:52,305 --> 00:04:55,806
+pattern, a seasonal pattern over time, and
+cyclic patterns
+
+89
+00:04:55,806 --> 00:04:58,930
+where the data rises and falls over non
+fixed periods.
+
+90
+00:04:59,940 --> 00:05:03,510
+And so, one way that we can do this is
+with the decompose function in R.
+
+91
+00:05:03,510 --> 00:05:07,850
+So if I decompose this in an additive way,
+then I can see that there's
+
+92
+00:05:07,850 --> 00:05:12,680
+a trend variable that appears to be an
+upward trend of the Google stock price.
+
+93
+00:05:12,680 --> 00:05:16,279
+There also appears to be a seasonal
+pattern, as well as
+
+94
+00:05:16,279 --> 00:05:20,340
+a more of a random cyclical pattern in the
+data set.
+
+95
+00:05:20,340 --> 00:05:23,903
+So this is decomposing this series here
+into a
+
+96
+00:05:23,903 --> 00:05:27,950
+series of different types of patterns in
+the data.
+
+97
+00:05:27,950 --> 00:05:30,380
+So here for training and test sets, I have
+to
+
+98
+00:05:30,380 --> 00:05:33,910
+build training and test sets that have
+consecutive time points.
+
+99
+00:05:33,910 --> 00:05:37,009
+So here I am building a training set that
+starts
+
+100
+00:05:37,009 --> 00:05:39,800
+at time point 1 and ends at time point 5.
+
+101
+00:05:39,800 --> 00:05:45,070
+And then a test set that is the next
+consecutive sets of points after that.
+
+102
+00:05:45,070 --> 00:05:49,374
+So that way, I can always build a training
+set and apply it to a test set
+
+103
+00:05:49,374 --> 00:05:52,710
+that have consecutive time points that
+show the same
+
+104
+00:05:52,710 --> 00:05:56,270
+sort of trends that I've observed in my
+data.
+
+105
+00:05:56,270 --> 00:05:59,170
+So there's a couple different ways for
+doing forecasting.
+
+106
+00:05:59,170 --> 00:06:03,058
+One is to do a simple moving average,
+which in another words, it
+
+107
+00:06:03,058 --> 00:06:07,810
+basically averages up all of the values
+of, for a particular time point.
+
+108
+00:06:07,810 --> 00:06:10,070
+And the prediction will be the average of
+
+109
+00:06:10,070 --> 00:06:14,320
+the previous time points out to a
+particular time.
+
+110
+00:06:14,320 --> 00:06:15,810
+You can also do exponential smoothing.
+
+111
+00:06:15,810 --> 00:06:19,957
+In other words, basically we weight
+near-by time points as higher
+
+112
+00:06:19,957 --> 00:06:24,760
+values or by more heavily than time points
+that are farther away.
+
+113
+00:06:24,760 --> 00:06:26,460
+So there's a large number of different
+
+114
+00:06:26,460 --> 00:06:28,889
+classes of smoothing models that you can
+choose.
+
+115
+00:06:30,870 --> 00:06:36,105
+And for exponential smoothing, you can get
+an, you can fit a model where you have a
+
+116
+00:06:36,105 --> 00:06:40,940
+different choices for the different types
+of trends that you might want to fit.
+
+117
+00:06:40,940 --> 00:06:43,231
+And then when you forecast, you can get
+
+118
+00:06:43,231 --> 00:06:47,180
+a prediction that comes out of your
+forecasting model.
+
+119
+00:06:47,180 --> 00:06:50,566
+And you can also get sort of a prediction
+bounds for
+
+120
+00:06:50,566 --> 00:06:55,334
+what are the possible values that you
+could get from that prediction.
+
+121
+00:06:55,334 --> 00:06:58,537
+And you can get the accuracy using this
+accuracy function,
+
+122
+00:06:58,537 --> 00:07:01,740
+so you can basically get the accuracy of
+your forecast using
+
+123
+00:07:01,740 --> 00:07:04,493
+your test set, and it will give you root
+mean square
+
+124
+00:07:04,493 --> 00:07:08,619
+to error and other metrics that are more
+appropriate for forecasting.
+
+125
+00:07:09,770 --> 00:07:13,304
+I've obviously gone through this very fast
+and so, if you want more
+
+126
+00:07:13,304 --> 00:07:16,156
+information, there's actually an entire
+field
+
+127
+00:07:16,156 --> 00:07:19,670
+dedicated to forecasting and time series
+prediction.
+
+128
+00:07:19,670 --> 00:07:24,710
+And I would highly recommend Rob Hyndman's
+Forecasting: principles and practice.
+
+129
+00:07:24,710 --> 00:07:28,353
+This is a free book that's online and it's
+really, really good, and
+
+130
+00:07:28,353 --> 00:07:32,580
+has a lot of information about how to get
+started at, in forecasting.
+
+131
+00:07:32,580 --> 00:07:35,990
+So the cautions are to be wary of spurious
+correlations.
+
+132
+00:07:35,990 --> 00:07:39,321
+Be very careful about how far you predic,
+predict out into the future
+
+133
+00:07:39,321 --> 00:07:41,447
+with express, extrapolation, and be wary
+
+134
+00:07:41,447 --> 00:07:44,830
+of dependencies like seasonal effects over
+time.
+
+135
+00:07:44,830 --> 00:07:49,411
+If you would like information on you, for
+financial prediction and financial
+
+136
+00:07:49,411 --> 00:07:52,095
+forecasting, the quantmod and quandl
+packages
+
+137
+00:07:52,095 --> 00:07:54,000
+are also very useful in that area.
+
