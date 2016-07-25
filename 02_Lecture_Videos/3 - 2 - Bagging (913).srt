@@ -1,0 +1,808 @@
+1
+00:00:00,290 --> 00:00:03,890
+This lecture is about bagging, which is
+short for bootstrap aggregating.
+
+2
+00:00:03,890 --> 00:00:07,234
+The basic idea is that when you fit
+complicated models,
+
+3
+00:00:07,234 --> 00:00:10,720
+sometimes if you average those models
+together, you get a
+
+4
+00:00:10,720 --> 00:00:14,349
+smoother model fit, that gives you a
+better balance between
+
+5
+00:00:14,349 --> 00:00:17,500
+potential bias in your fit and variance in
+your fit.
+
+6
+00:00:19,380 --> 00:00:21,420
+So bootstrap aggregating has a very simple
+idea.
+
+7
+00:00:21,420 --> 00:00:26,740
+The basic idea is take your data and take
+resamples of the data set.
+
+8
+00:00:26,740 --> 00:00:29,904
+So, this is the similar to the idea of
+bootstrapping, which you would have
+
+9
+00:00:29,904 --> 00:00:31,663
+learned about in the inference class that
+
+10
+00:00:31,663 --> 00:00:34,350
+is part of the data science
+specialization.
+
+11
+00:00:34,350 --> 00:00:37,120
+After you resample the cases with
+replacement, then
+
+12
+00:00:37,120 --> 00:00:41,080
+you recalculate your prediction function
+on that resampled data.
+
+13
+00:00:41,080 --> 00:00:42,480
+And then you either average the
+
+14
+00:00:42,480 --> 00:00:45,130
+predictions from all these repeated
+predictors that
+
+15
+00:00:45,130 --> 00:00:46,820
+you built or you majority vote or
+
+16
+00:00:46,820 --> 00:00:48,820
+something like that when you're doing
+classification.
+
+17
+00:00:50,490 --> 00:00:54,076
+The thing is that you get a similar bias
+that you would get from fitting any one
+
+18
+00:00:54,076 --> 00:00:56,823
+of those models individually, but a
+reduced variability
+
+19
+00:00:56,823 --> 00:01:00,150
+because you've averaged a bunch of
+different predictors together.
+
+20
+00:01:00,150 --> 00:01:02,386
+This is most useful for non-linear
+functions.
+
+21
+00:01:02,386 --> 00:01:05,086
+So, we'll show an example with smoothing,
+but it's
+
+22
+00:01:05,086 --> 00:01:08,150
+also very useful for things like
+predicting with trees.
+
+23
+00:01:09,520 --> 00:01:13,215
+So I'm going to go back to the ozone data,
+so it's in the ElemStatLearn package.
+
+24
+00:01:13,215 --> 00:01:16,350
+And I load the the ozone data set.
+
+25
+00:01:16,350 --> 00:01:18,875
+I then order for the purposes of showing
+you how this works,
+
+26
+00:01:18,875 --> 00:01:21,920
+I'm going to order the data set by the
+outcome, the ozone variable here.
+
+27
+00:01:22,940 --> 00:01:25,133
+And then I look at the data set and I
+
+28
+00:01:25,133 --> 00:01:30,510
+can see it has four variables, ozone,
+radiation, temperature, and wind.
+
+29
+00:01:30,510 --> 00:01:31,891
+So the idea is that I'm going to try
+
+30
+00:01:31,891 --> 00:01:33,948
+to predict temperature as a function of
+ozone.
+
+31
+00:01:33,948 --> 00:01:35,906
+[BLANK_AUDIO]
+
+32
+00:01:35,906 --> 00:01:38,792
+So the first thing that we can do is just
+show you an example of how this works.
+
+33
+00:01:38,792 --> 00:01:42,158
+So the basic idea is, I'm going to create
+a matrix
+
+34
+00:01:42,158 --> 00:01:46,209
+here and it's going to have 10 rows and a
+155 columns.
+
+35
+00:01:46,209 --> 00:01:49,710
+Then what I'm going to do is, I'm going to
+resample the data set.
+
+36
+00:01:50,890 --> 00:01:52,830
+In for ten different times, so then a
+
+37
+00:01:52,830 --> 00:01:56,300
+loop over ten different samples of the
+data set.
+
+38
+00:01:56,300 --> 00:01:59,670
+Each time I'm going to sample width
+replacement from the entire data set.
+
+39
+00:02:00,870 --> 00:02:03,860
+Then I'm going to create a new data set,
+ozone0, which is
+
+40
+00:02:03,860 --> 00:02:08,170
+the resample data set for that particular
+element of the loop.
+
+41
+00:02:08,170 --> 00:02:12,985
+And that's just the subset of the data set
+corresponding to our random sample.
+
+42
+00:02:12,985 --> 00:02:15,855
+Then I'm going to reorder the data set
+every time by
+
+43
+00:02:15,855 --> 00:02:19,297
+the ozone variable, and you'll see why in
+just a minute.
+
+44
+00:02:19,297 --> 00:02:22,209
+Then I fit a loess curve each time, so a
+loess is
+
+45
+00:02:22,209 --> 00:02:26,090
+kind of a smooth curve that you can fit
+through the data.
+
+46
+00:02:26,090 --> 00:02:28,500
+It's very similar to the sublime model
+fits that we
+
+47
+00:02:28,500 --> 00:02:33,050
+saw in a previous example with modeling
+with linear regression.
+
+48
+00:02:33,050 --> 00:02:34,842
+And so the basic idea is we're fitting
+
+49
+00:02:34,842 --> 00:02:37,877
+a smooth curve relating temperature, to
+the ozone variables.
+
+50
+00:02:37,877 --> 00:02:41,672
+So temperature is the outcome, and ozone
+is the predictor, and each time I
+
+51
+00:02:41,672 --> 00:02:45,900
+use the resample data set as the data set
+I'm building that predictor on.
+
+52
+00:02:45,900 --> 00:02:48,330
+And I use a common span for each time, the
+
+53
+00:02:48,330 --> 00:02:50,560
+span being a measure of how smooth that
+fit will be.
+
+54
+00:02:51,810 --> 00:02:56,580
+I then predict for every single loess
+curve the outcome
+
+55
+00:02:56,580 --> 00:02:58,800
+for a new data set for the exact same
+values.
+
+56
+00:02:58,800 --> 00:03:02,213
+I always predict for ozone values 1 to
+155.
+
+57
+00:03:02,213 --> 00:03:07,134
+So the ith row of this ll object is now
+the prediction from
+
+58
+00:03:07,134 --> 00:03:12,280
+the loess curve, from the ith resample of
+the date ozone.
+
+59
+00:03:12,280 --> 00:03:14,020
+So what I've done here?
+
+60
+00:03:14,020 --> 00:03:18,112
+I've resampled my data set ten different
+times, fit a smooth curve through it those
+
+61
+00:03:18,112 --> 00:03:20,073
+ten different times, and then what I'm
+
+62
+00:03:20,073 --> 00:03:22,280
+going to do is I'm going to average those
+values.
+
+63
+00:03:23,390 --> 00:03:25,460
+So, here's what it looks like in this
+plot.
+
+64
+00:03:25,460 --> 00:03:27,323
+So, here I've plotted ozone on the x
+
+65
+00:03:27,323 --> 00:03:30,510
+axis, these are the observed ozone values
+versus temperature
+
+66
+00:03:30,510 --> 00:03:32,372
+on the y axis, those are the observed
+
+67
+00:03:32,372 --> 00:03:36,920
+temperature values, and each black dot
+represents an observation.
+
+68
+00:03:36,920 --> 00:03:40,280
+Each gray line here represents the fit
+with one resampled data set.
+
+69
+00:03:40,280 --> 00:03:43,990
+So you can see the gray lines that have a
+lot of curviness to them.
+
+70
+00:03:43,990 --> 00:03:46,260
+They capture a lot of the variability in
+the data set.
+
+71
+00:03:46,260 --> 00:03:49,220
+But they also maybe over-capture some of
+the variability.
+
+72
+00:03:49,220 --> 00:03:51,260
+They're little bit too curvy.
+
+73
+00:03:51,260 --> 00:03:53,830
+Once I've averaged those lines together I
+get something that's a little
+
+74
+00:03:53,830 --> 00:03:56,180
+bit smoother and is closer to the middle
+of the data set.
+
+75
+00:03:56,180 --> 00:03:57,780
+That's the red line.
+
+76
+00:03:57,780 --> 00:04:00,000
+So the red line is the bagged loess curve.
+
+77
+00:04:00,000 --> 00:04:02,809
+It's basically the average of multiple
+fitted loess curves,
+
+78
+00:04:02,809 --> 00:04:05,250
+the same data set where I've resampled it
+every time.
+
+79
+00:04:07,210 --> 00:04:11,020
+There's a proof that shows that the
+bagging estimate will always have
+
+80
+00:04:11,020 --> 00:04:16,610
+lower variability but similar bias to the
+individual model fits that you do.
+
+81
+00:04:16,610 --> 00:04:20,980
+In the caret package there's some models
+that already perform bagging for you.
+
+82
+00:04:20,980 --> 00:04:23,140
+So if you're using the train function you
+
+83
+00:04:23,140 --> 00:04:27,690
+could set method to be bagEarth, treebag,
+or bagFDA.
+
+84
+00:04:27,690 --> 00:04:30,844
+And those are specific bagged models that
+the the
+
+85
+00:04:30,844 --> 00:04:33,590
+model that the caret package will fit for
+you.
+
+86
+00:04:34,960 --> 00:04:39,570
+Alternatively, you can actually build your
+own bagging function in caret.
+
+87
+00:04:39,570 --> 00:04:43,300
+This is a bit of an advanced use and so I
+recommend that you
+
+88
+00:04:43,300 --> 00:04:47,250
+read the documentation carefully if you're
+going to be trying to do that yourself.
+
+89
+00:04:47,250 --> 00:04:50,492
+The idea here though is you basically are
+going to
+
+90
+00:04:50,492 --> 00:04:54,330
+take your predictor variable and put it
+into one data frame.
+
+91
+00:04:54,330 --> 00:04:57,650
+So I'm going to make the predictors be a
+data frame that contains the ozone data.
+
+92
+00:04:57,650 --> 00:04:59,730
+Then you have your outcome variable.
+
+93
+00:04:59,730 --> 00:05:02,920
+Here's it's going to be just a temperature
+variable from the data set.
+
+94
+00:05:02,920 --> 00:05:06,820
+And I pass this to the bag function in
+caret package.
+
+95
+00:05:06,820 --> 00:05:08,671
+So I tell it, I want to use the predictors
+
+96
+00:05:08,671 --> 00:05:10,913
+from that data frame, this is my outcome,
+this
+
+97
+00:05:10,913 --> 00:05:13,157
+is the number of replications with the
+number of
+
+98
+00:05:13,157 --> 00:05:15,420
+sub samples I'd like to take from the data
+set.
+
+99
+00:05:15,420 --> 00:05:20,770
+And then bagControl tells me something
+about how I'm going to fit the model.
+
+100
+00:05:20,770 --> 00:05:25,030
+So fit is the function that's going to be
+applied to fit the model every time.
+
+101
+00:05:25,030 --> 00:05:29,450
+This could be a call to the train function
+in the caret package.
+
+102
+00:05:29,450 --> 00:05:32,027
+Predict is a the way that given a
+particular
+
+103
+00:05:32,027 --> 00:05:35,420
+model fit, that we'll be able to predict
+new values.
+
+104
+00:05:35,420 --> 00:05:40,790
+So this could be, for example, a call to
+the predict function from a trained model.
+
+105
+00:05:40,790 --> 00:05:44,580
+And then aggregate is the way that we'll
+put the var, the predictions together.
+
+106
+00:05:44,580 --> 00:05:46,110
+So for example it could average the
+
+107
+00:05:46,110 --> 00:05:50,130
+predictions across all the different
+replicated samples.
+
+108
+00:05:50,130 --> 00:05:52,100
+You can see that if you look at this
+
+109
+00:05:52,100 --> 00:05:55,735
+custom bag version of the conditional
+regression trees, you can
+
+110
+00:05:55,735 --> 00:05:58,073
+see that it gets some of the benefit that
+I
+
+111
+00:05:58,073 --> 00:06:00,860
+was showing you in the previous slide with
+bag loess.
+
+112
+00:06:00,860 --> 00:06:03,458
+So the idea here is I'm plotting ozone
+
+113
+00:06:03,458 --> 00:06:07,360
+again on the x-axis versus temperature on
+the y-axis.
+
+114
+00:06:07,360 --> 00:06:11,080
+The little grey dots represent actual
+observed values.
+
+115
+00:06:11,080 --> 00:06:15,970
+The red dots represent the fit from a
+single conditional regression tree.
+
+116
+00:06:15,970 --> 00:06:19,671
+And so you can see that for example, it
+capture, it doesn't capture the
+
+117
+00:06:19,671 --> 00:06:23,690
+trend that's going on down here very well,
+the red line is just flat.
+
+118
+00:06:23,690 --> 00:06:26,380
+Even though there appears to be a trend
+upward in the data points here.
+
+119
+00:06:26,380 --> 00:06:28,733
+But when I average over ten different
+bagged
+
+120
+00:06:28,733 --> 00:06:32,670
+model model fits with these conditional
+regression trees.
+
+121
+00:06:32,670 --> 00:06:36,104
+I see that there's an increase here in the
+values in
+
+122
+00:06:36,104 --> 00:06:39,770
+the blue fit, which is the fit from the
+bagged regression.
+
+123
+00:06:41,610 --> 00:06:42,800
+So we're going to look a little bit
+
+124
+00:06:42,800 --> 00:06:44,870
+at those different parts of the bagging
+function.
+
+125
+00:06:44,870 --> 00:06:48,309
+So in this particular case I'm using the
+ctreeBag function, which you
+
+126
+00:06:48,309 --> 00:06:51,880
+can look at in, if you've loaded the caret
+package in R.
+
+127
+00:06:51,880 --> 00:06:54,150
+So, for the fit part it takes the data
+frame
+
+128
+00:06:54,150 --> 00:06:57,178
+that we've passed and the predict, and the
+outcome that
+
+129
+00:06:57,178 --> 00:07:00,334
+we've passed, and it basically uses the
+ctree function to
+
+130
+00:07:00,334 --> 00:07:04,570
+train a tree, conditional regression tree
+on the data set.
+
+131
+00:07:04,570 --> 00:07:07,330
+This is the last command that's called the
+ctree command.
+
+132
+00:07:07,330 --> 00:07:11,200
+So it returns this model fit from the
+ctree function.
+
+133
+00:07:11,200 --> 00:07:15,550
+The prediction takes in the object.
+
+134
+00:07:15,550 --> 00:07:18,950
+So this is going to be an object from the
+ctree model fit.
+
+135
+00:07:18,950 --> 00:07:22,950
+And a new data set x, and it's going to
+get a new prediction.
+
+136
+00:07:22,950 --> 00:07:27,740
+So what you can see here is it basically
+calculates each time
+
+137
+00:07:27,740 --> 00:07:32,630
+the tree response or the outcome from the
+object and the new data.
+
+138
+00:07:32,630 --> 00:07:35,521
+It then calculates this probability matrix
+and
+
+139
+00:07:35,521 --> 00:07:39,350
+returns either the actually the observed
+levels that
+
+140
+00:07:39,350 --> 00:07:42,021
+it predicts or it actually re, just
+returns
+
+141
+00:07:42,021 --> 00:07:45,650
+the response, the predicted response from
+the variable.
+
+142
+00:07:47,840 --> 00:07:50,950
+The aggregation then takes those values
+and averages
+
+143
+00:07:50,950 --> 00:07:53,690
+them together or puts them together in
+some way.
+
+144
+00:07:53,690 --> 00:07:55,374
+So here what this is doing is
+
+145
+00:07:55,374 --> 00:07:58,529
+it's basically getting the prediction from
+every
+
+146
+00:07:58,529 --> 00:08:04,730
+single one of these model fits, so that' s
+across a large number of observations.
+
+147
+00:08:04,730 --> 00:08:09,210
+And then it binds them together into one
+data matrix by with
+
+148
+00:08:09,210 --> 00:08:14,050
+each row being equal to the prediction
+from one of the model predictions.
+
+149
+00:08:14,050 --> 00:08:16,090
+And then it takes the median at every
+value.
+
+150
+00:08:16,090 --> 00:08:18,776
+So in other words it takes the median
+prediction from
+
+151
+00:08:18,776 --> 00:08:22,270
+each of the different model fits across
+all the bootstrap samples.
+
+152
+00:08:24,440 --> 00:08:28,480
+So bagging is very useful for nonlinear
+models, and it's widely used.
+
+153
+00:08:28,480 --> 00:08:30,210
+It's often used with trees.
+
+154
+00:08:30,210 --> 00:08:32,250
+And you can think of an extension to this
+as
+
+155
+00:08:32,250 --> 00:08:36,380
+being random forest, which we'll talk
+about in a future lecture.
+
+156
+00:08:36,380 --> 00:08:39,160
+Several models use bagging and caret's
+main train
+
+157
+00:08:39,160 --> 00:08:41,440
+function, like I told you about in
+previous slide.
+
+158
+00:08:41,440 --> 00:08:45,118
+And you can also build your own specific
+bagging functions, for any
+
+159
+00:08:45,118 --> 00:08:49,860
+classification or prediction algorithm
+that you'd like to take a look at.
+
+160
+00:08:49,860 --> 00:08:52,590
+For further resources, I've linked to a
+couple
+
+161
+00:08:52,590 --> 00:08:55,390
+of different tutorials on bagging and
+boosting, as
+
+162
+00:08:55,390 --> 00:08:57,100
+well as the Elements of Statistical
+Learning which
+
+163
+00:08:57,100 --> 00:08:59,720
+has a lot more details about how bagging
+works.
+
+164
+00:08:59,720 --> 00:09:02,917
+But remember that the basic idea is to
+basically resample
+
+165
+00:09:02,917 --> 00:09:06,645
+your data, refit your nonlinear model,
+then average those model
+
+166
+00:09:06,645 --> 00:09:09,908
+fits together over resamples to get a
+smoother model fit,
+
+167
+00:09:09,908 --> 00:09:13,060
+than you would've got from any individual
+fit on its own
+
