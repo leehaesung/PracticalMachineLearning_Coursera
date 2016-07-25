@@ -1,0 +1,602 @@
+1
+00:00:00,500 --> 00:00:02,500
+This lecture is about combining
+predictors,
+
+2
+00:00:02,500 --> 00:00:06,530
+it's sometimes called ensembling methods
+in learning.
+
+3
+00:00:06,530 --> 00:00:09,700
+And so the key idea here is that you can
+combine classifiers
+
+4
+00:00:09,700 --> 00:00:13,540
+by averaging or voting and these can be
+classifiers that are very different.
+
+5
+00:00:13,540 --> 00:00:16,290
+So for example you can combine a boosting
+classifier
+
+6
+00:00:16,290 --> 00:00:19,360
+with a random forest with a linear
+regression model.
+
+7
+00:00:19,360 --> 00:00:23,350
+In general combining classifiers together
+improves accuracy
+
+8
+00:00:23,350 --> 00:00:26,120
+and it can also reduce interpretive
+abilities you
+
+9
+00:00:26,120 --> 00:00:29,950
+have to be really careful the gain that
+
+10
+00:00:29,950 --> 00:00:33,860
+you get is worth the loss on
+interperatibility.
+
+11
+00:00:33,860 --> 00:00:37,200
+Boosting, bagging and random floor,
+they're all basically variance
+
+12
+00:00:37,200 --> 00:00:40,070
+on this theme that you can average
+different classifiers together.
+
+13
+00:00:40,070 --> 00:00:42,970
+But those are all examples where it's the
+
+14
+00:00:42,970 --> 00:00:45,530
+same kind of classifiers being averaged in
+every case.
+
+15
+00:00:47,300 --> 00:00:50,620
+So as an example of how successful this
+can be, the Netflix prize
+
+16
+00:00:50,620 --> 00:00:52,470
+was a million dollar prize that was
+
+17
+00:00:52,470 --> 00:00:56,280
+basically major prediction competition
+that was run.
+
+18
+00:00:56,280 --> 00:00:57,880
+And so the team that ended up wining
+
+19
+00:00:57,880 --> 00:01:01,220
+was actually a blended combination of 107
+different.
+
+20
+00:01:01,220 --> 00:01:04,180
+Machine learning algorithms combined
+together in order
+
+21
+00:01:04,180 --> 00:01:08,050
+to get the best score in this example.
+
+22
+00:01:08,050 --> 00:01:11,960
+The Heritage Health prize was also won by
+methods that
+
+23
+00:01:11,960 --> 00:01:14,940
+were ensembling for multiple different
+
+24
+00:01:14,940 --> 00:01:18,510
+regression models and machine learning
+methods.
+
+25
+00:01:18,510 --> 00:01:21,870
+And so this was these are both of the
+links to the
+
+26
+00:01:21,870 --> 00:01:25,470
+first progress prizes for the two teams
+that were in the lead.
+
+27
+00:01:25,470 --> 00:01:28,460
+The Heritage Health prize was a $3 million
+prize.
+
+28
+00:01:28,460 --> 00:01:31,160
+It was designed to try to predict whether
+people would
+
+29
+00:01:31,160 --> 00:01:34,050
+go back to the hospital based on their
+hospitalization record.
+
+30
+00:01:36,070 --> 00:01:38,950
+So the basic intuition here, you can think
+of as a majority vote.
+
+31
+00:01:38,950 --> 00:01:42,920
+So suppose we have five completely
+independent classifiers.
+
+32
+00:01:42,920 --> 00:01:46,590
+If the accuracy at 70% for each
+classifier, then we
+
+33
+00:01:46,590 --> 00:01:50,840
+can think that, the accuracy for majority
+vote would be.
+
+34
+00:01:50,840 --> 00:01:56,700
+10 times the majority vote being right for
+three out of the five classifiers,
+
+35
+00:01:56,700 --> 00:02:01,730
+for four out of the five classifiers, or
+for all five classifiers.
+
+36
+00:02:01,730 --> 00:02:09,412
+And so it turns out that would be 83.7%
+majority vote accuracy.
+
+37
+00:02:09,412 --> 00:02:10,873
+With 101 independent classifiers you get
+99.9% majority vote accuracy.
+
+38
+00:02:12,150 --> 00:02:14,536
+So some approaches for combining
+classifiers
+
+39
+00:02:14,536 --> 00:02:16,921
+basically use, one approach is using
+similar
+
+40
+00:02:16,921 --> 00:02:19,369
+classifiers and combining them together
+using
+
+41
+00:02:19,369 --> 00:02:22,380
+something like bagging, boosting, or
+random forests.
+
+42
+00:02:23,430 --> 00:02:25,384
+Another approach is to combine different
+
+43
+00:02:25,384 --> 00:02:28,064
+classifiers using model stacking or model
+ensembling,
+
+44
+00:02:28,064 --> 00:02:31,600
+and we're going to talk a little bit about
+model stacking in this lecture.
+
+45
+00:02:32,700 --> 00:02:34,950
+So, here's an example with the wage data.
+
+46
+00:02:34,950 --> 00:02:37,640
+So, where going to, build the wage data
+set
+
+47
+00:02:37,640 --> 00:02:39,640
+and we're going to leave out the log wage
+variable.
+
+48
+00:02:39,640 --> 00:02:44,300
+Since we're trying to predict wage, log
+wage would be a very good predictor.
+
+49
+00:02:44,300 --> 00:02:47,200
+And, we build the, validation set here.
+
+50
+00:02:47,200 --> 00:02:50,410
+And, we also build a training set and a
+test set.
+
+51
+00:02:50,410 --> 00:02:53,440
+So, I've separated it into three different
+data sets here.
+
+52
+00:02:53,440 --> 00:02:55,410
+And that, you'll see the importance of
+that in just a minute.
+
+53
+00:02:57,000 --> 00:03:00,100
+So the training set is the largest of the
+data sets.
+
+54
+00:03:00,100 --> 00:03:02,620
+It has a 100, 1,474 examples.
+
+55
+00:03:02,620 --> 00:03:08,010
+The test set has 628 and the validation
+set has 898 samples in it.
+
+56
+00:03:10,220 --> 00:03:12,570
+We, then, in the training set, build.
+
+57
+00:03:12,570 --> 00:03:14,120
+In this case, I'm using a GLM.
+
+58
+00:03:14,120 --> 00:03:15,720
+So this is a linear model.
+
+59
+00:03:15,720 --> 00:03:19,240
+And I'm building it in the, training data.
+
+60
+00:03:19,240 --> 00:03:22,630
+And I'm basically predicting wage using
+all the other variables.
+
+61
+00:03:22,630 --> 00:03:25,510
+I'm also going to build a separate model,
+also in the training data.
+
+62
+00:03:25,510 --> 00:03:29,270
+And I'm going to, here, use method equals
+random forest.
+
+63
+00:03:29,270 --> 00:03:32,800
+And so I'm fitting two different
+prediction models to the same data set.
+
+64
+00:03:34,500 --> 00:03:36,102
+I can then plot those predictions versus
+
+65
+00:03:36,102 --> 00:03:38,106
+each other so this is the predictions
+here.
+
+66
+00:03:38,106 --> 00:03:40,778
+Pred1 is the predictions from the linear
+model,
+
+67
+00:03:40,778 --> 00:03:43,775
+and pred2 are the predictions from the
+random forest.
+
+68
+00:03:43,775 --> 00:03:45,849
+And you can see that they, they're close
+to
+
+69
+00:03:45,849 --> 00:03:49,210
+each other, but they don't actually agree
+with each other.
+
+70
+00:03:49,210 --> 00:03:52,540
+And, neither of them perfectly correlates
+with the wage variable,
+
+71
+00:03:52,540 --> 00:03:54,920
+which is the color of the dots in this
+particular picture.
+
+72
+00:03:56,530 --> 00:03:59,670
+So then what we can do is fit a model that
+combines the predictors.
+
+73
+00:03:59,670 --> 00:04:03,450
+So, I basically build a new data set
+consisting of
+
+74
+00:04:03,450 --> 00:04:08,230
+the predictions from model one and the
+predictions from model two.
+
+75
+00:04:08,230 --> 00:04:11,366
+And then what I can do is I can create a
+wage
+
+76
+00:04:11,366 --> 00:04:17,500
+variable, which is the, the, on the test
+data set, the wage variable.
+
+77
+00:04:17,500 --> 00:04:19,840
+Then I can fit a new model, which
+
+78
+00:04:19,840 --> 00:04:24,040
+relates this wage variable, to the two
+predictions.
+
+79
+00:04:24,040 --> 00:04:27,520
+So now, instead of just fitting a model
+that relates the co-variants
+
+80
+00:04:27,520 --> 00:04:32,170
+to the outcome, I've fit two separate
+prediction models for the outcome.
+
+81
+00:04:32,170 --> 00:04:34,220
+And now now I'm fitting a regression model
+ratin,
+
+82
+00:04:34,220 --> 00:04:38,990
+relating the outcome to the predictions
+for those two models.
+
+83
+00:04:38,990 --> 00:04:42,480
+And then I can predict from the combined
+data set on new samples.
+
+84
+00:04:44,170 --> 00:04:48,690
+So, I can look at the how well I do on the
+test set
+
+85
+00:04:48,690 --> 00:04:54,644
+and so I can see that for example on the
+test set the first predictor.
+
+86
+00:04:54,644 --> 00:05:00,217
+Has an error of 827.1 and the second
+predictor has an error of 866,
+
+87
+00:05:00,217 --> 00:05:05,806
+whereas the combined predictor has an
+error that's lower, 813.9.
+
+88
+00:05:05,806 --> 00:05:09,101
+And I also want to try it out on the
+validation set because remember
+
+89
+00:05:09,101 --> 00:05:12,040
+I use the test set to try to blend the two
+models together.
+
+90
+00:05:12,040 --> 00:05:14,340
+So, I fit a model on the test set, so
+
+91
+00:05:14,340 --> 00:05:17,550
+that's not a good representation of the
+out of sample error.
+
+92
+00:05:17,550 --> 00:05:22,070
+So, now I basically create a prediction of
+my first model on the
+
+93
+00:05:22,070 --> 00:05:27,010
+validation set and a prediction of my
+second model on the validation set.
+
+94
+00:05:27,010 --> 00:05:31,050
+I then create a data frame that contains
+those two predictions.
+
+95
+00:05:31,050 --> 00:05:33,803
+And now I predict using my model, my
+combined
+
+96
+00:05:33,803 --> 00:05:37,220
+model, on the predictions in the
+validation data set.
+
+97
+00:05:37,220 --> 00:05:39,650
+So the covariance being passed in the
+model
+
+98
+00:05:39,650 --> 00:05:42,130
+are the predictions from the two different
+models.
+
+99
+00:05:43,170 --> 00:05:49,140
+So here I can see the error from model one
+if I used it by itself would be 1003.
+
+100
+00:05:49,140 --> 00:05:52,770
+The error for my second model would be
+1068.
+
+101
+00:05:52,770 --> 00:05:56,830
+And the combined model has a lower error
+even on the validation data set.
+
+102
+00:05:56,830 --> 00:06:00,520
+So stacking models in this way can re,
+improve accuracy
+
+103
+00:06:00,520 --> 00:06:04,200
+by blending different models, the
+strengths of different models together.
+
+104
+00:06:04,200 --> 00:06:06,130
+Even simple blending like I've talked
+about here
+
+105
+00:06:06,130 --> 00:06:08,450
+can be really useful and can improve
+accuracy.
+
+106
+00:06:09,510 --> 00:06:13,850
+The typical model blending for mul, binary
+multiclass data involves building
+
+107
+00:06:13,850 --> 00:06:18,080
+an odd number of models, predicting the
+outcome with each model.
+
+108
+00:06:18,080 --> 00:06:22,260
+And then, assigning the ultimate class
+label based on majority vote.
+
+109
+00:06:22,260 --> 00:06:25,010
+This can get dramatically more
+complicated, I, I found
+
+110
+00:06:25,010 --> 00:06:28,590
+a caret package ensemble that, ensembles
+some of the
+
+111
+00:06:28,590 --> 00:06:30,990
+caret models together, but it's a little
+bit in
+
+112
+00:06:30,990 --> 00:06:33,450
+development, so I'd say use at your own
+risk.
+
+113
+00:06:33,450 --> 00:06:35,800
+You can also read more about ensemble
+learning here
+
+114
+00:06:35,800 --> 00:06:37,900
+at the Wikipedia page that I've linked to
+here.
+
+115
+00:06:39,740 --> 00:06:41,730
+One important point to keep in mind when
+doing model
+
+116
+00:06:41,730 --> 00:06:46,620
+ensembling is that this can lead to
+increases in computational complexity.
+
+117
+00:06:46,620 --> 00:06:48,440
+So it turns out that even though Netflix
+paid
+
+118
+00:06:48,440 --> 00:06:51,850
+a million dollars to the team that won the
+prize.
+
+119
+00:06:51,850 --> 00:06:53,470
+The solution, the Netflix millionaire
+
+120
+00:06:53,470 --> 00:06:56,290
+dollar solution was never actually
+implemented.
+
+121
+00:06:56,290 --> 00:07:01,100
+Because it was too computational intensive
+to apply to specific data sets.
+
+122
+00:07:01,100 --> 00:07:04,640
+So, recall from the earliest lectures in
+this class that there are trade offs in
+
+123
+00:07:04,640 --> 00:07:08,040
+scalability versus accuracy that you have
+to
+
+124
+00:07:08,040 --> 00:07:10,040
+pay attention to when building these
+prediction models.
+
