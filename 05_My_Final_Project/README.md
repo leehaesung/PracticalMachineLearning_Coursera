@@ -34,4 +34,4 @@ The goal of our project is to predict the manner in which they did the exercise.
 
 
 ## My Project Solution
-* [Human Excercise pattern and Recognition](https://github.com/leehaesung/PracticalMachineLearning_Coursera/blob/master/05_My_Final_Project/index.Rmd) 
+* [Human Activity Recognition](https://github.com/leehaesung/PracticalMachineLearning_Coursera/blob/master/05_My_Final_Project/index.Rmd) 
